@@ -136,24 +136,6 @@
 		945B53141AD2342C0047A27D = {
 			isa = PBXGroup;
 			children = (
-				945B538F1AD23D2E0047A27D /* Chameleon */,
-				945B539C1AD23D2E0047A27D /* PQFCustomLoaders */,
-				945B53A41AD23D2E0047A27D /* UIColor+FlatColors */,
-				945B53A71AD23D2E0047A27D /* UIKeyChainStore */,
-				945B538D1AD23CD30047A27D /* Bolts.framework */,
-				945B538B1AD23CC60047A27D /* Parse.framework */,
-				945B537C1AD23B9D0047A27D /* libz.1.1.3.dylib */,
-				945B53741AD239FD0047A27D /* libsqlite3.dylib */,
-				945B53721AD239F70047A27D /* libz.dylib */,
-				945B53701AD239F10047A27D /* SystemConfiguration.framework */,
-				945B536E1AD239E80047A27D /* StoreKit.framework */,
-				945B536C1AD239E20047A27D /* Security.framework */,
-				945B536A1AD239DB0047A27D /* QuartzCore.framework */,
-				945B53681AD239D30047A27D /* MobileCoreServices.framework */,
-				945B53661AD239CD0047A27D /* CoreLocation.framework */,
-				945B53641AD239C60047A27D /* CoreGraphics.framework */,
-				945B53621AD239C00047A27D /* CFNetwork.framework */,
-				945B53601AD239B90047A27D /* AudioToolbox.framework */,
 				945B531F1AD2342C0047A27D /* PromMe */,
 				945B53391AD2342C0047A27D /* PromMeTests */,
 				945B531E1AD2342C0047A27D /* Products */,
@@ -179,6 +161,8 @@
 				945B532A1AD2342C0047A27D /* Main.storyboard */,
 				945B532D1AD2342C0047A27D /* Images.xcassets */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
+				945B53B51AD23D5F0047A27D /* Misc. 3rd Party Libraries */,
+				945B53B41AD23D470047A27D /* Parse and Default Libraries */,
 				945B53201AD2342C0047A27D /* Supporting Files */,
 			);
 			path = PromMe;
@@ -259,6 +243,40 @@
 				945B53A91AD23D2E0047A27D /* UICKeyChainStore.m */,
 			);
 			path = UIKeyChainStore;
+			sourceTree = "<group>";
+		};
+		945B53B41AD23D470047A27D /* Parse and Default Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				945B538D1AD23CD30047A27D /* Bolts.framework */,
+				945B538B1AD23CC60047A27D /* Parse.framework */,
+				945B537C1AD23B9D0047A27D /* libz.1.1.3.dylib */,
+				945B53741AD239FD0047A27D /* libsqlite3.dylib */,
+				945B53721AD239F70047A27D /* libz.dylib */,
+				945B53701AD239F10047A27D /* SystemConfiguration.framework */,
+				945B536E1AD239E80047A27D /* StoreKit.framework */,
+				945B536C1AD239E20047A27D /* Security.framework */,
+				945B536A1AD239DB0047A27D /* QuartzCore.framework */,
+				945B53681AD239D30047A27D /* MobileCoreServices.framework */,
+				945B53661AD239CD0047A27D /* CoreLocation.framework */,
+				945B53641AD239C60047A27D /* CoreGraphics.framework */,
+				945B53621AD239C00047A27D /* CFNetwork.framework */,
+				945B53601AD239B90047A27D /* AudioToolbox.framework */,
+			);
+			name = "Parse and Default Libraries";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		945B53B51AD23D5F0047A27D /* Misc. 3rd Party Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				945B538F1AD23D2E0047A27D /* Chameleon */,
+				945B539C1AD23D2E0047A27D /* PQFCustomLoaders */,
+				945B53A41AD23D2E0047A27D /* UIColor+FlatColors */,
+				945B53A71AD23D2E0047A27D /* UIKeyChainStore */,
+			);
+			name = "Misc. 3rd Party Libraries";
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -7,7 +7,8 @@
 //
 
 #import "LogInViewController.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "MainPromMePageViewController.h"
+
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
@@ -21,14 +22,39 @@
     self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends", @"read_custom_friendlists"];
     
     if ([FBSDKAccessToken currentAccessToken]) {
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             if (!error) {
-                 NSLog(@"fetched user:%@", result);
-             }
-         }];
+        
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/taggable_friends?fields=name,picture.width(300),limit=500" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+            if(error) {
+                NSLog(@"ERROR AT USER TAGGABLE");
+                NSLog(error.description);
+            }
+            
+            else {
+                
+                NSDictionary *formattedResults = (NSDictionary*)result;
+                
+                NSArray *people = [formattedResults objectForKey:@"data"];
+                
+                for(NSDictionary *person in people) {
+                    NSLog(person.description);
+                }
+                
+                NSLog(@"SIZE: %ld", (long)people.count);
+                
+                NSDictionary *paging = [formattedResults objectForKey:@"paging"];
+                
+                NSLog(paging[@"next"]);
+                
+                NSString *html = [NSString stringWithContentsOfURL:[NSURL URLWithString:paging[@"next"]] encoding:NSUTF8StringEncoding error:nil];
+                
+                NSLog(@"RESULT\n\n%@", html);
+            }
+            
+        }];
     }
-    
+    else {
+        NSLog(@"NOPE!");
+    }
 
 }
 
@@ -40,16 +66,13 @@
 - (void) loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 {
     if(!error) {
-        NSLog(@"SUCCESSFUL LOGIN!");
+        MainPromMePageViewController *mainPromMe = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
+        
+        self.view.window.rootViewController = mainPromMe;
     }
     else {
         NSLog(@"NOPE");
     }
-    
-    NSLog([result token].description);
-    
-
-
 }
 
 - (void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton

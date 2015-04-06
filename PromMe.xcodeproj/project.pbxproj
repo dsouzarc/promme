@@ -41,6 +41,8 @@
 		945B53BD1AD2B7100047A27D /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53BB1AD2B7100047A27D /* LogInViewController.m */; };
 		945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B53BC1AD2B7100047A27D /* LogInViewController.xib */; };
 		945B53C01AD2B7F90047A27D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945B53BF1AD2B7F90047A27D /* FBSDKLoginKit.framework */; };
+		945B53C41AD2C40E0047A27D /* MainPromMePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */; };
+		945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,9 @@
 		945B53BB1AD2B7100047A27D /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		945B53BC1AD2B7100047A27D /* LogInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogInViewController.xib; sourceTree = "<group>"; };
 		945B53BF1AD2B7F90047A27D /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPromMePageViewController.h; sourceTree = "<group>"; };
+		945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainPromMePageViewController.m; sourceTree = "<group>"; };
+		945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainPromMePageViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +171,9 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
+				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
+				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
+				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
 				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
@@ -377,6 +385,7 @@
 			files = (
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
+				945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */,
 				945B53311AD2342C0047A27D /* LaunchScreen.xib in Resources */,
 				945B532E1AD2342C0047A27D /* Images.xcassets in Resources */,
 			);
@@ -398,6 +407,7 @@
 			files = (
 				945B53BD1AD2B7100047A27D /* LogInViewController.m in Sources */,
 				945B53AC1AD23D2E0047A27D /* UIColor+Chameleon.m in Sources */,
+				945B53C41AD2C40E0047A27D /* MainPromMePageViewController.m in Sources */,
 				945B53B11AD23D2E0047A27D /* PQFCirclesInTriangle.m in Sources */,
 				945B53AD1AD23D2E0047A27D /* UIColor+CIELAB.m in Sources */,
 				945B53AA1AD23D2E0047A27D /* ChameleonStatusBar.m in Sources */,

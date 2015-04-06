@@ -8,15 +8,14 @@
 
 #import "LogInViewController.h"
 #import "MainPromMePageViewController.h"
-#import "PQFBouncingBalls.h"
+#import "PQFCirclesInTriangle.h"
 #import "UICKeyChainStore.h"
 #import "Person.h"
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
 
-
-@property (strong, nonatomic) PQFBouncingBalls *loadingAnimation;
+@property (strong, nonatomic) PQFCirclesInTriangle *loadingCircles;
 @property (strong, nonatomic) UICKeyChainStore *keyChain;
 
 @property (strong, nonatomic) NSMutableArray *listOfFriends;
@@ -37,11 +36,17 @@
     
     self.loginButton.readPermissions = permissions;
     
+    self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
+    self.loadingCircles.label.text = @"Creating account...";
+    self.loadingCircles.borderWidth = 5.0;
+    self.loadingCircles.maxDiam = 200.0;
+    self.loadingCircles.loaderColor = [UIColor blueColor];
+    [self.loadingCircles show];
+    
     //If we have successfully logged into Facebook
     if ([FBSDKAccessToken currentAccessToken]) {
-        
-        NSLog(@"ACCCESS TOKEN!!");
-        [self.loadingAnimation show];
+        NSLog(@"Logged in");
+        [self getFacebookIDAndName];
         
     }
     else {
@@ -86,8 +91,7 @@
     //GET LIST OF FRIENDS
     NSString *urlRequest = @"/me/taggable_friends?fields=name,picture.width(300),limit=500";
     
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
-                                                                                                          id result, NSError *error) {
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
         if(error) {
             NSLog(@"ERROR AT USER TAGGABLE");
             NSLog(error.description);
@@ -107,6 +111,7 @@
 
 - (void) recursivelyAddPeople:(NSString*)url
 {
+    NSLog(@"Still working... %ld", (long)self.listOfFriends.count);
     NSData *data = [[NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
     
     NSDictionary *formattedResults = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -159,8 +164,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if(self) {
-        self.loadingAnimation = [[PQFBouncingBalls alloc] initLoaderOnView:self.view];
-        
         self.keyChain = [[UICKeyChainStore alloc] init];
         self.listOfFriends = [[NSMutableArray alloc] init];
     }

@@ -15,7 +15,8 @@
 @property (nonatomic, strong) NSString *profilePhotoLink;
 
 - (instancetype) initWithEverything:(NSString*)id name:(NSString*)name photoLink:(NSString*)photoLink;
-
 - (instancetype) initWithDictionary:(NSDictionary*)dictionary;
+- (instancetype) initWithParseDictionary:(NSDictionary*)fromParse;
+- (NSDictionary*) toDictionary;
 
 @end

@@ -36,5 +36,19 @@
     return self;
 }
 
+- (instancetype) initWithParseDictionary:(NSDictionary *)fromParse
+{
+    self = [self initWithEverything:fromParse[@"id"] name:fromParse[@"name"] photoLink:fromParse[@"profilePhotoLink"]];
+    
+    return self;
+})
+
+- (NSDictionary*)toDictionary
+{
+    NSDictionary *dictionary = @{@"name": self.name, @"profilePhotoLink": self.profilePhotoLink, @"id": self.id};
+    
+    return dictionary;
+}
+
 @end
 

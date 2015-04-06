@@ -11,10 +11,10 @@
 #import "PQFBouncingBalls.h"
 #import "UICKeyChainStore.h"
 #import "Person.h"
-
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
+
 
 @property (strong, nonatomic) PQFBouncingBalls *loadingAnimation;
 @property (strong, nonatomic) UICKeyChainStore *keyChain;
@@ -30,112 +30,127 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends", @"read_custom_friendlists"];
+    self.loginButton.delegate = self;
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    
+    NSArray *permissions = @[@"public_profile", @"email", @"user_friends", @"read_custom_friendlists"];
+    
+    self.loginButton.readPermissions = permissions;
     
     //If we have successfully logged into Facebook
     if ([FBSDKAccessToken currentAccessToken]) {
         
+        NSLog(@"ACCCESS TOKEN!!");
         [self.loadingAnimation show];
         
-        //GET AND SAVE MY USERNAME AND INFORMATION
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/" parameters:nil]
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             
-             if(error) {
-                 NSLog(@"ERROR: %@", error.description);
-             }
-             else {
-                 NSDictionary *goodResult = (NSDictionary*)result;
-                 
-                 self.facebookID = goodResult[@"id"];
-                 self.myName = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
-                 
-                 self.keyChain[@"facebookID"] = self.facebookID;
-                 self.keyChain[@"myName"] = self.myName;
-                 
-                 NSLog(@"GOOD: %@\t%@", self.myName, self.facebookID);
-             }
-         }];
-        
-        //GET LIST OF FRIENDS
-        NSString *urlRequest = @"/me/taggable_friendsfields=name,picture.width(300),limit=500";
-        
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
-                                                            id result, NSError *error) {
-            if(error) {
-                NSLog(@"ERROR AT USER TAGGABLE");
-                NSLog(error.description);
-            }
-            
-            else {
-                NSDictionary *formattedResults = (NSDictionary*)result;
-                
-                NSArray *people = [formattedResults objectForKey:@"data"];
-                
-                for(NSDictionary *person in people) {
-                    [self.listOfFriends addObject:[[Person alloc] initWithDictionary:person]];
-                }
-                
-                NSDictionary *paging = [formattedResults objectForKey:@"paging"];
-                
-                NSLog(paging[@"next"]);
-                
-                NSString *html = [NSString stringWithContentsOfURL:[NSURL URLWithString:paging[@"next"]] encoding:NSUTF8StringEncoding error:nil];
-                
-                NSLog(@"RESULT\n\n%@", html);
-                
-                NSString *url = [NSString stringWithFormat:@"/%@/photos", people[0]];
-                
-                [[[FBSDKGraphRequest alloc] initWithGraphPath:url parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                    if(error) {
-                        NSLog(@"ERROR GETTING PHOTOS");
-                        NSLog(error.description);
-                    }
-                    else {
-                        NSLog(@"SUCCESS");
-                        NSDictionary *results = (NSDictionary*)result;
-                        
-                        NSArray *links = results[@"data"];
-                        
-                        for(NSString *string in links) {
-                            NSLog(@"HERE STRINGS: %@", string);
-                        }
-                    }
-                }];
-                
-                NSDictionary *aPerson = (NSDictionary*)people[0];
-                
-                NSLog(@"ID: %@", aPerson[@"id"]);
-                
-                url = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=140&height=110", aPerson[@"id"]];
-                
-                html = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
-                
-                NSLog(@"LATEST PHOTOS: %@", html);
-            }
-            
-        }];
     }
     else {
-        NSLog(@"NOPE!");
+        FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+        [loginManager logInWithReadPermissions:permissions handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if(!error) {
+                NSLog(@"Logged in");
+                [self getFacebookIDAndName];
+            }
+        }];
     }
 
+}
+
+- (void) getFacebookIDAndName
+{
+    //GET AND SAVE MY USERNAME AND INFORMATION
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:nil]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         NSLog(@"HERE: ");
+         if(error) {
+             NSLog(@"ERROR: %@", error.description);
+         }
+         else {
+             NSDictionary *goodResult = (NSDictionary*)result;
+             
+             self.facebookID = goodResult[@"id"];
+             self.myName = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
+             
+             self.keyChain[@"facebookID"] = self.facebookID;
+             self.keyChain[@"myName"] = self.myName;
+             
+             NSLog(@"GOOD: %@\t%@", self.myName, self.facebookID);
+             
+             [self getFacebookFriends];
+         }
+     }];
+}
+
+- (void) getFacebookFriends
+{
+    //GET LIST OF FRIENDS
+    NSString *urlRequest = @"/me/taggable_friends?fields=name,picture.width(300),limit=500";
+    
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                                                                          id result, NSError *error) {
+        if(error) {
+            NSLog(@"ERROR AT USER TAGGABLE");
+            NSLog(error.description);
+        }
+        
+        else {
+            NSDictionary *formattedResults = (NSDictionary*) result;
+            NSArray *people = [formattedResults objectForKey:@"data"];
+            NSDictionary *pagingInformation = [formattedResults objectForKey:@"paging"];
+            
+            [self addPeople:people];
+            [self recursivelyAddPeople:pagingInformation[@"next"]];
+        }
+        
+    }];
+}
+
+- (void) recursivelyAddPeople:(NSString*)url
+{
+    NSData *data = [[NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSDictionary *formattedResults = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    NSArray *people = [formattedResults objectForKey:@"data"];
+    [self addPeople:people];
+    NSDictionary *pagingInformation = [formattedResults objectForKey:@"paging"];
+    
+    if(pagingInformation && pagingInformation[@"next"]) {
+        [self recursivelyAddPeople:pagingInformation[@"next"]];
+    }
+    else {
+        NSLog(@"FINISHED: %ld", (long)self.listOfFriends.count);
+        
+        for(Person *person in self.listOfFriends) {
+            NSLog(person.name);
+        }
+    }
+}
+
+- (void) addPeople:(NSArray*)people
+{
+    for(NSDictionary *person in people) {
+        [self.listOfFriends addObject:[[Person alloc] initWithDictionary:person]];
+    }
 }
 
 - (void) loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 {
     if(!error) {
-        MainPromMePageViewController *mainPromMe = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
+        NSLog(@"Successful login");
+        [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
         
-        self.view.window.rootViewController = mainPromMe;
+        [self getFacebookFriends];
+        [self getFacebookIDAndName];
     }
     else {
-        NSLog(@"NOPE");
+        NSLog(@"Unsuccessful login");
     }
 }
 
 - (void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
+    NSLog(@"LOGGED OUT");
     [self viewDidLoad];
 }
 

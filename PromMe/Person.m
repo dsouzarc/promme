@@ -30,7 +30,7 @@
     NSDictionary *photoInformation = (NSDictionary*)(((NSDictionary*)dictionary[@"picture"])[@"data"]);
     
     NSString *id = photoInformation[@"url"];
-    NSString *profilePhotoLink = [@"url"];
+    NSString *profilePhotoLink = photoInformation[@"url"];
     
     self = [self initWithEverything:id name:name photoLink:profilePhotoLink];
     return self;

@@ -16,4 +16,6 @@
 
 - (instancetype) initWithEverything:(NSString*)id name:(NSString*)name photoLink:(NSString*)photoLink;
 
+- (instancetype) initWithDictionary:(NSDictionary*)dictionary;
+
 @end

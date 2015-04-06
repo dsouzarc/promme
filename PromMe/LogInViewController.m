@@ -8,10 +8,21 @@
 
 #import "LogInViewController.h"
 #import "MainPromMePageViewController.h"
+#import "PQFBouncingBalls.h"
+#import "UICKeyChainStore.h"
+#import "Person.h"
 
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
+
+@property (strong, nonatomic) PQFBouncingBalls *loadingAnimation;
+@property (strong, nonatomic) UICKeyChainStore *keyChain;
+
+@property (strong, nonatomic) NSMutableArray *listOfFriends;
+
+@property (strong, nonatomic) NSString *facebookID;
+@property (strong, nonatomic) NSString *myName;
 
 @end
 
@@ -21,25 +32,49 @@
     [super viewDidLoad];
     self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends", @"read_custom_friendlists"];
     
+    //If we have successfully logged into Facebook
     if ([FBSDKAccessToken currentAccessToken]) {
         
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/taggable_friends?fields=name,picture.width(300),limit=500" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [self.loadingAnimation show];
+        
+        //GET AND SAVE MY USERNAME AND INFORMATION
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/" parameters:nil]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             
+             if(error) {
+                 NSLog(@"ERROR: %@", error.description);
+             }
+             else {
+                 NSDictionary *goodResult = (NSDictionary*)result;
+                 
+                 self.facebookID = goodResult[@"id"];
+                 self.myName = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
+                 
+                 self.keyChain[@"facebookID"] = self.facebookID;
+                 self.keyChain[@"myName"] = self.myName;
+                 
+                 NSLog(@"GOOD: %@\t%@", self.myName, self.facebookID);
+             }
+         }];
+        
+        //GET LIST OF FRIENDS
+        NSString *urlRequest = @"/me/taggable_friendsfields=name,picture.width(300),limit=500";
+        
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                            id result, NSError *error) {
             if(error) {
                 NSLog(@"ERROR AT USER TAGGABLE");
                 NSLog(error.description);
             }
             
             else {
-                
                 NSDictionary *formattedResults = (NSDictionary*)result;
                 
                 NSArray *people = [formattedResults objectForKey:@"data"];
                 
                 for(NSDictionary *person in people) {
-                    NSLog(person.description);
+                    [self.listOfFriends addObject:[[Person alloc] initWithDictionary:person]];
                 }
-                
-                NSLog(@"SIZE: %ld", (long)people.count);
                 
                 NSDictionary *paging = [formattedResults objectForKey:@"paging"];
                 
@@ -87,11 +122,6 @@
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void) loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 {
     if(!error) {
@@ -107,6 +137,20 @@
 - (void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
     [self viewDidLoad];
+}
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self) {
+        self.loadingAnimation = [[PQFBouncingBalls alloc] initLoaderOnView:self.view];
+        
+        self.keyChain = [[UICKeyChainStore alloc] init];
+        self.listOfFriends = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
 }
 
 @end

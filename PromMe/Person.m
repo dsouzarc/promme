@@ -23,5 +23,18 @@
     return self;
 }
 
+- (instancetype) initWithDictionary:(NSDictionary *)dictionary
+{
+    NSString *name = dictionary[@"name"];
+    
+    NSDictionary *photoInformation = (NSDictionary*)(((NSDictionary*)dictionary[@"picture"])[@"data"]);
+    
+    NSString *id = photoInformation[@"url"];
+    NSString *profilePhotoLink = [@"url"];
+    
+    self = [self initWithEverything:id name:name photoLink:profilePhotoLink];
+    return self;
+}
+
 @end
 

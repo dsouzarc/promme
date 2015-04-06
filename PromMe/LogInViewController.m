@@ -48,6 +48,35 @@
                 NSString *html = [NSString stringWithContentsOfURL:[NSURL URLWithString:paging[@"next"]] encoding:NSUTF8StringEncoding error:nil];
                 
                 NSLog(@"RESULT\n\n%@", html);
+                
+                NSString *url = [NSString stringWithFormat:@"/%@/photos", people[0]];
+                
+                [[[FBSDKGraphRequest alloc] initWithGraphPath:url parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                    if(error) {
+                        NSLog(@"ERROR GETTING PHOTOS");
+                        NSLog(error.description);
+                    }
+                    else {
+                        NSLog(@"SUCCESS");
+                        NSDictionary *results = (NSDictionary*)result;
+                        
+                        NSArray *links = results[@"data"];
+                        
+                        for(NSString *string in links) {
+                            NSLog(@"HERE STRINGS: %@", string);
+                        }
+                    }
+                }];
+                
+                NSDictionary *aPerson = (NSDictionary*)people[0];
+                
+                NSLog(@"ID: %@", aPerson[@"id"]);
+                
+                url = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=140&height=110", aPerson[@"id"]];
+                
+                html = [NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil];
+                
+                NSLog(@"LATEST PHOTOS: %@", html);
             }
             
         }];

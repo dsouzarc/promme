@@ -38,6 +38,9 @@
 		945B53B21AD23D2E0047A27D /* UIColor+FlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53A61AD23D2E0047A27D /* UIColor+FlatColors.m */; };
 		945B53B31AD23D2E0047A27D /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53A91AD23D2E0047A27D /* UICKeyChainStore.m */; };
 		945B53B91AD2B4A70047A27D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945B53B81AD2B4A70047A27D /* FBSDKCoreKit.framework */; };
+		945B53BD1AD2B7100047A27D /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53BB1AD2B7100047A27D /* LogInViewController.m */; };
+		945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B53BC1AD2B7100047A27D /* LogInViewController.xib */; };
+		945B53C01AD2B7F90047A27D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945B53BF1AD2B7F90047A27D /* FBSDKLoginKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +105,10 @@
 		945B53A81AD23D2E0047A27D /* UICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICKeyChainStore.h; sourceTree = "<group>"; };
 		945B53A91AD23D2E0047A27D /* UICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICKeyChainStore.m; sourceTree = "<group>"; };
 		945B53B81AD2B4A70047A27D /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		945B53BA1AD2B7100047A27D /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		945B53BB1AD2B7100047A27D /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		945B53BC1AD2B7100047A27D /* LogInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogInViewController.xib; sourceTree = "<group>"; };
+		945B53BF1AD2B7F90047A27D /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +118,7 @@
 			files = (
 				945B53891AD23C960047A27D /* AudioToolbox.framework in Frameworks */,
 				945B538A1AD23C960047A27D /* CFNetwork.framework in Frameworks */,
+				945B53C01AD2B7F90047A27D /* FBSDKLoginKit.framework in Frameworks */,
 				945B53871AD23C820047A27D /* CoreGraphics.framework in Frameworks */,
 				945B53881AD23C820047A27D /* CoreLocation.framework in Frameworks */,
 				945B53861AD23C730047A27D /* MobileCoreServices.framework in Frameworks */,
@@ -139,6 +147,7 @@
 		945B53141AD2342C0047A27D = {
 			isa = PBXGroup;
 			children = (
+				945B53BF1AD2B7F90047A27D /* FBSDKLoginKit.framework */,
 				945B531F1AD2342C0047A27D /* PromMe */,
 				945B53391AD2342C0047A27D /* PromMeTests */,
 				945B531E1AD2342C0047A27D /* Products */,
@@ -159,11 +168,14 @@
 			children = (
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
-				945B53271AD2342C0047A27D /* ViewController.h */,
-				945B53281AD2342C0047A27D /* ViewController.m */,
-				945B532A1AD2342C0047A27D /* Main.storyboard */,
+				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
+				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
+				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
 				945B532D1AD2342C0047A27D /* Images.xcassets */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
+				945B532A1AD2342C0047A27D /* Main.storyboard */,
+				945B53271AD2342C0047A27D /* ViewController.h */,
+				945B53281AD2342C0047A27D /* ViewController.m */,
 				945B53B51AD23D5F0047A27D /* Misc. 3rd Party Libraries */,
 				945B53B41AD23D470047A27D /* Parse and Default Libraries */,
 				945B53201AD2342C0047A27D /* Supporting Files */,
@@ -363,6 +375,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
 				945B53311AD2342C0047A27D /* LaunchScreen.xib in Resources */,
 				945B532E1AD2342C0047A27D /* Images.xcassets in Resources */,
@@ -383,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				945B53BD1AD2B7100047A27D /* LogInViewController.m in Sources */,
 				945B53AC1AD23D2E0047A27D /* UIColor+Chameleon.m in Sources */,
 				945B53B11AD23D2E0047A27D /* PQFCirclesInTriangle.m in Sources */,
 				945B53AD1AD23D2E0047A27D /* UIColor+CIELAB.m in Sources */,

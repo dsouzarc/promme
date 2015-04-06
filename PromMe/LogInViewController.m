@@ -7,8 +7,7 @@
 //
 
 #import "LogInViewController.h"
-
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
@@ -19,8 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
-    // Do any additional setup after loading the view from its nib.
+    self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends", @"read_custom_friendlists"];
+    
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             if (!error) {
+                 NSLog(@"fetched user:%@", result);
+             }
+         }];
+    }
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,6 +45,11 @@
     else {
         NSLog(@"NOPE");
     }
+    
+    NSLog([result token].description);
+    
+
+
 }
 
 - (void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton

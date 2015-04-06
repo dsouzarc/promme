@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 @interface LogInViewController : ViewController <FBSDKLoginButtonDelegate>
 

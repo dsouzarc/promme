@@ -7,8 +7,11 @@
 //
 
 #import "MainPromMePageViewController.h"
+#import "Person.h"
 
 @interface MainPromMePageViewController ()
+
+@property (strong, nonatomic) NSArray *friendsList;
 
 @end
 
@@ -16,7 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self loadFriends];
+    
+    for(Person *person in self.friendsList) {
+        NSLog(person.name);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +32,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) loadFriends
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *savedData = [defaults objectForKey:@"savedFriends"];
+    
+    if(savedData != nil) {
+        NSArray *data = [NSKeyedUnarchiver unarchiveObjectWithData:savedData];
+        
+        self.friendsList = [[NSArray alloc] initWithArray:data];
+    }
 }
-*/
 
 @end

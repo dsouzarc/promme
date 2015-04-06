@@ -41,13 +41,33 @@
     self = [self initWithEverything:fromParse[@"id"] name:fromParse[@"name"] photoLink:fromParse[@"profilePhotoLink"]];
     
     return self;
-})
+}
 
 - (NSDictionary*)toDictionary
 {
     NSDictionary *dictionary = @{@"name": self.name, @"profilePhotoLink": self.profilePhotoLink, @"id": self.id};
     
     return dictionary;
+}
+
+- (void) encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.id forKey:@"id"];
+    [aCoder encodeObject:self.profilePhotoLink forKey:@"profilePhotoLink"];
+}
+
+- (id) initWithCoder:(NSCoder *)aDecoder
+{
+    self = [[Person alloc] init];
+    
+    if(self) {
+        self.name = [aDecoder decodeObjectForKey:@"name"];
+        self.id = [aDecoder decodeObjectForKey:@"id"];
+        self.profilePhotoLink = [aDecoder decodeObjectForKey:@"profilePhotoLink"];
+    }
+    
+    return self;
 }
 
 @end

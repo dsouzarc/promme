@@ -11,6 +11,7 @@
 #import "PQFCirclesInTriangle.h"
 #import "UICKeyChainStore.h"
 #import "Person.h"
+
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
@@ -22,6 +23,7 @@
 
 @property (strong, nonatomic) NSString *facebookID;
 @property (strong, nonatomic) NSString *myName;
+@property (strong, nonatomic) NSString *linkToProfilePicture;
 
 @end
 
@@ -47,7 +49,6 @@
     if ([FBSDKAccessToken currentAccessToken]) {
         NSLog(@"Logged in");
         [self getFacebookIDAndName];
-        
     }
     else {
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
@@ -81,7 +82,23 @@
              
              NSLog(@"GOOD: %@\t%@", self.myName, self.facebookID);
              
+             [self getProfilePictureLink];
              [self getFacebookFriends];
+         }
+     }];
+}
+
+- (void) getProfilePictureLink
+{
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/picture?redirect=false" parameters:nil]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         NSLog(@"HERE: ");
+         if(error) {
+             NSLog(@"ERROR: %@", error.description);
+         }
+         else {
+             NSDictionary *goodResult = (NSDictionary*)((NSDictionary*)result)[@"data"];
+             self.linkToProfilePicture = goodResult[@"url"];
          }
      }];
 }
@@ -123,19 +140,51 @@
     if(pagingInformation && pagingInformation[@"next"]) {
         [self recursivelyAddPeople:pagingInformation[@"next"]];
     }
+    
     else {
-        NSLog(@"FINISHED: %ld", (long)self.listOfFriends.count);
         
-        for(Person *person in self.listOfFriends) {
-            NSLog(person.name);
-        }
+        //CREATE THE ACCOUNT
+        NSDictionary *params = @{@"userName": self.myName,
+                                 @"fbID": self.facebookID,
+                                 @"userID": self.linkToProfilePicture};
+        [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(NSString *response, NSError *error) {
+            if(error) {
+                NSLog(@"ERROR SAVING");
+            }
+            else {
+                NSLog(@"ACCOUNT CREATED");
+                
+                //SAVE THE DATA
+                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:self.listOfFriends] forKey:@"savedFriends"];
+                
+                MainPromMePageViewController *mainPage = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
+                self.view.window.rootViewController = mainPage;
+            }
+        }];
     }
+}
+
+- (NSArray*)peopleToDictionary
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    for(Person *person in self.listOfFriends) {
+        [array addObject:person.toDictionary];
+    }
+    
+    return array;
 }
 
 - (void) addPeople:(NSArray*)people
 {
     for(NSDictionary *person in people) {
-        [self.listOfFriends addObject:[[Person alloc] initWithDictionary:person]];
+        
+        @try {
+            [self.listOfFriends addObject:[[Person alloc] initWithDictionary:person]];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"EXCEPTION ADDING: %@", exception.reason);
+        }
     }
 }
 

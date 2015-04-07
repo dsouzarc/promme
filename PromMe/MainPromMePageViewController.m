@@ -7,11 +7,13 @@
 //
 
 #import "MainPromMePageViewController.h"
+#import "SwipeDraggableView.h"
 #import "Person.h"
 
 @interface MainPromMePageViewController ()
 
 @property (strong, nonatomic) NSArray *friendsList;
+@property (strong, nonatomic) SwipeDraggableView *draggableView;
 
 @end
 
@@ -22,14 +24,13 @@
     
     [self loadFriends];
     
-    for(Person *person in self.friendsList) {
-        NSLog(person.name);
-    }
-}
+    self.view.window.backgroundColor = [UIColor whiteColor];
+    self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[0]];
+    
+    [self.view addSubview:self.draggableView];
+    self.draggableView.frame = CGRectMake(60, 60, 200, 260);
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 - (void) loadFriends

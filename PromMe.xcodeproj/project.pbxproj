@@ -44,6 +44,7 @@
 		945B53C41AD2C40E0047A27D /* MainPromMePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */; };
 		945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */; };
 		945B53C81AD2D8D90047A27D /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53C71AD2D8D90047A27D /* Person.m */; };
+		945B53CB1AD493960047A27D /* SwipeDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53CA1AD493960047A27D /* SwipeDraggableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,8 @@
 		945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainPromMePageViewController.xib; sourceTree = "<group>"; };
 		945B53C61AD2D8D90047A27D /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		945B53C71AD2D8D90047A27D /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		945B53C91AD493960047A27D /* SwipeDraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeDraggableView.h; sourceTree = "<group>"; };
+		945B53CA1AD493960047A27D /* SwipeDraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeDraggableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,11 +176,13 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
-				945B53C61AD2D8D90047A27D /* Person.h */,
-				945B53C71AD2D8D90047A27D /* Person.m */,
+				945B53C91AD493960047A27D /* SwipeDraggableView.h */,
+				945B53CA1AD493960047A27D /* SwipeDraggableView.m */,
 				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
 				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
 				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
+				945B53C61AD2D8D90047A27D /* Person.h */,
+				945B53C71AD2D8D90047A27D /* Person.m */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
 				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
@@ -420,6 +425,7 @@
 				945B53AE1AD23D2E0047A27D /* UIViewController+Chameleon.m in Sources */,
 				945B53B31AD23D2E0047A27D /* UICKeyChainStore.m in Sources */,
 				945B53291AD2342C0047A27D /* ViewController.m in Sources */,
+				945B53CB1AD493960047A27D /* SwipeDraggableView.m in Sources */,
 				945B53C81AD2D8D90047A27D /* Person.m in Sources */,
 				945B53261AD2342C0047A27D /* AppDelegate.m in Sources */,
 				945B53B21AD23D2E0047A27D /* UIColor+FlatColors.m in Sources */,

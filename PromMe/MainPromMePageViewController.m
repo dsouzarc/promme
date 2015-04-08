@@ -28,8 +28,14 @@
     self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[0]];
     
     [self.view addSubview:self.draggableView];
-    self.draggableView.frame = CGRectMake(60, 60, 200, 260);
+    
+    int imageSize = 300;
+    
+    self.draggableView.frame = CGRectMake((self.view.frame.size.width - imageSize)/2, (self.view.frame.size.height - imageSize)/2, imageSize, imageSize);
 
+    //self.draggableView.frame = CGRectMake((self.view.frame.size.width - 300)/2, (self.view.frame.size.height - 400)/2, 200, 200);
+    //[self.draggableView setCenter:CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2)];
+    [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
     
 }
 

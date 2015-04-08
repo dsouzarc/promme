@@ -27,18 +27,23 @@
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
     
     [self addGestureRecognizer:self.panGestureRecognizer];
-    
-    NSLog(self.person.profilePhotoLink);
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]]];
-    
-    [self addSubview:imageView];
+
     self.layer.cornerRadius = 8;
     self.layer.shadowOffset = CGSizeMake(7, 7);
     self.layer.shadowRadius = 5;
     self.layer.shadowOpacity = 0.5;
     
     return self;
+}
+
+- (void) drawRect:(CGRect)rect
+{
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]];
+    
+    [image drawInRect:CGRectMake((self.frame.size.width/2) - (image.size.width/2),
+                                 (self.frame.size.height / 2) - (image.size.height / 2),
+                                 image.size.width,
+                                 image.size.height)];
 }
 
 - (void) dragged:(UIPanGestureRecognizer*)gestureRecognizer

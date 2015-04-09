@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) NSArray *friendsList;
 @property (strong, nonatomic) SwipeDraggableView *draggableView;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end
 
@@ -25,7 +26,8 @@
     [self loadFriends];
     
     self.view.window.backgroundColor = [UIColor whiteColor];
-    self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[0]];
+    self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[0] nameLabel:self.nameLabel];
+    self.nameLabel.text = ((Person*)self.friendsList[0]).name;
     
     [self.view addSubview:self.draggableView];
     
@@ -33,10 +35,7 @@
     
     self.draggableView.frame = CGRectMake((self.view.frame.size.width - imageSize)/2, (self.view.frame.size.height - imageSize)/2, imageSize, imageSize);
 
-    //self.draggableView.frame = CGRectMake((self.view.frame.size.width - 300)/2, (self.view.frame.size.height - 400)/2, 200, 200);
-    //[self.draggableView setCenter:CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2)];
     [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
-    
 }
 
 - (void) loadFriends

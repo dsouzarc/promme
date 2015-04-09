@@ -17,15 +17,20 @@
 
 @property (nonatomic, strong) SwipeDraggableOverlay *overlay;
 
+@property (nonatomic, strong) UILabel *nameLabel;
+
 @end
 
 
 @implementation SwipeDraggableView
 
-- (instancetype) init:(Person *)person
+- (instancetype) init:(Person *)person nameLabel:(UILabel *)nameLabel
 {
     self = [super init];
     self.person = person;
+    
+    self.nameLabel = nameLabel;
+    self.nameLabel.textColor = [UIColor blackColor];
     
     self.backgroundColor = [UIColor blackColor];
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
@@ -36,9 +41,7 @@
     self.layer.shadowOffset = CGSizeMake(7, 7);
     self.layer.shadowRadius = 5;
     self.layer.shadowOpacity = 0.5;
-    
-    //[self drawImage];
-    
+
     return self;
 }
 
@@ -52,9 +55,7 @@
     self.overlay = [[SwipeDraggableOverlay alloc] initWithFrame:self.bounds];
     self.overlay.alpha = 0;
     [self addSubview:self.overlay];
-    
-    //[self drawImage];
-    
+
     return self;
 }
 
@@ -68,15 +69,6 @@
     [image drawInRect:CGRectMake(self.startPoint.x, self.startPoint.y, image.size.width, image.size.height)];
 }
 
-- (void) drawImage
-{
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]];
-    
-    self.startPoint = CGPointMake((self.frame.size.width/2) - (image.size.width/2),
-                                  (self.frame.size.height / 2) - (image.size.height / 2));
-    
-    [image drawInRect:CGRectMake(self.startPoint.x, self.startPoint.y, image.size.width, image.size.height)];
-}
 
 - (void)dragged:(UIPanGestureRecognizer *)gestureRecognizer
 {
@@ -93,12 +85,23 @@
             CGFloat rotationAngel = (CGFloat) (2*M_PI/16 * rotationStrength);
             CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
             CGFloat scale = MAX(scaleStrength, 0.93);
+            
             CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
             CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
             self.transform = scaleTransform;
             self.center = CGPointMake(self.startPoint.x + xDistance, self.startPoint.y + yDistance);
             
             [self updateOverlay:xDistance];
+            
+            if(rotationAngel < 0) {
+                self.nameLabel.textColor = [UIColor redColor];
+            }
+            else if(rotationAngel > 0) {
+                self.nameLabel.textColor = [UIColor greenColor];
+            }
+            else {
+                self.nameLabel.textColor = [UIColor blackColor];
+            }
             
             break;
         };

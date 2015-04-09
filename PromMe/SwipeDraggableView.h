@@ -11,6 +11,6 @@
 
 @interface SwipeDraggableView : UIView
 
-- (instancetype) init:(Person*)person;
+- (instancetype) init:(Person*)person nameLabel:(UILabel*)nameLabel;
 
 @end

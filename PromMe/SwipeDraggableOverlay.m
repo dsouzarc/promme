@@ -38,8 +38,7 @@
     _mode = mode;
     
     if(_mode == SwipeDraggableOverlayModeLeft) {
-        NSLog(@"HERE");
-        self.imageView.image = [UIImage imageNamed:@"no_dress"];
+        self.imageView.image = [UIImage imageNamed:@"fire"];
     }
     else {
         self.imageView.image = [UIImage imageNamed:@"yes_dress"];
@@ -49,7 +48,7 @@
 - (void) layoutSubviews
 {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(50, 50, 100, 100);
+    self.imageView.frame = CGRectMake(70, 0, 150, 300);
 }
 
 @end

@@ -48,6 +48,7 @@
 		945B53CE1AD5CE320047A27D /* SwipeDraggableOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */; };
 		945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D31AD5F6DA0047A27D /* yes_dress.png */; };
 		945B53D61AD5F6DA0047A27D /* no_dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D41AD5F6DA0047A27D /* no_dress.png */; };
+		945B53D81AD6002B0047A27D /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D71AD6002B0047A27D /* fire.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,7 @@
 		945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeDraggableOverlay.m; sourceTree = "<group>"; };
 		945B53D31AD5F6DA0047A27D /* yes_dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes_dress.png; sourceTree = "<group>"; };
 		945B53D41AD5F6DA0047A27D /* no_dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_dress.png; sourceTree = "<group>"; };
+		945B53D71AD6002B0047A27D /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
 				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
 				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
+				945B53D71AD6002B0047A27D /* fire.png */,
 				945B53D41AD5F6DA0047A27D /* no_dress.png */,
 				945B532D1AD2342C0047A27D /* Images.xcassets */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
@@ -405,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
+				945B53D81AD6002B0047A27D /* fire.png in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
 				945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */,
 				945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */,

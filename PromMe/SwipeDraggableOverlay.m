@@ -16,6 +16,40 @@
 
 @implementation SwipeDraggableOverlay
 
+- (id) initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    
+    if(self) {
+        self.backgroundColor = [UIColor whiteColor];
+        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yes_dress"]];
+        [self addSubview:self.imageView];
+    }
+    
+    return self;
+}
 
+- (void) setMode:(SwipeDraggableOverlayMode)mode
+{
+    if(_mode == mode) {
+        return;
+    }
+    
+    _mode = mode;
+    
+    if(_mode == SwipeDraggableOverlayModeLeft) {
+        NSLog(@"HERE");
+        self.imageView.image = [UIImage imageNamed:@"no_dress"];
+    }
+    else {
+        self.imageView.image = [UIImage imageNamed:@"yes_dress"];
+    }
+}
+
+- (void) layoutSubviews
+{
+    [super layoutSubviews];
+    self.imageView.frame = CGRectMake(50, 50, 100, 100);
+}
 
 @end

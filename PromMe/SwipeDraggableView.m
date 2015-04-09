@@ -7,12 +7,15 @@
 //
 
 #import "SwipeDraggableView.h"
+#import "SwipeDraggableOverlay.h"
 
 @interface SwipeDraggableView ()
 
 @property (strong, nonatomic) Person *person;
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic) CGPoint startPoint;
+
+@property (nonatomic, strong) SwipeDraggableOverlay *overlay;
 
 @end
 
@@ -34,13 +37,41 @@
     self.layer.shadowRadius = 5;
     self.layer.shadowOpacity = 0.5;
     
+    //[self drawImage];
+    
     return self;
 }
 
-- (void) drawRect:(CGRect)rect
+- (id) initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
+    [self addGestureRecognizer:self.panGestureRecognizer];
+    
+    self.overlay = [[SwipeDraggableOverlay alloc] initWithFrame:self.bounds];
+    self.overlay.alpha = 0;
+    [self addSubview:self.overlay];
+    
+    //[self drawImage];
+    
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect
 {
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]];
+    
+    self.startPoint = CGPointMake((self.frame.size.width/2) - (image.size.width/2),
+                                  (self.frame.size.height / 2) - (image.size.height / 2));
+    
+    [image drawInRect:CGRectMake(self.startPoint.x, self.startPoint.y, image.size.width, image.size.height)];
+}
 
+- (void) drawImage
+{
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]];
+    
     self.startPoint = CGPointMake((self.frame.size.width/2) - (image.size.width/2),
                                   (self.frame.size.height / 2) - (image.size.height / 2));
     
@@ -59,13 +90,15 @@
         };
         case UIGestureRecognizerStateChanged:{
             CGFloat rotationStrength = MIN(xDistance / 320, 1);
-            CGFloat rotationAngel = (CGFloat) (2*M_PI * rotationStrength / 16);
+            CGFloat rotationAngel = (CGFloat) (2*M_PI/16 * rotationStrength);
             CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
             CGFloat scale = MAX(scaleStrength, 0.93);
-            self.center = CGPointMake(self.startPoint.x + xDistance, self.startPoint.y + yDistance);
             CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
             CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
             self.transform = scaleTransform;
+            self.center = CGPointMake(self.startPoint.x + xDistance, self.startPoint.y + yDistance);
+            
+            [self updateOverlay:xDistance];
             
             break;
         };
@@ -79,12 +112,24 @@
     }
 }
 
+- (void)updateOverlay:(CGFloat)distance
+{
+    if (distance > 0) {
+        self.overlay.mode = SwipeDraggableOverlayModeRight;
+    } else if (distance <= 0) {
+        self.overlay.mode = SwipeDraggableOverlayModeLeft;
+    }
+    CGFloat overlayStrength = MIN(fabsf(distance) / 100, 0.4);
+    self.overlay.alpha = overlayStrength;
+}
+
 - (void)resetViewPositionAndTransformations
 {
     [UIView animateWithDuration:0.2
                      animations:^{
                          self.center = self.startPoint;
                          self.transform = CGAffineTransformMakeRotation(0);
+                         self.overlay.alpha = 0;
                      }];
 }
 

@@ -46,6 +46,8 @@
 		945B53C81AD2D8D90047A27D /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53C71AD2D8D90047A27D /* Person.m */; };
 		945B53CB1AD493960047A27D /* SwipeDraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53CA1AD493960047A27D /* SwipeDraggableView.m */; };
 		945B53CE1AD5CE320047A27D /* SwipeDraggableOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */; };
+		945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D31AD5F6DA0047A27D /* yes_dress.png */; };
+		945B53D61AD5F6DA0047A27D /* no_dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D41AD5F6DA0047A27D /* no_dress.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +125,8 @@
 		945B53CA1AD493960047A27D /* SwipeDraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeDraggableView.m; sourceTree = "<group>"; };
 		945B53CC1AD5CE320047A27D /* SwipeDraggableOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeDraggableOverlay.h; sourceTree = "<group>"; };
 		945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeDraggableOverlay.m; sourceTree = "<group>"; };
+		945B53D31AD5F6DA0047A27D /* yes_dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes_dress.png; sourceTree = "<group>"; };
+		945B53D41AD5F6DA0047A27D /* no_dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_dress.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +197,8 @@
 				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
 				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
 				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
+				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
+				945B53D41AD5F6DA0047A27D /* no_dress.png */,
 				945B532D1AD2342C0047A27D /* Images.xcassets */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
 				945B532A1AD2342C0047A27D /* Main.storyboard */,
@@ -401,7 +407,9 @@
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
 				945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */,
+				945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */,
 				945B53311AD2342C0047A27D /* LaunchScreen.xib in Resources */,
+				945B53D61AD5F6DA0047A27D /* no_dress.png in Resources */,
 				945B532E1AD2342C0047A27D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

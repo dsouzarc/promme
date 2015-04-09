@@ -16,4 +16,6 @@ typedef NS_ENUM(NSUInteger, SwipeDraggableOverlayMode) {
 
 @interface SwipeDraggableOverlay : UIView
 
+@property (nonatomic) SwipeDraggableOverlayMode mode;
+
 @end

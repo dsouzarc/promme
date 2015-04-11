@@ -37,7 +37,6 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 
 @property (strong, nonatomic) NSString *facebookID;
 
-
 @end
 
 @implementation LogInViewController
@@ -45,23 +44,31 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.myProfilePicturesTableView registerNib:[UINib nibWithNibName:@"ProfilePictureTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
+    
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
 
     
     //If we have successfully logged into Facebook
-    /*if ([FBSDKAccessToken currentAccessToken]) {
+    if ([FBSDKAccessToken currentAccessToken]) {
         NSLog(@"Logged in with access token");
-        [self getFacebookIDAndName];
+        [self getFacebookInformation];
     }
     else {
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-        [loginManager logInWithReadPermissions:permissions handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        [loginManager logInWithReadPermissions:self.loginButton.readPermissions handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if(!error) {
                 NSLog(@"Logged in");
+                [self getFacebookInformation];
             }
         }];
-    }*/
+    }
+}
 
+- (void) getFacebookInformation
+{
+    [self getFacebookIDAndName];
+    [self getProfilePictureLink];
 }
 
 - (void) getFacebookIDAndName
@@ -90,25 +97,23 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 
 - (void) getProfilePictureLink
 {
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/picture?redirect=false" parameters:nil]
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/picture?redirect=false&width=300" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-         NSLog(@"Completion profile photo: ");
          if(error) {
              NSLog(@"ERROR: %@", error.description);
          }
          else {
-             
              if(result) {
-                 
-                 NSLog(@"Is result");
                  NSDictionary *resultItems = (NSDictionary*)result;
-                 
                  if(resultItems) {
-                     NSLog(@"Is result items");
                      NSDictionary *link = resultItems[@"data"];
-                     
                      if(link) {
-                         self.profilePhotosArray[0] = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]];
+                         [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]]];
+                         NSLog(@"Photo received: %@", link[@"url"]);
+                         
+                         [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]]];
+                         
+                         NSLog(@"PHOTO ARRAY SIZE: %d", (int)self.profilePhotosArray.count);
                          [self.myProfilePicturesTableView reloadData];
                          
                      }
@@ -132,7 +137,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     if(!error) {
         NSLog(@"Successful login");
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-        [self getFacebookIDAndName];
+        [self getFacebookInformation];
     }
     else {
         NSLog(@"Unsuccessful login");
@@ -151,7 +156,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     
     if(self) {
         self.keyChain = [[UICKeyChainStore alloc] init];
-        self.profilePhotosArray = [[NSMutableArray alloc] initWithCapacity:NUM_PROFILE_PHOTOS];
+        self.profilePhotosArray = [[NSMutableArray alloc] init]; //initWithCapacity:NUM_PROFILE_PHOTOS];
         
         self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
         self.loadingCircles.label.text = @"Fetching account information...";
@@ -183,27 +188,27 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return NUM_PROFILE_PHOTOS;
+    return self.profilePhotosArray.count;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ProfilePictureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ProfilePictureTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    if(self.profilePhotosArray && self.profilePhotosArray.count > indexPath.row && self.profilePhotosArray[indexPath.row]) {
-        cell.imageView.image = (UIImage*)self.profilePhotosArray[indexPath.row];
+    if(indexPath.row < self.profilePhotosArray.count) {
+        cell.profilePictureView.image = (UIImage*) self.profilePhotosArray[indexPath.row];
+
     }
-    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return PROFILE_PHOTO_SIZE;
+    return ((UIImage*) self.profilePhotosArray[indexPath.row]).size.height + 50; //PROFILE_PHOTO_SIZE;
 }
 
 

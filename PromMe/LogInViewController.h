@@ -12,6 +12,7 @@
 #import "PQFCirclesInTriangle.h"
 #import "UICKeyChainStore.h"
 #import "Person.h"
+#import "ProfilePictureTableViewCell.h"
 
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>

@@ -51,6 +51,8 @@
 		945B53D81AD6002B0047A27D /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D71AD6002B0047A27D /* fire.png */; };
 		945B53DC1AD60FF30047A27D /* PeopleAcceptedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */; };
 		945B53DD1AD60FF30047A27D /* PeopleAcceptedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */; };
+		94F7281B1AD9BDE300598D02 /* ProfilePictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */; };
+		94F7281C1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +136,9 @@
 		945B53D91AD60FF30047A27D /* PeopleAcceptedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAcceptedViewController.h; sourceTree = "<group>"; };
 		945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAcceptedViewController.m; sourceTree = "<group>"; };
 		945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleAcceptedViewController.xib; sourceTree = "<group>"; };
+		94F728181AD9BDE300598D02 /* ProfilePictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureTableViewCell.h; sourceTree = "<group>"; };
+		94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureTableViewCell.m; sourceTree = "<group>"; };
+		94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePictureTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +195,12 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
+				94F728181AD9BDE300598D02 /* ProfilePictureTableViewCell.h */,
+				94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */,
+				94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */,
+				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
+				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
+				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
 				945B53D91AD60FF30047A27D /* PeopleAcceptedViewController.h */,
 				945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */,
 				945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */,
@@ -204,9 +215,6 @@
 				945B53C71AD2D8D90047A27D /* Person.m */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
-				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
-				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
-				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
 				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
 				945B53D71AD6002B0047A27D /* fire.png */,
 				945B53D41AD5F6DA0047A27D /* no_dress.png */,
@@ -417,6 +425,7 @@
 			files = (
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				945B53D81AD6002B0047A27D /* fire.png in Resources */,
+				94F7281C1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib in Resources */,
 				945B53DD1AD60FF30047A27D /* PeopleAcceptedViewController.xib in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
 				945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */,
@@ -453,6 +462,7 @@
 				945B53AE1AD23D2E0047A27D /* UIViewController+Chameleon.m in Sources */,
 				945B53B31AD23D2E0047A27D /* UICKeyChainStore.m in Sources */,
 				945B53291AD2342C0047A27D /* ViewController.m in Sources */,
+				94F7281B1AD9BDE300598D02 /* ProfilePictureTableViewCell.m in Sources */,
 				945B53CB1AD493960047A27D /* SwipeDraggableView.m in Sources */,
 				945B53C81AD2D8D90047A27D /* Person.m in Sources */,
 				945B53261AD2342C0047A27D /* AppDelegate.m in Sources */,

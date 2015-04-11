@@ -71,10 +71,10 @@
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Eb-fW-vBl">
                                     <rect key="frame" x="8" y="335" width="359" height="29"/>
                                     <segments>
-                                        <segment title="Grade"/>
-                                        <segment title="Second"/>
-                                        <segment title=""/>
-                                        <segment title=""/>
+                                        <segment title="Freshman"/>
+                                        <segment title="Sophomore"/>
+                                        <segment title="Junior"/>
+                                        <segment title="Senior"/>
                                     </segments>
                                 </segmentedControl>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MSP-z7-bxz">
@@ -94,9 +94,9 @@
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bE9-sr-CQ4">
                                     <rect key="frame" x="8" y="387" width="359" height="29"/>
                                     <segments>
-                                        <segment title="Gender"/>
-                                        <segment title="Second"/>
-                                        <segment title=""/>
+                                        <segment title="Male"/>
+                                        <segment title="Female"/>
+                                        <segment title="Other"/>
                                     </segments>
                                 </segmentedControl>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="My Profile Pictures" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CUG-ud-Z6A">

@@ -7,11 +7,17 @@
 //
 
 #import "ViewController.h"
+
+#import "MainPromMePageViewController.h"
+#import "PQFCirclesInTriangle.h"
+#import "UICKeyChainStore.h"
+#import "Person.h"
+
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
 
-@interface LogInViewController : ViewController <FBSDKLoginButtonDelegate>
+@interface LogInViewController : ViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @end

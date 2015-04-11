@@ -7,20 +7,23 @@
 //
 
 #import "LogInViewController.h"
-#import "MainPromMePageViewController.h"
-#import "PQFCirclesInTriangle.h"
-#import "UICKeyChainStore.h"
-#import "Person.h"
 
 @interface LogInViewController ()
 
+extern const int NUM_PROFILE_PHOTOS = 4;
+extern const int PROFILE_PHOTO_SIZE = 300;
+
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
+
 @property (strong, nonatomic) IBOutlet UITextField *myNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *myHighSchoolTextField;
 @property (strong, nonatomic) IBOutlet UITextField *myPhoneNumberTextField;
+
 @property (strong, nonatomic) IBOutlet UIButton *myLocationTextField;
+
 @property (strong, nonatomic) IBOutlet UISegmentedControl *myGradeSegmentedControl;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *myGenderSegmentedControl;
+
 @property (strong, nonatomic) IBOutlet UITableView *myProfilePicturesTableView;
 @property (strong, nonatomic) IBOutlet UIButton *myLocationButton;
 
@@ -29,13 +32,11 @@
 
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingCircles;
 @property (strong, nonatomic) UICKeyChainStore *keyChain;
-@property (strong, nonatomic) IBOutlet UILabel *friendsGottenLabel;
 
-@property (strong, nonatomic) NSMutableArray *listOfFriends;
+@property (strong, nonatomic) NSMutableArray *profilePhotosArray;
 
 @property (strong, nonatomic) NSString *facebookID;
-@property (strong, nonatomic) NSString *myName;
-@property (strong, nonatomic) NSString *linkToProfilePicture;
+
 
 @end
 
@@ -43,23 +44,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.loginButton.delegate = self;
+    
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    
-    NSArray *permissions = @[@"public_profile", @"email", @"user_friends"];
-    
-    self.loginButton.readPermissions = permissions;
-    
-    /*self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
-    self.loadingCircles.label.text = @"Creating account...";
-    self.loadingCircles.borderWidth = 4.0;
-    self.loadingCircles.maxDiam = 250.0;
-    self.loadingCircles.numberOfCircles = 9;
-    self.loadingCircles.loaderColor = [UIColor blueColor];
 
     
     //If we have successfully logged into Facebook
-    if ([FBSDKAccessToken currentAccessToken]) {
+    /*if ([FBSDKAccessToken currentAccessToken]) {
         NSLog(@"Logged in with access token");
         [self getFacebookIDAndName];
     }
@@ -76,9 +66,8 @@
 
 - (void) getFacebookIDAndName
 {
-        [self.loadingCircles show];
-    //GET AND SAVE MY USERNAME AND INFORMATION
-    self.friendsGottenLabel.text = @"Getting my profile information";
+    [self.loadingCircles show];
+    
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          NSLog(@"Completion profile information ");
@@ -94,22 +83,13 @@
              }
              
              self.facebookID = goodResult[@"id"];
-             self.myName = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
-             
-             self.keyChain[@"facebookID"] = self.facebookID;
-             self.keyChain[@"myName"] = self.myName;
-             
-             NSLog(@"GOOD: %@\t%@", self.myName, self.facebookID);
-             
-             [self getProfilePictureLink];
-             [self getFacebookFriends];
+             self.myNameTextField.text = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
          }
      }];
 }
 
 - (void) getProfilePictureLink
 {
-    [self.friendsGottenLabel setText:@"Getting more information..."];
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/picture?redirect=false" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          NSLog(@"Completion profile photo: ");
@@ -128,7 +108,9 @@
                      NSDictionary *link = resultItems[@"data"];
                      
                      if(link) {
-                         self.linkToProfilePicture = link[@"url"];
+                         self.profilePhotosArray[0] = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]];
+                         [self.myProfilePicturesTableView reloadData];
+                         
                      }
                      else {
                          NSLog(@"NO URL");
@@ -137,106 +119,13 @@
                  else {
                      NSLog(@"No data");
                  }
+                 
+                 [self.loadingCircles hide];
              }
          }
      }];
 }
 
-- (void) getFacebookFriends
-{
-    //GET LIST OF FRIENDS
-    
-    self.friendsGottenLabel.text = @"Downloading friends list...";
-    NSString *urlRequest = @"/me/taggable_friends?fields=name,picture.width(300),limit=500";
-    
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-        if(error) {
-            NSLog(@"ERROR AT USER TAGGABLE");
-            NSLog(error.description);
-        }
-        
-        else {
-            NSDictionary *formattedResults = (NSDictionary*) result;
-            NSArray *people = [formattedResults objectForKey:@"data"];
-            NSDictionary *pagingInformation = [formattedResults objectForKey:@"paging"];
-            
-            [self addPeople:people];
-            [self recursivelyAddPeople:pagingInformation[@"next"]];
-        }
-    }];
-}
-
-- (void) recursivelyAddPeople:(NSString*)url
-{
-    //NSLog(@"Still working... %ld", (long)self.listOfFriends.count);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-            [self.friendsGottenLabel setText: [NSString stringWithFormat:@"Number of friends retrieved: %ld", (long)self.listOfFriends.count]];
-    });
-    
-
-    NSData *data = [[NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSDictionary *formattedResults = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    
-    NSArray *people = [formattedResults objectForKey:@"data"];
-    [self addPeople:people];
-    NSDictionary *pagingInformation = [formattedResults objectForKey:@"paging"];
-    
-    if(pagingInformation && pagingInformation[@"next"]) {
-        [self recursivelyAddPeople:pagingInformation[@"next"]];
-    }
-    
-    else {
-        
-        //CREATE THE ACCOUNT
-        NSDictionary *params = @{@"userName": self.myName,
-                                 @"fbID": self.facebookID,
-                                 @"userID": self.linkToProfilePicture};
-        [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(NSString *response, NSError *error) {
-            if(error) {
-                NSLog(@"ERROR SAVING");
-            }
-            else {
-                NSLog(@"ACCOUNT CREATED");
-                
-                //SAVE THE DATA
-                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:self.listOfFriends] forKey:@"savedFriends"];
-                
-                for(Person *person in self.listOfFriends) {
-                    NSLog(@"%@\t%@\t%@", person.name, person.id, person.profilePhotoLink);
-                }
-                
-                MainPromMePageViewController *mainPage = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
-                self.view.window.rootViewController = mainPage;
-            }
-        }];
-    }
-}
-
-- (NSArray*)peopleToDictionary
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    
-    for(Person *person in self.listOfFriends) {
-        [array addObject:person.toDictionary];
-    }
-    
-    return array;
-}
-
-- (void) addPeople:(NSArray*)people
-{
-    for(NSDictionary *person in people) {
-        
-        @try {
-            [self.listOfFriends addObject:[[Person alloc] initWithDictionary:person]];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"EXCEPTION ADDING: %@", exception.reason);
-        }
-    }
-}
 
 - (void) loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 {
@@ -244,8 +133,6 @@
         NSLog(@"Successful login");
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
         [self getFacebookIDAndName];
-        //[self getFacebookFriends];
-        //[self getFacebookIDAndName];
     }
     else {
         NSLog(@"Unsuccessful login");
@@ -264,14 +151,83 @@
     
     if(self) {
         self.keyChain = [[UICKeyChainStore alloc] init];
-        self.listOfFriends = [[NSMutableArray alloc] init];
+        self.profilePhotosArray = [[NSMutableArray alloc] initWithCapacity:NUM_PROFILE_PHOTOS];
+        
+        self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
+        self.loadingCircles.label.text = @"Fetching account information...";
+        self.loadingCircles.borderWidth = 4.0;
+        self.loadingCircles.maxDiam = 250.0;
+        self.loadingCircles.numberOfCircles = 9;
+        self.loadingCircles.loaderColor = [UIColor blueColor];
+        
+        NSArray *permissions = @[@"public_profile", @"email", @"user_friends", @"user_photos"];
+        self.loginButton.readPermissions = permissions;
     }
     
     return self;
 }
 
 - (IBAction)createAccountClicked:(id)sender {
+    
 }
+
 - (IBAction)findMyLocationClicked:(id)sender {
+    
 }
+
+/****************************/
+//   TABLEVIEW DELEGATES
+/****************************/
+
+static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return NUM_PROFILE_PHOTOS;
+}
+
+- (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    if(self.profilePhotosArray && self.profilePhotosArray.count > indexPath.row && self.profilePhotosArray[indexPath.row]) {
+        cell.imageView.image = (UIImage*)self.profilePhotosArray[indexPath.row];
+    }
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return PROFILE_PHOTO_SIZE;
+}
+
+
+/****************************/
+//    TEXTFIELD DELEGATES
+/****************************/
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    //Add some glow effect
+    textField.layer.cornerRadius=8.0f;
+    textField.layer.masksToBounds=YES;
+    textField.layer.borderColor=[[UIColor whiteColor]CGColor];
+    textField.layer.borderWidth= 2.0f;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    //Remove the glow effect
+    textField.layer.borderColor=[[UIColor clearColor]CGColor];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
 @end

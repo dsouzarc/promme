@@ -15,6 +15,17 @@
 @interface LogInViewController ()
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
+@property (strong, nonatomic) IBOutlet UITextField *myNameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *myHighSchoolTextField;
+@property (strong, nonatomic) IBOutlet UITextField *myPhoneNumberTextField;
+@property (strong, nonatomic) IBOutlet UIButton *myLocationTextField;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *myGradeSegmentedControl;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *myGenderSegmentedControl;
+@property (strong, nonatomic) IBOutlet UITableView *myProfilePicturesTableView;
+@property (strong, nonatomic) IBOutlet UIButton *myLocationButton;
+
+- (IBAction)createAccountClicked:(id)sender;
+- (IBAction)findMyLocationClicked:(id)sender;
 
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingCircles;
 @property (strong, nonatomic) UICKeyChainStore *keyChain;
@@ -259,4 +270,8 @@
     return self;
 }
 
+- (IBAction)createAccountClicked:(id)sender {
+}
+- (IBAction)findMyLocationClicked:(id)sender {
+}
 @end

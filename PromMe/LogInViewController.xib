@@ -6,6 +6,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LogInViewController">
             <connections>
+                <outlet property="loginButton" destination="cN4-qz-cgP" id="AaU-xU-O3C"/>
+                <outlet property="myGenderSegmentedControl" destination="bE9-sr-CQ4" id="6l1-i3-5pE"/>
+                <outlet property="myGradeSegmentedControl" destination="2Eb-fW-vBl" id="9xL-Ey-YRX"/>
+                <outlet property="myHighSchoolTextField" destination="mma-Fn-9b5" id="ixB-FE-d7h"/>
+                <outlet property="myLocationButton" destination="v5o-1N-72Q" id="KmZ-Vs-8Uf"/>
+                <outlet property="myNameTextField" destination="Xa5-rK-vnL" id="rzh-r0-6fD"/>
+                <outlet property="myPhoneNumberTextField" destination="L3R-DT-zq9" id="d03-SJ-Dsj"/>
+                <outlet property="myProfilePicturesTableView" destination="MSP-z7-bxz" id="4EQ-jq-mpR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="qw5-hF-4q2"/>
             </connections>
         </placeholder>
@@ -23,27 +31,42 @@
                                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cN4-qz-cgP" customClass="FBSDKLoginButton">
                                     <rect key="frame" x="8" y="77" width="359" height="42"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="JXq-29-K4o"/>
+                                    </connections>
                                 </view>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xa5-rK-vnL">
                                     <rect key="frame" x="8" y="143" width="359" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="ecK-ob-eHx"/>
+                                    </connections>
                                 </textField>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L3R-DT-zq9">
                                     <rect key="frame" x="8" y="235" width="359" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="3Ck-br-q56"/>
+                                    </connections>
                                 </textField>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High School" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mma-Fn-9b5">
                                     <rect key="frame" x="8" y="189" width="359" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="ZQH-oO-yzJ"/>
+                                    </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5o-1N-72Q">
                                     <rect key="frame" x="8" y="281" width="359" height="30"/>
                                     <state key="normal" title="My Location">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="findMyLocationClicked:" destination="-1" eventType="touchUpInside" id="H2H-Ef-ldV"/>
+                                    </connections>
                                 </button>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Eb-fW-vBl">
                                     <rect key="frame" x="8" y="335" width="359" height="29"/>
@@ -57,6 +80,10 @@
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MSP-z7-bxz">
                                     <rect key="frame" x="8" y="484" width="359" height="224"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="lhg-k4-yWd"/>
+                                        <outlet property="delegate" destination="-1" id="g8z-ff-BFD"/>
+                                    </connections>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Make a Prom Me Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRs-YH-BNX">
                                     <rect key="frame" x="8" y="40" width="359" height="21"/>
@@ -83,6 +110,9 @@
                                     <state key="normal" title="Create Prom Me Account">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="createAccountClicked:" destination="-1" eventType="touchUpInside" id="AFQ-Uu-jDk"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

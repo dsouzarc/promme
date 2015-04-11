@@ -69,6 +69,63 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 {
     [self getFacebookIDAndName];
     [self getProfilePictureLink];
+    [self getProfilePictureAlbumID];
+}
+
+- (void) getProfilePictureAlbumID
+{
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/albums?fields=name&limit=30" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        
+        if(error) {
+            
+        }
+        
+        NSArray *albums = ((NSDictionary*)result)[@"data"];
+        
+        for(NSDictionary *album in albums) {
+            if([album[@"name"] isEqualToString:@"Profile Pictures"]) {
+                NSString *profilePicturesID = album[@"id"];
+                NSLog(@"PROFILE PICTURES ID: %@", profilePicturesID);
+                [self getRecentProfilePhotos:profilePicturesID];
+            }
+        }
+    }];
+}
+
+- (void) getRecentProfilePhotos:(NSString*)profilePictureAlbumID
+{
+    NSString *path = [NSString stringWithFormat:@"%@/photos?fields=album,id,link", profilePictureAlbumID];
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        
+        NSArray *albums = ((NSDictionary*)result)[@"data"];
+        
+        for(int i = 1; i < NUM_PROFILE_PHOTOS && i < albums.count; i++) {
+            NSString *profilePhotoID = ((NSDictionary*)albums[i])[@"id"];
+            [self addProfilePhotoToArray:profilePhotoID];
+        }
+    }];
+}
+
+- (void) addProfilePhotoToArray:(NSString*)photoID
+{
+    NSString *path = [NSString stringWithFormat:@"%@?width=300", photoID];
+    
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        
+        NSArray *photoVersions = ((NSDictionary*)result)[@"images"];
+        
+        for(NSDictionary *photo in photoVersions) {
+            int photoWidth = [photo[@"width"] intValue];
+            
+            //Photo width bigger than 300, less than 400
+            if(photoWidth > PROFILE_PHOTO_SIZE && photoWidth < (PROFILE_PHOTO_SIZE + 100)) {
+                NSString *source = photo[@"source"];
+                [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:source]]]];
+                
+                [self.myProfilePicturesTableView reloadData];
+            }
+        }
+    }];
 }
 
 - (void) getFacebookIDAndName
@@ -109,11 +166,6 @@ extern const int PROFILE_PHOTO_SIZE = 300;
                      NSDictionary *link = resultItems[@"data"];
                      if(link) {
                          [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]]];
-                         NSLog(@"Photo received: %@", link[@"url"]);
-                         
-                         [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]]];
-                         
-                         NSLog(@"PHOTO ARRAY SIZE: %d", (int)self.profilePhotosArray.count);
                          [self.myProfilePicturesTableView reloadData];
                          
                      }
@@ -201,8 +253,8 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
     
     if(indexPath.row < self.profilePhotosArray.count) {
         cell.profilePictureView.image = (UIImage*) self.profilePhotosArray[indexPath.row];
-
     }
+    
     return cell;
 }
 

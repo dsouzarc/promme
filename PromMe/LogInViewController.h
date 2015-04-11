@@ -19,6 +19,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
 
-@interface LogInViewController : ViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface LogInViewController : ViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate>
 
 @end

@@ -10,7 +10,7 @@
 
 @interface LogInViewController ()
 
-extern const int NUM_PROFILE_PHOTOS = 4;
+extern const int NUM_PROFILE_PHOTOS = 5;
 extern const int PROFILE_PHOTO_SIZE = 300;
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
@@ -46,8 +46,9 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     
     [self.myProfilePicturesTableView registerNib:[UINib nibWithNibName:@"ProfilePictureTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
     
-    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-
+    //[FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    
+    [self getFacebookInformation];
     
     //If we have successfully logged into Facebook
     if ([FBSDKAccessToken currentAccessToken]) {
@@ -68,7 +69,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 - (void) getFacebookInformation
 {
     [self getFacebookIDAndName];
-    [self getProfilePictureLink];
+    //[self getProfilePictureLink];
     [self getProfilePictureAlbumID];
 }
 
@@ -99,7 +100,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
         
         NSArray *albums = ((NSDictionary*)result)[@"data"];
         
-        for(int i = 1; i < NUM_PROFILE_PHOTOS && i < albums.count; i++) {
+        for(int i = 0; i < NUM_PROFILE_PHOTOS && i < albums.count; i++) {
             NSString *profilePhotoID = ((NSDictionary*)albums[i])[@"id"];
             [self addProfilePhotoToArray:profilePhotoID];
         }
@@ -118,7 +119,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
             int photoWidth = [photo[@"width"] intValue];
             
             //Photo width bigger than 300, less than 400
-            if(photoWidth > PROFILE_PHOTO_SIZE && photoWidth < (PROFILE_PHOTO_SIZE + 100)) {
+            if(photoWidth > PROFILE_PHOTO_SIZE && photoWidth <= (PROFILE_PHOTO_SIZE + 100)) {
                 NSString *source = photo[@"source"];
                 [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:source]]]];
                 
@@ -149,6 +150,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
              self.facebookID = goodResult[@"id"];
              self.myNameTextField.text = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
          }
+         [self.loadingCircles hide];
      }];
 }
 
@@ -236,6 +238,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 //   TABLEVIEW DELEGATES
 /****************************/
 
+static int chosenPicture = 0;
 static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -261,6 +264,34 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return ((UIImage*) self.profilePhotosArray[indexPath.row]).size.height + 50; //PROFILE_PHOTO_SIZE;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    chosenPicture = (int)indexPath.row;
+    
+    UIImagePickerController *changePhoto = [[UIImagePickerController alloc] init];
+    changePhoto.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    changePhoto.allowsEditing = YES;
+    changePhoto.delegate = self;
+    [self presentViewController:changePhoto animated:YES completion:nil];
+}
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
+    selectedImage = [self imageWithImage:selectedImage scaledToSize:CGSizeMake(300, 300)];
+    self.profilePhotosArray[chosenPicture] = selectedImage;
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self.myProfilePicturesTableView reloadData];
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 

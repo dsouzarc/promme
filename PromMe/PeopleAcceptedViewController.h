@@ -8,6 +8,6 @@
 
 #import "ViewController.h"
 
-@interface PeopleAcceptedViewController : ViewController
-
+@interface PeopleAcceptedViewController : ViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+- (void) showInView:(UIView *)view shouldAnimate:(BOOL)shouldAnimate;
 @end

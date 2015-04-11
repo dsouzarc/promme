@@ -49,6 +49,8 @@
 		945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D31AD5F6DA0047A27D /* yes_dress.png */; };
 		945B53D61AD5F6DA0047A27D /* no_dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D41AD5F6DA0047A27D /* no_dress.png */; };
 		945B53D81AD6002B0047A27D /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 945B53D71AD6002B0047A27D /* fire.png */; };
+		945B53DC1AD60FF30047A27D /* PeopleAcceptedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */; };
+		945B53DD1AD60FF30047A27D /* PeopleAcceptedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +131,9 @@
 		945B53D31AD5F6DA0047A27D /* yes_dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yes_dress.png; sourceTree = "<group>"; };
 		945B53D41AD5F6DA0047A27D /* no_dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_dress.png; sourceTree = "<group>"; };
 		945B53D71AD6002B0047A27D /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		945B53D91AD60FF30047A27D /* PeopleAcceptedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleAcceptedViewController.h; sourceTree = "<group>"; };
+		945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleAcceptedViewController.m; sourceTree = "<group>"; };
+		945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PeopleAcceptedViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +190,9 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
+				945B53D91AD60FF30047A27D /* PeopleAcceptedViewController.h */,
+				945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */,
+				945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */,
 				945B53CC1AD5CE320047A27D /* SwipeDraggableOverlay.h */,
 				945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */,
 				945B53C91AD493960047A27D /* SwipeDraggableView.h */,
@@ -409,6 +417,7 @@
 			files = (
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				945B53D81AD6002B0047A27D /* fire.png in Resources */,
+				945B53DD1AD60FF30047A27D /* PeopleAcceptedViewController.xib in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
 				945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */,
 				945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */,
@@ -435,6 +444,7 @@
 				945B53BD1AD2B7100047A27D /* LogInViewController.m in Sources */,
 				945B53AC1AD23D2E0047A27D /* UIColor+Chameleon.m in Sources */,
 				945B53C41AD2C40E0047A27D /* MainPromMePageViewController.m in Sources */,
+				945B53DC1AD60FF30047A27D /* PeopleAcceptedViewController.m in Sources */,
 				945B53B11AD23D2E0047A27D /* PQFCirclesInTriangle.m in Sources */,
 				945B53AD1AD23D2E0047A27D /* UIColor+CIELAB.m in Sources */,
 				945B53AA1AD23D2E0047A27D /* ChameleonStatusBar.m in Sources */,

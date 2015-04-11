@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainPromMePageViewController">
             <connections>
+                <outlet property="matchesButton" destination="tzG-eo-oZT" id="6NI-q4-jdG"/>
                 <outlet property="nameLabel" destination="nyg-iU-V2L" id="QP1-Yb-lcb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="2dv-ya-bRN"/>
             </connections>
@@ -16,10 +17,41 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Person's Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyg-iU-V2L">
-                    <rect key="frame" x="8" y="594" width="359" height="41"/>
+                    <rect key="frame" x="8" y="59" width="359" height="41"/>
                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f10-Nr-GUV">
+                    <rect key="frame" x="217" y="517" width="132" height="114"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <state key="normal" title="Yay">
+                        <color key="titleColor" red="0.0" green="1" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="yesIcon:" destination="-1" eventType="touchUpInside" id="0rr-Lk-Yi3"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJr-aX-HPW">
+                    <rect key="frame" x="14" y="517" width="132" height="114"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <state key="normal" title="Nay">
+                        <color key="titleColor" red="1" green="0.040748128465178945" blue="0.091330634800752986" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" red="0.52661379419191912" green="0.49822030099866943" blue="0.51231051229860458" alpha="0.65000000000000002" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="noIcon:" destination="-1" eventType="touchUpInside" id="t3J-wF-cJf"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzG-eo-oZT">
+                    <rect key="frame" x="264" y="21" width="85" height="30"/>
+                    <state key="normal" title="Matches">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="matchesClicked:" destination="-1" eventType="touchUpInside" id="ic2-5p-cfA"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

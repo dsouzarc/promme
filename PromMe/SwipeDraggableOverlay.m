@@ -22,7 +22,7 @@
     
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
-        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yes_dress"]];
+        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fire"]];
         [self addSubview:self.imageView];
     }
     

@@ -75,6 +75,8 @@
     CGFloat xDistance = [gestureRecognizer translationInView:self].x;
     CGFloat yDistance = [gestureRecognizer translationInView:self].y;
     
+    //NSLog(@"%f\t%f", xDistance, yDistance);
+    
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:{
             self.startPoint = self.center;
@@ -107,6 +109,14 @@
         };
         case UIGestureRecognizerStateEnded: {
             [self resetViewPositionAndTransformations];
+            
+            if(xDistance < -200) {
+                [self.delegate swipedDirection:self didSwipeLeft:YES];
+            }
+            else if(xDistance > 200) {
+                [self.delegate swipedDirection:self didSwipeLeft:NO];
+            }
+            
             break;
         };
         case UIGestureRecognizerStatePossible:break;

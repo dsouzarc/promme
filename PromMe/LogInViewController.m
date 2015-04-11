@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingCircles;
 @property (strong, nonatomic) UICKeyChainStore *keyChain;
+@property (strong, nonatomic) IBOutlet UILabel *friendsGottenLabel;
 
 @property (strong, nonatomic) NSMutableArray *listOfFriends;
 
@@ -34,20 +35,21 @@
     self.loginButton.delegate = self;
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
     
-    NSArray *permissions = @[@"public_profile", @"email", @"user_friends", @"read_custom_friendlists"];
+    NSArray *permissions = @[@"public_profile", @"email", @"user_friends"];
     
     self.loginButton.readPermissions = permissions;
     
-    self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
+    /*self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
     self.loadingCircles.label.text = @"Creating account...";
-    self.loadingCircles.borderWidth = 5.0;
-    self.loadingCircles.maxDiam = 200.0;
+    self.loadingCircles.borderWidth = 4.0;
+    self.loadingCircles.maxDiam = 250.0;
+    self.loadingCircles.numberOfCircles = 9;
     self.loadingCircles.loaderColor = [UIColor blueColor];
-    [self.loadingCircles show];
+
     
     //If we have successfully logged into Facebook
     if ([FBSDKAccessToken currentAccessToken]) {
-        NSLog(@"Logged in");
+        NSLog(@"Logged in with access token");
         [self getFacebookIDAndName];
     }
     else {
@@ -55,24 +57,30 @@
         [loginManager logInWithReadPermissions:permissions handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if(!error) {
                 NSLog(@"Logged in");
-                [self getFacebookIDAndName];
             }
         }];
-    }
+    }*/
 
 }
 
 - (void) getFacebookIDAndName
 {
+        [self.loadingCircles show];
     //GET AND SAVE MY USERNAME AND INFORMATION
+    self.friendsGottenLabel.text = @"Getting my profile information";
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-         NSLog(@"HERE: ");
+         NSLog(@"Completion profile information ");
          if(error) {
              NSLog(@"ERROR: %@", error.description);
          }
          else {
+             NSLog(@"Good results");
              NSDictionary *goodResult = (NSDictionary*)result;
+             
+             if(!result) {
+                 NSLog(@"NO RESULT");
+             }
              
              self.facebookID = goodResult[@"id"];
              self.myName = [NSString stringWithFormat:@"%@ %@", goodResult[@"first_name"], goodResult[@"last_name"]];
@@ -90,15 +98,35 @@
 
 - (void) getProfilePictureLink
 {
+    [self.friendsGottenLabel setText:@"Getting more information..."];
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/picture?redirect=false" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-         NSLog(@"HERE: ");
+         NSLog(@"Completion profile photo: ");
          if(error) {
              NSLog(@"ERROR: %@", error.description);
          }
          else {
-             NSDictionary *goodResult = (NSDictionary*)((NSDictionary*)result)[@"data"];
-             self.linkToProfilePicture = goodResult[@"url"];
+             
+             if(result) {
+                 
+                 NSLog(@"Is result");
+                 NSDictionary *resultItems = (NSDictionary*)result;
+                 
+                 if(resultItems) {
+                     NSLog(@"Is result items");
+                     NSDictionary *link = resultItems[@"data"];
+                     
+                     if(link) {
+                         self.linkToProfilePicture = link[@"url"];
+                     }
+                     else {
+                         NSLog(@"NO URL");
+                     }
+                 }
+                 else {
+                     NSLog(@"No data");
+                 }
+             }
          }
      }];
 }
@@ -106,6 +134,8 @@
 - (void) getFacebookFriends
 {
     //GET LIST OF FRIENDS
+    
+    self.friendsGottenLabel.text = @"Downloading friends list...";
     NSString *urlRequest = @"/me/taggable_friends?fields=name,picture.width(300),limit=500";
     
     [[[FBSDKGraphRequest alloc] initWithGraphPath:urlRequest parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
@@ -122,13 +152,18 @@
             [self addPeople:people];
             [self recursivelyAddPeople:pagingInformation[@"next"]];
         }
-        
     }];
 }
 
 - (void) recursivelyAddPeople:(NSString*)url
 {
-    NSLog(@"Still working... %ld", (long)self.listOfFriends.count);
+    //NSLog(@"Still working... %ld", (long)self.listOfFriends.count);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+            [self.friendsGottenLabel setText: [NSString stringWithFormat:@"Number of friends retrieved: %ld", (long)self.listOfFriends.count]];
+    });
+    
+
     NSData *data = [[NSString stringWithContentsOfURL:[NSURL URLWithString:url] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
     
     NSDictionary *formattedResults = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -156,6 +191,10 @@
                 
                 //SAVE THE DATA
                 [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:self.listOfFriends] forKey:@"savedFriends"];
+                
+                for(Person *person in self.listOfFriends) {
+                    NSLog(@"%@\t%@\t%@", person.name, person.id, person.profilePhotoLink);
+                }
                 
                 MainPromMePageViewController *mainPage = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
                 self.view.window.rootViewController = mainPage;
@@ -193,9 +232,9 @@
     if(!error) {
         NSLog(@"Successful login");
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-        
-        [self getFacebookFriends];
         [self getFacebookIDAndName];
+        //[self getFacebookFriends];
+        //[self getFacebookIDAndName];
     }
     else {
         NSLog(@"Unsuccessful login");

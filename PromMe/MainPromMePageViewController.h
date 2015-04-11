@@ -7,7 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "SwipeDraggableView.h"
+#import "Person.h"
 
-@interface MainPromMePageViewController : ViewController
+@interface MainPromMePageViewController : ViewController <SwipeDraggableViewDelegate>
 
 @end

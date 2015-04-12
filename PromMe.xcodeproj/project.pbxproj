@@ -11,7 +11,6 @@
 		945B53261AD2342C0047A27D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53251AD2342C0047A27D /* AppDelegate.m */; };
 		945B53291AD2342C0047A27D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53281AD2342C0047A27D /* ViewController.m */; };
 		945B532C1AD2342C0047A27D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 945B532A1AD2342C0047A27D /* Main.storyboard */; };
-		945B532E1AD2342C0047A27D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 945B532D1AD2342C0047A27D /* Images.xcassets */; };
 		945B53311AD2342C0047A27D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 945B532F1AD2342C0047A27D /* LaunchScreen.xib */; };
 		945B533D1AD2342C0047A27D /* PromMeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B533C1AD2342C0047A27D /* PromMeTests.m */; };
 		945B53801AD23C470047A27D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 945B53741AD239FD0047A27D /* libsqlite3.dylib */; };
@@ -58,6 +57,7 @@
 		94BACD221ADA16F000C52B66 /* SPGooglePlacesPlaceDetailQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD1E1ADA16F000C52B66 /* SPGooglePlacesPlaceDetailQuery.m */; };
 		94BACD271ADA171400C52B66 /* ChooseAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD251ADA171400C52B66 /* ChooseAddressViewController.m */; };
 		94BACD281ADA171400C52B66 /* ChooseAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD261ADA171400C52B66 /* ChooseAddressViewController.xib */; };
+		94BACD431ADB28D600C52B66 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD421ADB28D600C52B66 /* AppIcon.xcassets */; };
 		94F7281B1AD9BDE300598D02 /* ProfilePictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */; };
 		94F7281C1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -81,7 +81,6 @@
 		945B53271AD2342C0047A27D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		945B53281AD2342C0047A27D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		945B532B1AD2342C0047A27D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		945B532D1AD2342C0047A27D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		945B53301AD2342C0047A27D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		945B53361AD2342C0047A27D /* PromMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PromMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		945B533B1AD2342C0047A27D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,6 +155,7 @@
 		94BACD241ADA171400C52B66 /* ChooseAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseAddressViewController.h; sourceTree = "<group>"; };
 		94BACD251ADA171400C52B66 /* ChooseAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseAddressViewController.m; sourceTree = "<group>"; };
 		94BACD261ADA171400C52B66 /* ChooseAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseAddressViewController.xib; sourceTree = "<group>"; };
+		94BACD421ADB28D600C52B66 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		94F728181AD9BDE300598D02 /* ProfilePictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureTableViewCell.h; sourceTree = "<group>"; };
 		94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureTableViewCell.m; sourceTree = "<group>"; };
 		94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePictureTableViewCell.xib; sourceTree = "<group>"; };
@@ -236,9 +236,9 @@
 				945B53C71AD2D8D90047A27D /* Person.m */,
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
+				94BACD421ADB28D600C52B66 /* AppIcon.xcassets */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
 				94BACD2A1ADA2B8C00C52B66 /* PNG Files */,
-				945B532D1AD2342C0047A27D /* Images.xcassets */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
 				945B532A1AD2342C0047A27D /* Main.storyboard */,
 				945B53271AD2342C0047A27D /* ViewController.h */,
@@ -488,10 +488,10 @@
 				945B53DD1AD60FF30047A27D /* PeopleAcceptedViewController.xib in Resources */,
 				945B532C1AD2342C0047A27D /* Main.storyboard in Resources */,
 				945B53C51AD2C40E0047A27D /* MainPromMePageViewController.xib in Resources */,
+				94BACD431ADB28D600C52B66 /* AppIcon.xcassets in Resources */,
 				945B53D51AD5F6DA0047A27D /* yes_dress.png in Resources */,
 				945B53311AD2342C0047A27D /* LaunchScreen.xib in Resources */,
 				945B53D61AD5F6DA0047A27D /* no_dress.png in Resources */,
-				945B532E1AD2342C0047A27D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

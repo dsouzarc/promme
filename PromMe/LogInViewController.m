@@ -269,6 +269,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 
 - (IBAction)createAccountClicked:(id)sender {
     
+    self.loadingCircles.label.text = @"Saving profile information";
     [self.loadingCircles show];
     
     //TODO: CHECK EACHFIELD, including FB ID + currentlocation
@@ -283,20 +284,39 @@ extern const int PROFILE_PHOTO_SIZE = 300;
                              };
     
     [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(PFObject *user, NSError *error) {
-        [self.loadingCircles hide];
-        
         if(error) {
             //TODO: Alert: No account made
             NSLog(@"No account: %@", error.description);
+            [self.loadingCircles hide];
             return;
         }
+        
+        self.loadingCircles.label.text = @"Saving profile pictures";
+        
+        NSString *channel = [NSString stringWithFormat:@"P%@", self.facebookID];
+        PFInstallation *installation = [PFInstallation currentInstallation];
+        [installation addObject:channel forKey:@"channels"];
+        
+        [installation saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
+            if(success) {
+                NSLog(@"Saved FB ID as channel: %@", channel);
+            }
+        }];
         
         user[@"profile_picture_one"] = [self profilePictureToFile:0];
         user[@"profile_picture_two"] = [self profilePictureToFile:1];
         user[@"profile_picture_three"] = [self profilePictureToFile:2];
         user[@"profile_picture_four"] = [self profilePictureToFile:3];
         user[@"profile_picture_five"] = [self profilePictureToFile:4];
-        [user saveInBackground];
+        
+        [user saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
+            
+            [self.loadingCircles hide];
+            
+            if(success) {
+                NSLog(@"Profile pictures saved");
+            }
+        }];
     }];
     
 }

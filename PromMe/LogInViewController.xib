@@ -46,12 +46,12 @@
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L3R-DT-zq9">
                                     <rect key="frame" x="8" y="235" width="359" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                     <connections>
                                         <outlet property="delegate" destination="-1" id="3Ck-br-q56"/>
                                     </connections>
                                 </textField>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High School" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mma-Fn-9b5">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="High School ex. 'Princeton High School'" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mma-Fn-9b5">
                                     <rect key="frame" x="8" y="189" width="359" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>

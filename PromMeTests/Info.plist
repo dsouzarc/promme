@@ -18,6 +18,12 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+    
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>For finding potential prom dates near your geographic location</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>For finding potential prom dates near your geographic location</string>
+    
 	<key>CFBundleVersion</key>
 	<string>1</string>
 </dict>

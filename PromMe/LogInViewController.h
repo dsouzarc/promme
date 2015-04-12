@@ -7,10 +7,11 @@
 //
 
 #import "ViewController.h"
-
+#import <CoreLocation/CoreLocation.h>
 #import "MainPromMePageViewController.h"
 #import "PQFCirclesInTriangle.h"
 #import "UICKeyChainStore.h"
+#import "ChooseAddressViewController.h"
 #import "Person.h"
 #import "ProfilePictureTableViewCell.h"
 
@@ -19,6 +20,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
 
-@interface LogInViewController : ViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate>
+@interface LogInViewController : ViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, ChooseAddressDelegate>
 
 @end

@@ -8,7 +8,8 @@
 
 #import "LogInViewController.h"
 
-@interface LogInViewController ()
+
+@interface LogInViewController () <CLLocationManagerDelegate>
 
 extern const int NUM_PROFILE_PHOTOS = 5;
 extern const int PROFILE_PHOTO_SIZE = 300;
@@ -18,8 +19,6 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 @property (strong, nonatomic) IBOutlet UITextField *myNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *myHighSchoolTextField;
 @property (strong, nonatomic) IBOutlet UITextField *myPhoneNumberTextField;
-
-@property (strong, nonatomic) IBOutlet UIButton *myLocationTextField;
 
 @property (strong, nonatomic) IBOutlet UISegmentedControl *myGradeSegmentedControl;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *myGenderSegmentedControl;
@@ -36,6 +35,9 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 @property (strong, nonatomic) NSMutableArray *profilePhotosArray;
 
 @property (strong, nonatomic) NSString *facebookID;
+@property (strong, nonatomic) PFGeoPoint *homeLocation;
+
+@property (strong, nonatomic) ChooseAddressViewController *homeAddressView;
 
 @end
 
@@ -43,6 +45,12 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSArray *permissions = @[@"public_profile", @"email", @"user_friends", @"user_photos"];
+    self.loginButton.readPermissions = permissions;
+    
+    self.homeAddressView = [[ChooseAddressViewController alloc] initWithNibName:@"ChooseAddressViewController" bundle:[NSBundle mainBundle]];
+    self.homeAddressView.delegate = self;
     
     [self.myProfilePicturesTableView registerNib:[UINib nibWithNibName:@"ProfilePictureTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cellIdentifier];
     
@@ -64,6 +72,12 @@ extern const int PROFILE_PHOTO_SIZE = 300;
             }
         }];
     }
+}
+
+- (void) chooseAddressViewController:(ChooseAddressViewController *)viewController chosenAddress:(PFGeoPoint *)chosenAddress addressName:(NSString *)addressName
+{
+    self.homeLocation = chosenAddress;
+    [self.myLocationButton setTitle:addressName forState:UIControlStateNormal];
 }
 
 - (void) getFacebookInformation
@@ -218,20 +232,17 @@ extern const int PROFILE_PHOTO_SIZE = 300;
         self.loadingCircles.maxDiam = 250.0;
         self.loadingCircles.numberOfCircles = 9;
         self.loadingCircles.loaderColor = [UIColor blueColor];
-        
-        NSArray *permissions = @[@"public_profile", @"email", @"user_friends", @"user_photos"];
-        self.loginButton.readPermissions = permissions;
     }
     
     return self;
 }
 
 - (IBAction)createAccountClicked:(id)sender {
-    
 }
 
 - (IBAction)findMyLocationClicked:(id)sender {
-    
+    [self setModalPresentationStyle:UIModalPresentationPopover];
+    [self presentViewController:self.homeAddressView animated:YES completion:nil];
 }
 
 /****************************/
@@ -317,5 +328,10 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
+
+/****************************/
+//    LOCATION DELEGATES
+/****************************/
+
 
 @end

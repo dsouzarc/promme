@@ -8,7 +8,6 @@
 
 #import "LogInViewController.h"
 
-
 @interface LogInViewController () <CLLocationManagerDelegate>
 
 extern const int NUM_PROFILE_PHOTOS = 5;
@@ -26,12 +25,6 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 @property (strong, nonatomic) IBOutlet UITableView *myProfilePicturesTableView;
 @property (strong, nonatomic) IBOutlet UIButton *myLocationButton;
 
-- (IBAction)createAccountClicked:(id)sender;
-- (IBAction)findMyLocationClicked:(id)sender;
-
-@property (strong, nonatomic) PQFCirclesInTriangle *loadingCircles;
-@property (strong, nonatomic) UICKeyChainStore *keyChain;
-
 @property (strong, nonatomic) NSMutableArray *profilePhotosArray;
 
 @property (strong, nonatomic) NSString *facebookID;
@@ -39,9 +32,34 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 
 @property (strong, nonatomic) ChooseAddressViewController *homeAddressView;
 
+@property (strong, nonatomic) PQFCirclesInTriangle *loadingCircles;
+@property (strong, nonatomic) UICKeyChainStore *keyChain;
+
+- (IBAction)createAccountClicked:(id)sender;
+- (IBAction)findMyLocationClicked:(id)sender;
+
 @end
 
 @implementation LogInViewController
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self) {
+        self.keyChain = [[UICKeyChainStore alloc] init];
+        self.profilePhotosArray = [[NSMutableArray alloc] init]; //initWithCapacity:NUM_PROFILE_PHOTOS];
+        
+        self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
+        self.loadingCircles.label.text = @"Fetching account information...";
+        self.loadingCircles.borderWidth = 4.0;
+        self.loadingCircles.maxDiam = 250.0;
+        self.loadingCircles.numberOfCircles = 9;
+        self.loadingCircles.loaderColor = [UIColor blueColor];
+        self.loadingCircles.label.textColor = [UIColor blackColor];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -199,44 +217,6 @@ extern const int PROFILE_PHOTO_SIZE = 300;
      }];
 }
 
-
-- (void) loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
-{
-    if(!error) {
-        NSLog(@"Successful login");
-        [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-        [self getFacebookInformation];
-    }
-    else {
-        NSLog(@"Unsuccessful login");
-    }
-}
-
-- (void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
-{
-    NSLog(@"LOGGED OUT");
-    [self viewDidLoad];
-}
-
-- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if(self) {
-        self.keyChain = [[UICKeyChainStore alloc] init];
-        self.profilePhotosArray = [[NSMutableArray alloc] init]; //initWithCapacity:NUM_PROFILE_PHOTOS];
-        
-        self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
-        self.loadingCircles.label.text = @"Fetching account information...";
-        self.loadingCircles.borderWidth = 4.0;
-        self.loadingCircles.maxDiam = 250.0;
-        self.loadingCircles.numberOfCircles = 9;
-        self.loadingCircles.loaderColor = [UIColor blueColor];
-    }
-    
-    return self;
-}
-
 - (NSString*) getGender
 {
     switch(self.myGenderSegmentedControl.selectedSegmentIndex) {
@@ -315,6 +295,16 @@ extern const int PROFILE_PHOTO_SIZE = 300;
             
             if(success) {
                 NSLog(@"Profile pictures saved");
+                self.keyChain[@"facebookid"] = self.facebookID;
+                self.keyChain[@"name"] = self.myNameTextField.text;
+                self.keyChain[@"phoneNumber"] = self.myPhoneNumberTextField.text;
+                self.keyChain[@"school"] = self.myHighSchoolTextField.text;
+                self.keyChain[@"gender"] = [self getGender];
+                self.keyChain[@"grade"] = [self getGender];
+                
+                MainPromMePageViewController *mainPromMe = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
+                [self setModalPresentationStyle:UIModalPresentationOverFullScreen];
+                [self presentViewController:mainPromMe animated:YES completion:nil];
             }
         }];
     }];
@@ -344,6 +334,28 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     [self setModalPresentationStyle:UIModalPresentationPopover];
     [self presentViewController:self.homeAddressView animated:YES completion:nil];
     
+}
+
+/****************************/
+//   FACEBOOK SDK LOGIN DELEGATES
+/****************************/
+
+- (void) loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
+{
+    if(!error) {
+        NSLog(@"Successful login");
+        [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+        [self getFacebookInformation];
+    }
+    else {
+        NSLog(@"Unsuccessful login");
+    }
+}
+
+- (void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
+{
+    NSLog(@"LOGGED OUT");
+    [self viewDidLoad];
 }
 
 /****************************/

@@ -279,15 +279,10 @@ extern const int PROFILE_PHOTO_SIZE = 300;
                              @"phoneNumber": self.myPhoneNumberTextField.text,
                              @"gender": [self getGender],
                              @"grade": [self getGrade],
-                             @"currentLocation": self.homeLocation,
-                             @"profilePic1": [self profilePictureToFile:0],
-                             @"profilePic2": [self profilePictureToFile:1],
-                             @"profilePic3": [self profilePictureToFile:2],
-                             @"profilePic4": [self profilePictureToFile:3],
-                             @"profilePic5": [self profilePictureToFile:4]
+                             @"currentLocation": self.homeLocation
                              };
     
-    [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(NSString *response, NSError *error) {
+    [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(PFObject *user, NSError *error) {
         [self.loadingCircles hide];
         
         if(error) {
@@ -296,12 +291,12 @@ extern const int PROFILE_PHOTO_SIZE = 300;
             return;
         }
         
-        if([response isEqualToString:@"YES"]) {
-            NSLog(@"Account created");
-        }
-        else {
-            NSLog(@"Not created");
-        }
+        user[@"profile_picture_one"] = [self profilePictureToFile:0];
+        user[@"profile_picture_two"] = [self profilePictureToFile:1];
+        user[@"profile_picture_three"] = [self profilePictureToFile:2];
+        user[@"profile_picture_four"] = [self profilePictureToFile:3];
+        user[@"profile_picture_five"] = [self profilePictureToFile:4];
+        [user saveInBackground];
     }];
     
 }
@@ -310,8 +305,16 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 {
     UIImage *image = (UIImage*)self.profilePhotosArray[profilePictureNumber];
     
-    NSString *fileName = [NSString stringWithFormat:@"profilePicture%l", (int)profilePictureNumber];
+    if(!image) {
+        NSLog(@"BAD");
+    }
+    
+    NSString *fileName = [NSString stringWithFormat:@"profilePicture%d", (int)(profilePictureNumber + 1)];
     PFFile *file = [PFFile fileWithName:fileName data:UIImagePNGRepresentation(image)];
+    
+    if(!file) {
+        NSLog(@"No file");
+    }
     return file;
 }
 

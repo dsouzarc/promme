@@ -279,20 +279,40 @@ extern const int PROFILE_PHOTO_SIZE = 300;
                              @"phoneNumber": self.myPhoneNumberTextField.text,
                              @"gender": [self getGender],
                              @"grade": [self getGrade],
-                             @"currentLocation": self.homeLocation
+                             @"currentLocation": self.homeLocation,
+                             @"profilePic1": [self profilePictureToFile:0],
+                             @"profilePic2": [self profilePictureToFile:1],
+                             @"profilePic3": [self profilePictureToFile:2],
+                             @"profilePic4": [self profilePictureToFile:3],
+                             @"profilePic5": [self profilePictureToFile:4]
                              };
     
     [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(NSString *response, NSError *error) {
         [self.loadingCircles hide];
         
-        if(error || !response) {
+        if(error) {
             //TODO: Alert: No account made
             NSLog(@"No account: %@", error.description);
+            return;
         }
         
-        NSLog(@"MY ID: %@", response);
+        if([response isEqualToString:@"YES"]) {
+            NSLog(@"Account created");
+        }
+        else {
+            NSLog(@"Not created");
+        }
     }];
     
+}
+
+- (PFFile*) profilePictureToFile:(NSInteger)profilePictureNumber
+{
+    UIImage *image = (UIImage*)self.profilePhotosArray[profilePictureNumber];
+    
+    NSString *fileName = [NSString stringWithFormat:@"profilePicture%l", (int)profilePictureNumber];
+    PFFile *file = [PFFile fileWithName:fileName data:UIImagePNGRepresentation(image)];
+    return file;
 }
 
 - (IBAction)findMyLocationClicked:(id)sender {

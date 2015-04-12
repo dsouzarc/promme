@@ -237,7 +237,62 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     return self;
 }
 
+- (NSString*) getGender
+{
+    switch(self.myGenderSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            return @"Male";
+        case 1:
+            return @"Female";
+        case 2:
+            return @"Other";
+        default:
+            return @"Other";
+    }
+}
+
+- (NSString*) getGrade
+{
+    switch(self.myGradeSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            return @"Freshman";
+        case 1:
+            return @"Sophomore";
+        case 2:
+            return @"Junior";
+        case 3:
+            return @"Senior";
+        default:
+            return @"Senior";
+    }
+}
+
 - (IBAction)createAccountClicked:(id)sender {
+    
+    [self.loadingCircles show];
+    
+    //TODO: CHECK EACHFIELD, including FB ID + currentlocation
+    
+    NSDictionary *params = @{@"userFullName": self.myNameTextField.text,
+                             @"fbID": self.facebookID,
+                             @"school": self.myHighSchoolTextField.text,
+                             @"phoneNumber": self.myPhoneNumberTextField.text,
+                             @"gender": [self getGender],
+                             @"grade": [self getGrade],
+                             @"currentLocation": self.homeLocation
+                             };
+    
+    [PFCloud callFunctionInBackground:@"addUser" withParameters:params block:^(NSString *response, NSError *error) {
+        [self.loadingCircles hide];
+        
+        if(error || !response) {
+            //TODO: Alert: No account made
+            NSLog(@"No account: %@", error.description);
+        }
+        
+        NSLog(@"MY ID: %@", response);
+    }];
+    
 }
 
 - (IBAction)findMyLocationClicked:(id)sender {
@@ -318,7 +373,7 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
     //Add some glow effect
     textField.layer.cornerRadius=8.0f;
     textField.layer.masksToBounds=YES;
-    textField.layer.borderColor=[[UIColor whiteColor]CGColor];
+    textField.layer.borderColor=[[UIColor blueColor]CGColor];
     textField.layer.borderWidth= 2.0f;
 }
 
@@ -331,10 +386,5 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
-
-/****************************/
-//    LOCATION DELEGATES
-/****************************/
-
 
 @end

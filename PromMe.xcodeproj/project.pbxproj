@@ -227,12 +227,9 @@
 				945B53CC1AD5CE320047A27D /* SwipeDraggableOverlay.h */,
 				945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */,
 				945B53C91AD493960047A27D /* SwipeDraggableView.h */,
-				94BACD241ADA171400C52B66 /* ChooseAddressViewController.h */,
-				94BACD251ADA171400C52B66 /* ChooseAddressViewController.m */,
-				94BACD261ADA171400C52B66 /* ChooseAddressViewController.xib */,
+				94BACD291ADA2B7700C52B66 /* Location Finding */,
 				945B53CA1AD493960047A27D /* SwipeDraggableView.m */,
 				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
-				94BACD231ADA16F700C52B66 /* SPGoogleAutocompletePlaces */,
 				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
 				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				945B53C61AD2D8D90047A27D /* Person.h */,
@@ -240,9 +237,7 @@
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
-				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
-				945B53D71AD6002B0047A27D /* fire.png */,
-				945B53D41AD5F6DA0047A27D /* no_dress.png */,
+				94BACD2A1ADA2B8C00C52B66 /* PNG Files */,
 				945B532D1AD2342C0047A27D /* Images.xcassets */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
 				945B532A1AD2342C0047A27D /* Main.storyboard */,
@@ -382,6 +377,27 @@
 				94BACD1E1ADA16F000C52B66 /* SPGooglePlacesPlaceDetailQuery.m */,
 			);
 			name = SPGoogleAutocompletePlaces;
+			sourceTree = "<group>";
+		};
+		94BACD291ADA2B7700C52B66 /* Location Finding */ = {
+			isa = PBXGroup;
+			children = (
+				94BACD241ADA171400C52B66 /* ChooseAddressViewController.h */,
+				94BACD251ADA171400C52B66 /* ChooseAddressViewController.m */,
+				94BACD261ADA171400C52B66 /* ChooseAddressViewController.xib */,
+				94BACD231ADA16F700C52B66 /* SPGoogleAutocompletePlaces */,
+			);
+			name = "Location Finding";
+			sourceTree = "<group>";
+		};
+		94BACD2A1ADA2B8C00C52B66 /* PNG Files */ = {
+			isa = PBXGroup;
+			children = (
+				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
+				945B53D71AD6002B0047A27D /* fire.png */,
+				945B53D41AD5F6DA0047A27D /* no_dress.png */,
+			);
+			name = "PNG Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

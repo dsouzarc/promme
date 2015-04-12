@@ -10,12 +10,12 @@
 #import <Parse/Parse.h>
 
 @interface ChooseAddressViewController ()
+- (IBAction)cancelAddress:(id)sender;
 
 - (IBAction)editDidBegin:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong, nonatomic) NSArray *possibleLocations;
 
 @property (strong, nonatomic) SPGooglePlacesAutocompleteQuery *query;
@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
 }
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,9 +37,30 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [super viewWillDisappear:animated];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.possibleLocations.count;
+}
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar
+{
+    NSLog(@"Called");
+    return UIBarPositionBottom;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -54,6 +76,7 @@
     SPGooglePlacesAutocompletePlace *place = (SPGooglePlacesAutocompletePlace*)[self.possibleLocations
                                                                                 objectAtIndex:indexPath.row];
     cell.textLabel.text = place.name;
+    [cell.textLabel sizeToFit];
     return cell;
 }
 
@@ -81,6 +104,12 @@
     NSDictionary *config = [[NSDictionary alloc] initWithContentsOfFile:plist];
     
     return config[@"GoogleAPIKey"];
+}
+
+- (IBAction)cancelAddress:(id)sender {
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)editDidBegin:(id)sender {

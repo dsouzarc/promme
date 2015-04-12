@@ -19,7 +19,7 @@
 
 @end
 
-@interface ChooseAddressViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ChooseAddressViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate, UINavigationBarDelegate, UINavigationControllerDelegate>
 
 @property(nonatomic, weak) id<ChooseAddressDelegate> delegate;
 

@@ -16,22 +16,28 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Text" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kj2-eF-PKu">
-                    <rect key="frame" x="0.0" y="44" width="375" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Text" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kj2-eF-PKu">
+                    <rect key="frame" x="0.0" y="64" width="375" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <action selector="editDidBegin:" destination="-1" eventType="editingChanged" id="MQh-tZ-cnB"/>
                     </connections>
                 </textField>
-                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OnF-dC-StR">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnF-dC-StR">
+                    <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                     <items>
-                        <navigationItem title="Find your hometown" id="zzg-FR-yQk"/>
+                        <navigationItem title="Find your hometown" id="zzg-FR-yQk">
+                            <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="iNM-kT-hrU">
+                                <connections>
+                                    <action selector="cancelAddress:" destination="-1" id="1o3-1V-9Ji"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
                     </items>
                 </navigationBar>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="W5R-DB-YX6">
-                    <rect key="frame" x="0.0" y="74" width="375" height="584"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="W5R-DB-YX6">
+                    <rect key="frame" x="0.0" y="94" width="375" height="573"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="mG4-Ni-vD0"/>
@@ -40,6 +46,21 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="OnF-dC-StR" secondAttribute="trailing" id="3RJ-TX-dgD"/>
+                <constraint firstAttribute="trailing" secondItem="kj2-eF-PKu" secondAttribute="trailing" id="F3N-j7-Rw3"/>
+                <constraint firstItem="W5R-DB-YX6" firstAttribute="top" secondItem="kj2-eF-PKu" secondAttribute="bottom" id="GDP-8u-acV"/>
+                <constraint firstAttribute="trailing" secondItem="W5R-DB-YX6" secondAttribute="trailing" id="Glm-mf-6lZ"/>
+                <constraint firstAttribute="bottom" secondItem="W5R-DB-YX6" secondAttribute="bottom" id="HMh-7h-4mF"/>
+                <constraint firstItem="OnF-dC-StR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="J6R-l5-Kws"/>
+                <constraint firstItem="kj2-eF-PKu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NEq-le-Hfd"/>
+                <constraint firstItem="W5R-DB-YX6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OYz-nA-QHZ"/>
+                <constraint firstItem="OnF-dC-StR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UdF-RA-ERY"/>
+                <constraint firstItem="kj2-eF-PKu" firstAttribute="top" secondItem="OnF-dC-StR" secondAttribute="bottom" id="Vef-p1-WMg"/>
+                <constraint firstItem="W5R-DB-YX6" firstAttribute="top" secondItem="kj2-eF-PKu" secondAttribute="bottom" id="Wzb-qZ-ZIX"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="362.5" y="290.5"/>
         </view>

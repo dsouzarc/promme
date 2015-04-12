@@ -241,8 +241,11 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 }
 
 - (IBAction)findMyLocationClicked:(id)sender {
+    //UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:self.homeAddressView];
+    //[self presentViewController:navigation animated:YES completion:nil];
     [self setModalPresentationStyle:UIModalPresentationPopover];
     [self presentViewController:self.homeAddressView animated:YES completion:nil];
+    
 }
 
 /****************************/

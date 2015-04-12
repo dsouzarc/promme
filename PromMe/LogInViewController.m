@@ -74,7 +74,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     
     //[FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
     
-    [self getFacebookInformation];
+    /*[self getFacebookInformation];
     
     //If we have successfully logged into Facebook
     if ([FBSDKAccessToken currentAccessToken]) {
@@ -89,7 +89,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
                 [self getFacebookInformation];
             }
         }];
-    }
+    }*/
 }
 
 - (void) chooseAddressViewController:(ChooseAddressViewController *)viewController chosenAddress:(PFGeoPoint *)chosenAddress addressName:(NSString *)addressName
@@ -289,18 +289,19 @@ extern const int PROFILE_PHOTO_SIZE = 300;
         user[@"profile_picture_four"] = [self profilePictureToFile:3];
         user[@"profile_picture_five"] = [self profilePictureToFile:4];
         
+        self.keyChain[@"facebookid"] = self.facebookID;
+        self.keyChain[@"name"] = self.myNameTextField.text;
+        self.keyChain[@"phoneNumber"] = self.myPhoneNumberTextField.text;
+        self.keyChain[@"school"] = self.myHighSchoolTextField.text;
+        self.keyChain[@"gender"] = [self getGender];
+        self.keyChain[@"grade"] = [self getGender];
+        
         [user saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
             
             [self.loadingCircles hide];
             
             if(success) {
                 NSLog(@"Profile pictures saved");
-                self.keyChain[@"facebookid"] = self.facebookID;
-                self.keyChain[@"name"] = self.myNameTextField.text;
-                self.keyChain[@"phoneNumber"] = self.myPhoneNumberTextField.text;
-                self.keyChain[@"school"] = self.myHighSchoolTextField.text;
-                self.keyChain[@"gender"] = [self getGender];
-                self.keyChain[@"grade"] = [self getGender];
                 
                 MainPromMePageViewController *mainPromMe = [[MainPromMePageViewController alloc] initWithNibName:@"MainPromMePageViewController" bundle:[NSBundle mainBundle]];
                 [self setModalPresentationStyle:UIModalPresentationOverFullScreen];
@@ -333,7 +334,6 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     //[self presentViewController:navigation animated:YES completion:nil];
     [self setModalPresentationStyle:UIModalPresentationPopover];
     [self presentViewController:self.homeAddressView animated:YES completion:nil];
-    
 }
 
 /****************************/

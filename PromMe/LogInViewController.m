@@ -14,6 +14,7 @@ extern const int NUM_PROFILE_PHOTOS = 5;
 extern const int PROFILE_PHOTO_SIZE = 300;
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (strong, nonatomic) IBOutlet UITextField *myNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *myHighSchoolTextField;
@@ -62,6 +63,8 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 }
 
 - (void)viewDidLoad {
+    
+    self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.scrollView.contentSize.height);
     [super viewDidLoad];
     
     NSArray *permissions = @[@"public_profile", @"email", @"user_friends", @"user_photos"];

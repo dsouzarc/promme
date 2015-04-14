@@ -262,10 +262,40 @@ static int profilePictureCounter = 0;
 
 - (IBAction)createAccountClicked:(id)sender {
     
+    //Validate all fields
+    if(self.myNameTextField.text.length < 3) {
+        [self showAlert:@"Invalid Information" alertMessage:@"Please enter a valid name" buttonName:@"Ok"];
+        return;
+    }
+    else if(![self.myNameTextField.text containsString:@" "]) {
+        [self showAlert:@"Invalid Information" alertMessage:@"Please enter your first and last name" buttonName:@"Ok"];
+        return;
+    }
+    if(self.myHighSchoolTextField.text.length < 6) {
+        [self showAlert:@"Invalid Information" alertMessage:@"Please enter a valid high school name" buttonName:@"Ok"];
+        return;
+    }
+    if(self.myPhoneNumberTextField.text.length != 10) {
+        [self showAlert:@"Invalid Information" alertMessage:@"Please enter a valid phone number" buttonName:@"Ok"];
+        return;
+    }
+    if(!self.facebookID) {
+        [self showAlert:@"Invalid Information" alertMessage:@"Please login with Facebook" buttonName:@"Ok"];
+        return;
+    }
+    for(int i = 0; i < self.hasCustomizedPhoto.count; i++) {
+        if(![self.hasCustomizedPhoto[i] boolValue]) {
+            [self showAlert:@"Invalid Information" alertMessage:@"Please customize all profile photos in the ScrollView" buttonName:@"Ok"];
+            return;
+        }
+    }
+    if(!self.homeLocation) {
+        [self showAlert:@"Invalid Information" alertMessage:@"Please choose a valid home town" buttonName:@"Ok"];
+        return;
+    }
+    
     self.loadingCircles.label.text = @"Saving profile information";
     [self.loadingCircles show];
-    
-    //TODO: CHECK EACHFIELD, including FB ID + currentlocation
     
     NSDictionary *params = @{@"userFullName": self.myNameTextField.text,
                              @"fbID": self.facebookID,
@@ -307,7 +337,7 @@ static int profilePictureCounter = 0;
         self.keyChain[@"phoneNumber"] = self.myPhoneNumberTextField.text;
         self.keyChain[@"school"] = self.myHighSchoolTextField.text;
         self.keyChain[@"gender"] = [self getGender];
-        self.keyChain[@"grade"] = [self getGender];
+        self.keyChain[@"grade"] = [self getGrade];
         
         [user saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
             
@@ -455,6 +485,14 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
     return newImage;
 }
 
+- (void) showAlert:(NSString*)alertTitle alertMessage:(NSString*)alertMessage buttonName:(NSString*)buttonName {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:buttonName
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+}
 
 /****************************/
 //    TEXTFIELD DELEGATES

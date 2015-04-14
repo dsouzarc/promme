@@ -13,9 +13,11 @@
 @property (strong, nonatomic) SwipeDraggableView *draggableView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) PeopleAcceptedViewController *peopleAccepted;
+@property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
 
 - (IBAction)yesIcon:(id)sender;
 - (IBAction)noIcon:(id)sender;
+- (IBAction)searchPreferencesButton:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *matchesButton;
 - (IBAction)matchesClicked:(id)sender;
@@ -45,14 +47,7 @@ static int randomPerson;
 
 - (void) loadFriends
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *savedData = [defaults objectForKey:@"savedFriends"];
     
-    if(savedData != nil) {
-        NSArray *data = [NSKeyedUnarchiver unarchiveObjectWithData:savedData];
-        self.friendsList = [[NSArray alloc] initWithArray:data];
-    }
-
 }
 
 - (IBAction)yesIcon:(id)sender {
@@ -63,6 +58,9 @@ static int randomPerson;
     
 }
 
+- (IBAction)searchPreferencesButton:(id)sender {
+}
+
 - (void) getPeople {
     [PFCloud callFunctionInBackground:@"findUserBasedOnSchoolGender" withParameters:@{@"myFBID": self.facebookID} block:^(NSArray *result, NSError *error) {
         
@@ -71,11 +69,25 @@ static int randomPerson;
         if(!error) {
             NSLog(@"Yeo");
             
-            self.availablePeopleToSwipe = [[NSMutableArray alloc] initWithArray:result];;
+            //self.availablePeopleToSwipe = [[NSMutableArray alloc] initWithArray:result];;
             
             for(NSDictionary *person in result) {
-                //NSLog(@"Person: %@", person[@"users_name"]);
+                NSLog(@"Person: %@\t%@", person[@"name"], person[@"gender"]);
+                
+                PFFile *userImageFile = person[@"pic_one"];
+                [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+                    if (!error) {
+                        UIImage *image = [UIImage imageWithData:imageData];
+                        NSLog(@"Image gotten");
+                    }
+                    else {
+                        NSLog(@"Error: %@", error.description);
+                    }
+                }];
+                
             }
+            
+            
         }
         
         else {
@@ -107,9 +119,7 @@ static int randomPerson;
             }
         }
     }];
-    
-    
-    
+
     [self nextPerson];
     [self getPeople];
 }
@@ -194,7 +204,6 @@ static int randomPerson;
     
     if(self) {
         self.availablePeopleToSwipe = [[NSMutableArray alloc] init];
-        
         UICKeyChainStore *keychain = [[UICKeyChainStore alloc] init];
         self.facebookID = keychain[@"facebookid"];
     }

@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainPromMePageViewController">
             <connections>
+                <outlet property="detailsLabel" destination="Pjm-Dn-TUR" id="Iaw-cj-xNF"/>
                 <outlet property="matchesButton" destination="tzG-eo-oZT" id="6NI-q4-jdG"/>
                 <outlet property="nameLabel" destination="nyg-iU-V2L" id="QP1-Yb-lcb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="2dv-ya-bRN"/>
@@ -52,6 +53,21 @@
                         <action selector="matchesClicked:" destination="-1" eventType="touchUpInside" id="ic2-5p-cfA"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVF-zL-eMB">
+                    <rect key="frame" x="8" y="21" width="138" height="30"/>
+                    <state key="normal" title="Search Preferences">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="searchPreferencesButton:" destination="-1" eventType="touchUpInside" id="qhB-y2-Dfl"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Additional Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pjm-Dn-TUR">
+                    <rect key="frame" x="14" y="488" width="335" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

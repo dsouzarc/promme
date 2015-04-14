@@ -8,7 +8,11 @@
 
 #import "ViewController.h"
 #import "SwipeDraggableView.h"
+#import "PeopleAcceptedViewController.h"
 #import "Person.h"
+#import "UICKeyChainStore.h"
+
+#import <Parse/Parse.h>
 
 @interface MainPromMePageViewController : ViewController <SwipeDraggableViewDelegate>
 

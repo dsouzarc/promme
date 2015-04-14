@@ -58,6 +58,7 @@
 		94BACD271ADA171400C52B66 /* ChooseAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD251ADA171400C52B66 /* ChooseAddressViewController.m */; };
 		94BACD281ADA171400C52B66 /* ChooseAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD261ADA171400C52B66 /* ChooseAddressViewController.xib */; };
 		94BACD431ADB28D600C52B66 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD421ADB28D600C52B66 /* AppIcon.xcassets */; };
+		94BACD451ADD91F500C52B66 /* no_picture_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD441ADD91F400C52B66 /* no_picture_image.png */; };
 		94F7281B1AD9BDE300598D02 /* ProfilePictureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */; };
 		94F7281C1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -156,6 +157,7 @@
 		94BACD251ADA171400C52B66 /* ChooseAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseAddressViewController.m; sourceTree = "<group>"; };
 		94BACD261ADA171400C52B66 /* ChooseAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseAddressViewController.xib; sourceTree = "<group>"; };
 		94BACD421ADB28D600C52B66 /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
+		94BACD441ADD91F400C52B66 /* no_picture_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_picture_image.png; sourceTree = "<group>"; };
 		94F728181AD9BDE300598D02 /* ProfilePictureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureTableViewCell.h; sourceTree = "<group>"; };
 		94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureTableViewCell.m; sourceTree = "<group>"; };
 		94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePictureTableViewCell.xib; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
+				94BACD441ADD91F400C52B66 /* no_picture_image.png */,
 				945B53D71AD6002B0047A27D /* fire.png */,
 				945B53D41AD5F6DA0047A27D /* no_dress.png */,
 			);
@@ -483,6 +486,7 @@
 				94BACD151ADA15A800C52B66 /* ApiConfigurations.plist in Resources */,
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				94BACD281ADA171400C52B66 /* ChooseAddressViewController.xib in Resources */,
+				94BACD451ADD91F500C52B66 /* no_picture_image.png in Resources */,
 				945B53D81AD6002B0047A27D /* fire.png in Resources */,
 				94F7281C1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib in Resources */,
 				945B53DD1AD60FF30047A27D /* PeopleAcceptedViewController.xib in Resources */,

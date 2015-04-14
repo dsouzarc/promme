@@ -7,11 +7,9 @@
 //
 
 #import "MainPromMePageViewController.h"
-#import "PeopleAcceptedViewController.h"
 
 @interface MainPromMePageViewController ()
 
-@property (strong, nonatomic) NSArray *friendsList;
 @property (strong, nonatomic) SwipeDraggableView *draggableView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) PeopleAcceptedViewController *peopleAccepted;
@@ -21,6 +19,10 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *matchesButton;
 - (IBAction)matchesClicked:(id)sender;
+
+@property (strong, nonatomic) NSMutableArray *availablePeopleToSwipe;
+@property (strong, nonatomic) NSArray *friendsList;
+@property (strong, nonatomic) NSString *facebookID;
 
 @end
 
@@ -37,8 +39,8 @@ static int randomPerson;
     
     randomPerson = arc4random() % self.friendsList.count;
     
+    [self getPeople];
     [self nextPerson];
-
 }
 
 - (void) loadFriends
@@ -61,10 +63,55 @@ static int randomPerson;
     
 }
 
+- (void) getPeople {
+    [PFCloud callFunctionInBackground:@"findUserBasedOnSchoolGender" withParameters:@{@"myFBID": self.facebookID} block:^(NSArray *result, NSError *error) {
+        
+        NSLog(@"Next");
+        
+        if(!error) {
+            NSLog(@"Yeo");
+            
+            self.availablePeopleToSwipe = [[NSMutableArray alloc] initWithArray:result];;
+            
+            for(NSDictionary *person in result) {
+                //NSLog(@"Person: %@", person[@"users_name"]);
+            }
+        }
+        
+        else {
+            NSLog(@"Error");
+        }
+        
+    }];
+}
+
 - (void) yesPerson {
     self.nameLabel.textColor = [UIColor greenColor];
     self.nameLabel.text = [NSString stringWithFormat:@"%@: Yes", self.nameLabel.text];
+    
+    NSDictionary *params = @{@"users_facebook_id": self.facebookID,
+                             @"otherFBID": ((NSDictionary*)self.availablePeopleToSwipe[counter])[@"users_facebook_id"]
+                             };
+    
+    
+    [PFCloud callFunctionInBackground:@"swiped" withParameters:params block:^(NSString *result, NSError *error) {
+        if(error) {
+            NSLog(@"Error calling swiped: %@", error.description);
+        }
+        else {
+            if([result isEqualToString:@"YES"]) {
+                NSLog(@"Swipe saved");
+            }
+            else {
+                NSLog(@"Swipe problem");
+            }
+        }
+    }];
+    
+    
+    
     [self nextPerson];
+    [self getPeople];
 }
 
 - (void) noPerson {
@@ -139,5 +186,19 @@ static int randomPerson;
     self.peopleAccepted = [[PeopleAcceptedViewController alloc] initWithNibName:@"PeopleAcceptedViewController" bundle:[NSBundle mainBundle]];
     
     [self.peopleAccepted showInView:self.view shouldAnimate:YES];
+}
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self) {
+        self.availablePeopleToSwipe = [[NSMutableArray alloc] init];
+        
+        UICKeyChainStore *keychain = [[UICKeyChainStore alloc] init];
+        self.facebookID = keychain[@"facebookid"];
+    }
+    
+    return self;
 }
 @end

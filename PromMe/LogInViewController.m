@@ -27,6 +27,7 @@ extern const int PROFILE_PHOTO_SIZE = 300;
 @property (strong, nonatomic) IBOutlet UIButton *myLocationButton;
 
 @property (strong, nonatomic) NSMutableArray *profilePhotosArray;
+@property (strong, nonatomic) NSMutableArray *hasCustomizedPhoto;
 
 @property (strong, nonatomic) NSString *facebookID;
 @property (strong, nonatomic) PFGeoPoint *homeLocation;
@@ -49,7 +50,8 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     
     if(self) {
         self.keyChain = [[UICKeyChainStore alloc] init];
-        self.profilePhotosArray = [[NSMutableArray alloc] init]; //initWithCapacity:NUM_PROFILE_PHOTOS];
+        self.profilePhotosArray = [self blankImages]; //initWithCapacity:NUM_PROFILE_PHOTOS];
+        self.hasCustomizedPhoto = [self hasNotCustomizedPhoto];
         
         self.loadingCircles = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
         self.loadingCircles.label.text = @"Fetching account information...";
@@ -128,6 +130,8 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     }];
 }
 
+static int profilePictureCounter = 0;
+
 - (void) getRecentProfilePhotos:(NSString*)profilePictureAlbumID
 {
     NSString *path = [NSString stringWithFormat:@"%@/photos?fields=album,id,link", profilePictureAlbumID];
@@ -156,7 +160,9 @@ extern const int PROFILE_PHOTO_SIZE = 300;
             //Photo width bigger than 300, less than 400
             if(photoWidth > PROFILE_PHOTO_SIZE && photoWidth <= (PROFILE_PHOTO_SIZE + 100)) {
                 NSString *source = photo[@"source"];
-                [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:source]]]];
+                self.profilePhotosArray[profilePictureCounter] = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:source]]];
+                self.hasCustomizedPhoto[profilePictureCounter] = [NSNumber numberWithBool:YES];
+                profilePictureCounter++;
                 
                 [self.myProfilePicturesTableView reloadData];
             }
@@ -202,7 +208,11 @@ extern const int PROFILE_PHOTO_SIZE = 300;
                  if(resultItems) {
                      NSDictionary *link = resultItems[@"data"];
                      if(link) {
-                         [self.profilePhotosArray addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]]];
+                         
+                         self.profilePhotosArray[profilePictureCounter] = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:link[@"url"]]]];
+                         self.hasCustomizedPhoto[profilePictureCounter] = [NSNumber numberWithBool:YES];
+                         profilePictureCounter++;
+                         
                          [self.myProfilePicturesTableView reloadData];
                          
                      }
@@ -339,6 +349,29 @@ extern const int PROFILE_PHOTO_SIZE = 300;
     [self presentViewController:self.homeAddressView animated:YES completion:nil];
 }
 
+- (NSMutableArray*) blankImages
+{
+    NSMutableArray *blankArray = [[NSMutableArray alloc] initWithCapacity:NUM_PROFILE_PHOTOS];
+    
+    for(int i = 0; i < NUM_PROFILE_PHOTOS; i++) {
+        UIImage *blankImage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"no_picture_image" ofType:@"png"]];
+        
+        [blankArray setObject:blankImage atIndexedSubscript:i];
+    }
+    
+    return blankArray;
+}
+
+- (NSMutableArray*) hasNotCustomizedPhoto
+{
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:NUM_PROFILE_PHOTOS];
+    
+    for(int i = 0; i < NUM_PROFILE_PHOTOS; i++) {
+        array[i] = [NSNumber numberWithBool:NO];
+    }
+    return array;
+}
+
 /****************************/
 //   FACEBOOK SDK LOGIN DELEGATES
 /****************************/
@@ -409,6 +442,7 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
     UIImage *selectedImage = info[UIImagePickerControllerEditedImage];
     selectedImage = [self imageWithImage:selectedImage scaledToSize:CGSizeMake(300, 300)];
     self.profilePhotosArray[chosenPicture] = selectedImage;
+    self.hasCustomizedPhoto[chosenPicture] = [NSNumber numberWithBool:YES];
     [picker dismissViewControllerAnimated:YES completion:nil];
     [self.myProfilePicturesTableView reloadData];
 }

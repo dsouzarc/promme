@@ -20,7 +20,8 @@
 
 @interface SwipeDraggableView : UIView
 
-- (instancetype) init:(Person*)person nameLabel:(UILabel*)nameLabel;
+- (instancetype) init:(Person*)person nameLabel:(UILabel*)nameLabel photo:(UIImage*)photo;
+@property (strong, nonatomic) UIImage *photo;
 
 @property (nonatomic, weak) id<SwipeDraggableViewDelegate> delegate;
 

@@ -12,6 +12,7 @@
 @interface SwipeDraggableView ()
 
 @property (strong, nonatomic) Person *person;
+
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic) CGPoint startPoint;
 
@@ -21,10 +22,9 @@
 
 @end
 
-
 @implementation SwipeDraggableView
 
-- (instancetype) init:(Person *)person nameLabel:(UILabel *)nameLabel
+- (instancetype) init:(Person *)person nameLabel:(UILabel *)nameLabel photo:(UIImage *)photo
 {
     self = [super init];
     self.person = person;
@@ -41,6 +41,8 @@
     self.layer.shadowOffset = CGSizeMake(7, 7);
     self.layer.shadowRadius = 5;
     self.layer.shadowOpacity = 0.5;
+    
+    self.photo = photo;
 
     return self;
 }
@@ -61,8 +63,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]];
+    UIImage *image = self.photo;
     
     self.startPoint = CGPointMake((self.frame.size.width/2) - (image.size.width/2),
                                   (self.frame.size.height / 2) - (image.size.height / 2));

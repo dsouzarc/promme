@@ -38,12 +38,12 @@ static int randomPerson;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self loadFriends];
+    //[self loadFriends];
     
-    randomPerson = arc4random() % self.friendsList.count;
+    //randomPerson = arc4random() % self.friendsList.count;
     
-    [self getPeople];
-    [self nextPerson];
+    //[self getPeople];
+    //[self nextPerson];
 }
 
 - (void) loadFriends
@@ -54,9 +54,9 @@ static int randomPerson;
 - (IBAction)yesIcon:(id)sender {
     [self yesPerson];
 }
+
 - (IBAction)noIcon:(id)sender {
     [self noPerson];
-    
 }
 
 - (IBAction)searchPreferencesButton:(id)sender {
@@ -158,38 +158,44 @@ static int randomPerson;
 }
 
 - (void) showNextPerson {
-    self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[randomPerson] nameLabel:self.nameLabel];
-    self.draggableView.delegate = self;
-    self.nameLabel.text = ((Person*)self.friendsList[randomPerson]).name;
     
-    [self.view addSubview:self.draggableView];
+    Person *nextPerson = [self.availablePeopleToSwipe firstObject];
     
-    int imageSize = 300;
+    NSDictionary *parameters = @{@"facebookID": nextPerson.facebookID,
+                                 @"pictureNumber": @0
+                                 };
     
-    self.draggableView.frame = CGRectMake((self.view.frame.size.width - imageSize)/2, (self.view.frame.size.height - imageSize)/2, imageSize, imageSize);
-    
-    [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
-    self.nameLabel.textColor = [UIColor blackColor];
-    counter++;
-    randomPerson = arc4random() % self.friendsList.count;
-    
-    if(counter == 5) {
-        for(int i = 0; i < self.friendsList.count; i++) {
-            if([((Person*)self.friendsList[i]).name isEqualToString:@"Connor Protter"]) {
-                randomPerson = i;
-            }
-        }
-    }
-    
-    if(counter == 8) {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.fireDate = [[NSDate date] dateByAddingTimeInterval:0];
-        notification.alertBody = @"New Match with Connor Protter";
-        [self.matchesButton setTitle:@"Matches: (1)" forState:UIControlStateNormal];
-        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    [PFCloud callFunctionInBackground:@"getUserPhoto" withParameters:parameters block:^(PFFile *file, NSError *error) {
         
-        [[[UIAlertView alloc] initWithTitle:@"New Match!" message:@"New match with Connor Protter for prom" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil] show];
-    }
+        if(!error) {
+            
+            [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if(!error) {
+                    NSLog(@"NO ERROR");
+                    self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[randomPerson] nameLabel:self.nameLabel photo:[UIImage imageWithData:data]];
+                    self.draggableView.delegate = self;
+                    self.nameLabel.text = ((Person*)self.friendsList[randomPerson]).name;
+                    
+                    [self.view addSubview:self.draggableView];
+                    
+                    int imageSize = 300;
+                    
+                    self.draggableView.frame = CGRectMake((self.view.frame.size.width - imageSize)/2, (self.view.frame.size.height - imageSize)/2, imageSize, imageSize);
+                    
+                    [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
+                    self.nameLabel.textColor = [UIColor blackColor];
+                    counter++;
+                    randomPerson = arc4random() % self.friendsList.count;
+                }
+                else {
+                    NSLog(@"ERROR: %@", error.description);
+                }
+            }];
+        }
+        else {
+            NSLog(@"ERROR: %@", error.description);
+        }
+    }];
 }
 
 - (IBAction)matchesClicked:(id)sender {

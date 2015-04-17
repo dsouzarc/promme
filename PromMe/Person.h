@@ -8,15 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Person : NSObject <NSCoding>
+@interface Person : NSObject
 
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *id;
-@property (nonatomic, strong) NSString *profilePhotoLink;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *highSchool;
+@property (strong, nonatomic) NSString *grade;
+@property (strong, nonatomic) NSString *facebookID;
+@property (strong, nonatomic) NSString *gender;
 
-- (instancetype) initWithEverything:(NSString*)id name:(NSString*)name photoLink:(NSString*)photoLink;
-- (instancetype) initWithDictionary:(NSDictionary*)dictionary;
-- (instancetype) initWithParseDictionary:(NSDictionary*)fromParse;
-- (NSDictionary*) toDictionary;
+- (instancetype) initWithEverything:(NSDictionary*)dictionary;
 
 @end

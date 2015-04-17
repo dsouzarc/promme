@@ -27,6 +27,8 @@
 @property (strong, nonatomic) NSArray *friendsList;
 @property (strong, nonatomic) NSString *facebookID;
 
+@property (strong, nonatomic) PQFCirclesInTriangle *loadingAnimation;
+
 @end
 
 @implementation MainPromMePageViewController
@@ -35,20 +37,63 @@ static int counter = 0;
 
 static int randomPerson;
 
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self) {
+        self.availablePeopleToSwipe = [[NSMutableArray alloc] init];
+        UICKeyChainStore *keychain = [[UICKeyChainStore alloc] init];
+        self.facebookID = keychain[@"facebookid"];
+
+        self.loadingAnimation = [[PQFCirclesInTriangle alloc] initLoaderOnView:self.view];
+        self.loadingAnimation.center = CGPointMake((self.view.frame.size.width - 100) / 2, (self.view.frame.size.height - 150) / 2);
+        self.loadingAnimation.loaderColor = [UIColor blueColor];
+        self.loadingAnimation.maxDiam = 150;
+    }
+    
+    return self;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //[self loadFriends];
-    
-    //randomPerson = arc4random() % self.friendsList.count;
-    
-    //[self getPeople];
-    //[self nextPerson];
+    [self loadFriends];
 }
 
 - (void) loadFriends
 {
+    [self.loadingAnimation show];
     
+    NSDictionary *params = @{@"myFBID": self.facebookID,
+                             @"isLocation": @true,
+                             @"maxDistance": @100,
+                             @"isSchool": @true,
+                             @"highschool": @"Princeton High School",
+                             @"isGender": @true,
+                             @"gender": @"Female"};
+    
+    [PFCloud callFunctionInBackground:@"getPeopleToSwipe" withParameters:params block:^(NSArray *results, NSError *error) {
+        
+        [self.loadingAnimation hide];
+        if(!error) {
+            
+            [self.availablePeopleToSwipe removeAllObjects];
+            
+            for(NSDictionary *result in results) {
+                Person *person = [[Person alloc] initWithEverything:result];
+                [self.availablePeopleToSwipe addObject:person];
+            }
+            
+            [self showNextPerson];
+        }
+        
+        else {
+            NSLog(@"Error");
+        }
+        
+    }];
+
 }
 
 - (IBAction)yesIcon:(id)sender {
@@ -66,44 +111,15 @@ static int randomPerson;
 
 - (void) getPeople {
     
-    NSDictionary *params = @{@"myFBID": self.facebookID,
-                             @"isLocation": @true,
-                             @"maxDistance": @100,
-                             @"isSchool": @true,
-                             @"highschool": @"Princeton High School",
-                             @"isGender": @true,
-                             @"gender": @"Female"
-                             };
-    
-    [PFCloud callFunctionInBackground:@"getPeopleToSwipe" withParameters:params block:^(NSArray *results, NSError *error) {
-        
-        NSLog(@"Next");
-        
-        if(!error) {
-            NSLog(@"Yeo");
-
-            for(NSDictionary *result in results) {
-                Person *person = [[Person alloc] initWithEverything:result];
-                [self.availablePeopleToSwipe addObject:person];
-            }
-            
-            [self showNextPerson];
-        }
-        
-        else {
-            NSLog(@"Error");
-        }
-        
-    }];
-}
+    }
 
 - (void) yesPerson {
     self.nameLabel.textColor = [UIColor greenColor];
     self.nameLabel.text = [NSString stringWithFormat:@"%@: Yes", self.nameLabel.text];
 
-    NSDictionary *params = @{@"users_facebook_id": self.facebookID,
-                             @"otherFBID": ((NSDictionary*)self.availablePeopleToSwipe[counter])[@"users_facebook_id"]
-                             };
+    /*NSDictionary *params = @{@"users_facebook_id": self.facebookID,
+                             @"otherFBID": ((Person*)self.availablePeopleToSwipe[counter])[@"users_facebook_id"]
+                             };*
     
     
     [PFCloud callFunctionInBackground:@"swiped" withParameters:params block:^(NSString *result, NSError *error) {
@@ -118,10 +134,10 @@ static int randomPerson;
                 NSLog(@"Swipe problem");
             }
         }
-    }];
+    }]; */
 
     [self nextPerson];
-    [self getPeople];
+    //[self getPeople];
 }
 
 - (void) noPerson {
@@ -160,6 +176,7 @@ static int randomPerson;
 - (void) showNextPerson {
     
     Person *nextPerson = [self.availablePeopleToSwipe firstObject];
+    [self.availablePeopleToSwipe removeObject:nextPerson];
     
     NSDictionary *parameters = @{@"facebookID": nextPerson.facebookID,
                                  @"pictureNumber": @0
@@ -204,16 +221,5 @@ static int randomPerson;
     [self.peopleAccepted showInView:self.view shouldAnimate:YES];
 }
 
-- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if(self) {
-        self.availablePeopleToSwipe = [[NSMutableArray alloc] init];
-        UICKeyChainStore *keychain = [[UICKeyChainStore alloc] init];
-        self.facebookID = keychain[@"facebookid"];
-    }
-    
-    return self;
-}
+
 @end

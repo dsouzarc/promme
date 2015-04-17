@@ -11,6 +11,8 @@
 #import "PeopleAcceptedViewController.h"
 #import "Person.h"
 #import "UICKeyChainStore.h"
+#import "PQFCirclesInTriangle.h"
+#import "PQFBarsInCircle.h"
 
 #import <Parse/Parse.h>
 

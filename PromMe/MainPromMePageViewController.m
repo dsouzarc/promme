@@ -11,15 +11,16 @@
 @interface MainPromMePageViewController ()
 
 @property (strong, nonatomic) SwipeDraggableView *draggableView;
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) PeopleAcceptedViewController *peopleAccepted;
+
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
+@property (strong, nonatomic) IBOutlet UIButton *matchesButton;
 
 - (IBAction)yesIcon:(id)sender;
 - (IBAction)noIcon:(id)sender;
-- (IBAction)searchPreferencesButton:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIButton *matchesButton;
+- (IBAction)searchPreferencesButton:(id)sender;
 - (IBAction)matchesClicked:(id)sender;
 
 @property (strong, nonatomic) NSMutableArray *availablePeopleToSwipe;
@@ -59,35 +60,34 @@ static int randomPerson;
 }
 
 - (IBAction)searchPreferencesButton:(id)sender {
+    NSLog(@"Getting people");
+    [self getPeople];
 }
 
 - (void) getPeople {
-    [PFCloud callFunctionInBackground:@"findUserBasedOnSchoolGender" withParameters:@{@"myFBID": self.facebookID} block:^(NSArray *result, NSError *error) {
+    
+    NSDictionary *params = @{@"myFBID": self.facebookID,
+                             @"isLocation": @true,
+                             @"maxDistance": @100,
+                             @"isSchool": @true,
+                             @"highschool": @"Princeton High School",
+                             @"isGender": @true,
+                             @"gender": @"Female"
+                             };
+    
+    [PFCloud callFunctionInBackground:@"getPeopleToSwipe" withParameters:params block:^(NSArray *results, NSError *error) {
         
         NSLog(@"Next");
         
         if(!error) {
             NSLog(@"Yeo");
-            
-            //self.availablePeopleToSwipe = [[NSMutableArray alloc] initWithArray:result];;
-            
-            for(NSDictionary *person in result) {
-                NSLog(@"Person: %@\t%@", person[@"name"], person[@"gender"]);
-                
-                PFFile *userImageFile = person[@"pic_one"];
-                [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-                    if (!error) {
-                        UIImage *image = [UIImage imageWithData:imageData];
-                        NSLog(@"Image gotten");
-                    }
-                    else {
-                        NSLog(@"Error: %@", error.description);
-                    }
-                }];
-                
+
+            for(NSDictionary *result in results) {
+                Person *person = [[Person alloc] initWithEverything:result];
+                [self.availablePeopleToSwipe addObject:person];
             }
             
-            
+            [self showNextPerson];
         }
         
         else {
@@ -100,7 +100,7 @@ static int randomPerson;
 - (void) yesPerson {
     self.nameLabel.textColor = [UIColor greenColor];
     self.nameLabel.text = [NSString stringWithFormat:@"%@: Yes", self.nameLabel.text];
-    
+
     NSDictionary *params = @{@"users_facebook_id": self.facebookID,
                              @"otherFBID": ((NSDictionary*)self.availablePeopleToSwipe[counter])[@"users_facebook_id"]
                              };

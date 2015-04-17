@@ -61,6 +61,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.person.profilePhotoLink]]];
     
     self.startPoint = CGPointMake((self.frame.size.width/2) - (image.size.width/2),

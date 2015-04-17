@@ -458,6 +458,11 @@ static NSString *cellIdentifier = @"ProfilePictureCellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.row == 0) {
+        [self showAlert:@"Invalid Action" alertMessage:@"Sorry, but you cannot change the first profile picture for verification reasons" buttonName:@"Ok"];
+        return;
+    }
+    
     chosenPicture = (int)indexPath.row;
     
     UIImagePickerController *changePhoto = [[UIImagePickerController alloc] init];

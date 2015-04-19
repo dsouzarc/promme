@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9443B3BC1AE465560003F516 /* MatchedPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 9443B3BB1AE465560003F516 /* MatchedPerson.m */; };
 		945B53231AD2342C0047A27D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53221AD2342C0047A27D /* main.m */; };
 		945B53261AD2342C0047A27D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53251AD2342C0047A27D /* AppDelegate.m */; };
 		945B53291AD2342C0047A27D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 945B53281AD2342C0047A27D /* ViewController.m */; };
@@ -74,6 +75,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9443B3BA1AE465560003F516 /* MatchedPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchedPerson.h; sourceTree = "<group>"; };
+		9443B3BB1AE465560003F516 /* MatchedPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchedPerson.m; sourceTree = "<group>"; };
 		945B531D1AD2342C0047A27D /* PromMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PromMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		945B53211AD2342C0047A27D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		945B53221AD2342C0047A27D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				945B53C61AD2D8D90047A27D /* Person.h */,
 				945B53C71AD2D8D90047A27D /* Person.m */,
+				9443B3BA1AE465560003F516 /* MatchedPerson.h */,
+				9443B3BB1AE465560003F516 /* MatchedPerson.m */,
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				94BACD421ADB28D600C52B66 /* AppIcon.xcassets */,
@@ -532,6 +537,7 @@
 				945B53CB1AD493960047A27D /* SwipeDraggableView.m in Sources */,
 				945B53C81AD2D8D90047A27D /* Person.m in Sources */,
 				945B53261AD2342C0047A27D /* AppDelegate.m in Sources */,
+				9443B3BC1AE465560003F516 /* MatchedPerson.m in Sources */,
 				94BACD221ADA16F000C52B66 /* SPGooglePlacesPlaceDetailQuery.m in Sources */,
 				94BACD211ADA16F000C52B66 /* SPGooglePlacesAutocompleteUtilities.m in Sources */,
 				945B53B21AD23D2E0047A27D /* UIColor+FlatColors.m in Sources */,

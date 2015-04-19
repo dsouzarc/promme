@@ -83,8 +83,12 @@ static Person *currentPerson;
             
             for(NSDictionary *result in results) {
                 Person *person = [[Person alloc] initWithEverything:result];
-                NSLog(@"AVAILABLE TO SWIPE: %@", person.name);
                 [self.availablePeopleToSwipe addObject:person];
+            }
+            
+            if(self.availablePeopleToSwipe.count == 0) {
+                [self showAlert:@"Uh Oh" alertMessage:@"Sorry, there is no one to swipe. Please try again later" buttonName:@"ok"];
+                return;
             }
             
             [self showNextPerson];
@@ -245,6 +249,10 @@ static Person *currentPerson;
                     
                     [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
                     self.nameLabel.textColor = [UIColor blackColor];
+                    self.nameLabel.text = [NSString stringWithFormat:@"%@, %@, %@", currentPerson.name, currentPerson.grade, currentPerson.highSchool];
+                    self.nameLabel.numberOfLines = 2;
+                    self.nameLabel.adjustsFontSizeToFitWidth = YES;
+                    
                     
                     [self.loadingAnimation hide];
                 }

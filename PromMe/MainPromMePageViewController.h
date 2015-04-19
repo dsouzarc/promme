@@ -12,7 +12,8 @@
 #import "Person.h"
 #import "UICKeyChainStore.h"
 #import "PQFCirclesInTriangle.h"
-#import "PQFBarsInCircle.h"
+#import "PQFBouncingBalls.h"
+#import "MatchedPerson.h"
 
 #import <Parse/Parse.h>
 

@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *facebookID;
 
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingAnimation;
+@property (strong, nonatomic) PQFBouncingBalls *loadingAnimation2;
 
 - (IBAction)yesIcon:(id)sender;
 - (IBAction)noIcon:(id)sender;
@@ -50,6 +51,10 @@ static Person *currentPerson;
         self.loadingAnimation.center = CGPointMake((self.view.frame.size.width - 100) / 2, (self.view.frame.size.height - 150) / 2);
         self.loadingAnimation.loaderColor = [UIColor blueColor];
         self.loadingAnimation.maxDiam = 150;
+        
+        self.loadingAnimation2 = [[PQFBouncingBalls alloc] initLoaderOnView:self.view];
+        self.loadingAnimation2.loaderColor = [UIColor blueColor];
+        self.loadingAnimation2.jumpAmount = 150;
     }
     
     return self;
@@ -294,9 +299,31 @@ static Person *currentPerson;
 }
 
 - (IBAction)matchesClicked:(id)sender {
-    self.peopleAccepted = [[PeopleAcceptedViewController alloc] initWithNibName:@"PeopleAcceptedViewController" bundle:[NSBundle mainBundle]];
     
-    [self.peopleAccepted showInView:self.view shouldAnimate:YES];
+    [self.loadingAnimation2 show];
+    
+    [PFCloud callFunctionInBackground:@"getMatches" withParameters:@{@"myFBID": self.facebookID} block:^(NSArray *matches, NSError *error) {
+        
+        if(error) {
+            [self showAlert:@"Uh oh" alertMessage:@"Sorry, something went wrong. Please try again" buttonName:@"Ok"];
+            [self.loadingAnimation2 hide];
+            NSLog(error.description);
+            return;
+        }
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+            NSMutableArray *officialMatches = [[NSMutableArray alloc] init];
+            
+            for(NSDictionary *match in matches) {
+                MatchedPerson *matched = [[MatchedPerson alloc] initWithEverything:match];
+                [officialMatches addObject:matched];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [self.loadingAnimation2 hide];
+            });
+        });
+    }];
 }
 
 - (void) showAlert:(NSString*)alertTitle alertMessage:(NSString*)alertMessage buttonName:(NSString*)buttonName {

@@ -195,6 +195,8 @@ static Person *currentPerson;
 
 - (void) showNextPerson {
     
+    [self.loadingAnimation show];
+    
     if(currentPersonIndex >= self.availablePeopleToSwipe.count) {
         [self showAlert:@"Uh oh." alertMessage:@"Sorry, no more people to swipe. Please check back later" buttonName:@"Ok"];
         return;
@@ -225,29 +227,42 @@ static Person *currentPerson;
                     
                     [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
                     self.nameLabel.textColor = [UIColor blackColor];
+                    
+                    [self.loadingAnimation hide];
                 }
                 else {
-                    NSLog(@"ERROR: %@", error.description);
+                    [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to display this user's profile photo" buttonName:@"Ok"];
                 }
             }];
         }
         else {
-            NSLog(@"ERROR: %@", error.description);
+            [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to get this user's profile photo" buttonName:@"Ok"];
         }
     }];
 }
 
 - (void) showNextProfilePhoto
 {
+    [self.loadingAnimation show];
     NSDictionary *parameters = @{@"facebookID": currentPerson.facebookID,
                                  @"pictureNumber": [NSNumber numberWithInt:profilePictureNumber]};
     
     [PFCloud callFunctionInBackground:@"getUserPhoto" withParameters:parameters block:^(PFFile *file, NSError *error) {
         if(!error) {
             [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                self.draggableView.photo = [UIImage imageWithData:data];
-                [self.draggableView setNeedsDisplay];
+                
+                if(!error) {
+                    self.draggableView.photo = [UIImage imageWithData:data];
+                    [self.draggableView setNeedsDisplay];
+                    [self.loadingAnimation hide];
+                }
+                else {
+                    [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to display this user's profile photo" buttonName:@"Ok"];
+                }
             }];
+        }
+        else {
+            [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to get this user's profile photo" buttonName:@"Ok"];
         }
     }];
 }

@@ -120,10 +120,10 @@
                 [self.delegate swipedDirection:self didSwipeLeft:NO];
             }
             
-            if(yDistance > 250) {
+            if(yDistance > 170) {
                 [self.delegate swipedDirection:self didSwipeUp:YES];
             }
-            else if(yDistance < -250) {
+            else if(yDistance < -170) {
                 [self.delegate swipedDirection:self didSwipeUp:NO];
             }
             

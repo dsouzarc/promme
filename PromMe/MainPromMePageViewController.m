@@ -55,7 +55,6 @@ static Person *currentPerson;
     return self;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -96,7 +95,6 @@ static Person *currentPerson;
         }
         
     }];
-
 }
 
 - (IBAction)yesIcon:(id)sender {
@@ -112,38 +110,47 @@ static Person *currentPerson;
     [self loadFriends];
 }
 
-
 - (void) yesPerson {
     self.nameLabel.textColor = [UIColor greenColor];
     self.nameLabel.text = [NSString stringWithFormat:@"%@: Yes", self.nameLabel.text];
-
-    /*NSDictionary *params = @{@"users_facebook_id": self.facebookID,
-                             @"otherFBID": ((Person*)self.availablePeopleToSwipe[counter])[@"users_facebook_id"]
-                             };*
     
-    
-    [PFCloud callFunctionInBackground:@"swiped" withParameters:params block:^(NSString *result, NSError *error) {
-        if(error) {
-            NSLog(@"Error calling swiped: %@", error.description);
-        }
-        else {
-            if([result isEqualToString:@"YES"]) {
-                NSLog(@"Swipe saved");
-            }
-            else {
-                NSLog(@"Swipe problem");
-            }
-        }
-    }]; */
+    [self updateParseWithSwipeDirection:YES];
 
     [self nextPerson];
-    //[self getPeople];
 }
 
 - (void) noPerson {
     self.nameLabel.textColor = [UIColor redColor];
     self.nameLabel.text = [NSString stringWithFormat:@"%@: No", self.nameLabel.text];
+    
+    [self updateParseWithSwipeDirection:NO];
+    
     [self nextPerson];
+}
+
+- (void) updateParseWithSwipeDirection:(BOOL)didSwipeRight
+{
+    NSString *parseFunction, *directionID;
+    if(didSwipeRight) {
+        parseFunction = @"swipeRight";
+        directionID = @"yesFBID";
+    }
+    else {
+        parseFunction = @"swipeLeft";
+        directionID = @"noFBID";
+    }
+    
+    NSDictionary *params = @{@"myFBID": self.facebookID,
+                             directionID: currentPerson.facebookID};
+    
+    [PFCloud callFunctionInBackground:parseFunction withParameters:params block:^(NSString *result, NSError *error) {
+        if(error) {
+            [self showAlert:@"Uh oh" alertMessage:@"Sorry, something went wrong with saving your last swipe" buttonName:@"Ok"];
+        }
+        else {
+            NSLog(@"%@\t%@", parseFunction, result);
+        }
+    }];
 }
 
 - (void) swipedDirection:(SwipeDraggableView *)view didSwipeLeft:(BOOL)didSwipeLeft
@@ -213,7 +220,6 @@ static Person *currentPerson;
             
             [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 if(!error) {
-                    NSLog(@"NO ERROR");
                     self.draggableView = [[SwipeDraggableView alloc] init:currentPerson nameLabel:self.nameLabel photo:[UIImage imageWithData:data]];
                     self.draggableView.delegate = self;
                     

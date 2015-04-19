@@ -11,7 +11,7 @@
 @interface LogInViewController () <CLLocationManagerDelegate>
 
 extern const int NUM_PROFILE_PHOTOS = 5;
-extern const int PROFILE_PHOTO_SIZE = 300;
+extern const int PROFILE_PHOTO_SIZE = 600;
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

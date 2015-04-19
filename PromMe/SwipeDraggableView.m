@@ -77,10 +77,6 @@
     
     //NSLog(@"%f\t%f", xDistance, yDistance);
     
-    if(self.startPoint.x == self.center.x && self.startPoint.y == self.center.y) {
-        NSLog(@"YEP");
-    }
-    
     switch (gestureRecognizer.state) {
             
         case UIGestureRecognizerStateBegan:{
@@ -107,7 +103,7 @@
             else if(rotationAngle > 0) {
                 self.nameLabel.textColor = [UIColor greenColor];
             }
-            else {
+            else if(rotationAngle == 0 || xDistance == 0){
                 self.nameLabel.textColor = [UIColor blackColor];
             }
             

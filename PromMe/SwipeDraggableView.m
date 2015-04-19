@@ -77,28 +77,34 @@
     
     //NSLog(@"%f\t%f", xDistance, yDistance);
     
+    if(self.startPoint.x == self.center.x && self.startPoint.y == self.center.y) {
+        NSLog(@"YEP");
+    }
+    
     switch (gestureRecognizer.state) {
+            
         case UIGestureRecognizerStateBegan:{
             self.startPoint = self.center;
             break;
         };
+            
         case UIGestureRecognizerStateChanged:{
             CGFloat rotationStrength = MIN(xDistance / 320, 1);
-            CGFloat rotationAngel = (CGFloat) (2*M_PI/16 * rotationStrength);
+            CGFloat rotationAngle = (CGFloat) (2*M_PI/16 * rotationStrength);
             CGFloat scaleStrength = 1 - fabsf(rotationStrength) / 4;
             CGFloat scale = MAX(scaleStrength, 0.93);
             
-            CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
+            CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngle);
             CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
             self.transform = scaleTransform;
             self.center = CGPointMake(self.startPoint.x + xDistance, self.startPoint.y + yDistance);
             
             [self updateOverlay:xDistance];
             
-            if(rotationAngel < 0) {
+            if(rotationAngle < 0) {
                 self.nameLabel.textColor = [UIColor redColor];
             }
-            else if(rotationAngel > 0) {
+            else if(rotationAngle > 0) {
                 self.nameLabel.textColor = [UIColor greenColor];
             }
             else {
@@ -107,6 +113,7 @@
             
             break;
         };
+            
         case UIGestureRecognizerStateEnded: {
             [self resetViewPositionAndTransformations];
             
@@ -117,8 +124,16 @@
                 [self.delegate swipedDirection:self didSwipeLeft:NO];
             }
             
+            if(yDistance > 250) {
+                [self.delegate swipedDirection:self didSwipeUp:YES];
+            }
+            else if(yDistance < -250) {
+                [self.delegate swipedDirection:self didSwipeUp:NO];
+            }
+            
             break;
         };
+            
         case UIGestureRecognizerStatePossible:break;
         case UIGestureRecognizerStateCancelled:break;
         case UIGestureRecognizerStateFailed:break;

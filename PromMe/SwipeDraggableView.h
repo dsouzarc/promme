@@ -15,6 +15,7 @@
 @protocol SwipeDraggableViewDelegate <NSObject>
 
 - (void) swipedDirection:(SwipeDraggableView*)view didSwipeLeft:(BOOL)didSwipeLeft;
+- (void) swipedDirection:(SwipeDraggableView *)view didSwipeUp:(BOOL)didSwipeUp;
 
 @end
 

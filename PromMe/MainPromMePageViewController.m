@@ -17,8 +17,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (strong, nonatomic) IBOutlet UIButton *matchesButton;
 
-@property (strong, nonatomic) UITapGestureRecognizer *showNextProfilePictureTapViewGestureRecognizer;
-
 @property (strong, nonatomic) NSMutableArray *availablePeopleToSwipe;
 @property (strong, nonatomic) NSArray *friendsList;
 @property (strong, nonatomic) NSString *facebookID;
@@ -52,9 +50,6 @@ static Person *currentPerson;
         self.loadingAnimation.center = CGPointMake((self.view.frame.size.width - 100) / 2, (self.view.frame.size.height - 150) / 2);
         self.loadingAnimation.loaderColor = [UIColor blueColor];
         self.loadingAnimation.maxDiam = 150;
-        
-        self.showNextProfilePictureTapViewGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextProfilePictureTapGestureRecognizer:)];
-        self.showNextProfilePictureTapViewGestureRecognizer.numberOfTouchesRequired = 1;
     }
     
     return self;
@@ -180,6 +175,24 @@ static Person *currentPerson;
     }
 }
 
+- (void) swipedDirection:(SwipeDraggableView *)view didSwipeUp:(BOOL)didSwipeUp
+{
+    if(didSwipeUp) {
+        profilePictureNumber++;
+        if(profilePictureNumber >= 6) {
+            profilePictureNumber = 1;
+        }
+    }
+    else {
+        profilePictureNumber--;
+        if(profilePictureNumber <= 0) {
+            profilePictureNumber = 5;
+        }
+    }
+    
+    [self showNextProfilePhoto];
+}
+
 - (void) showNextPerson {
     
     if(currentPersonIndex >= self.availablePeopleToSwipe.count) {
@@ -201,10 +214,6 @@ static Person *currentPerson;
                     NSLog(@"NO ERROR");
                     self.draggableView = [[SwipeDraggableView alloc] init:currentPerson nameLabel:self.nameLabel photo:[UIImage imageWithData:data]];
                     self.draggableView.delegate = self;
-                    
-                    self.showNextProfilePictureTapViewGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextProfilePictureTapViewGestureRecognizer)];
-                    self.showNextProfilePictureTapViewGestureRecognizer.numberOfTouchesRequired = 1;
-                    [self.draggableView addGestureRecognizer:self.showNextProfilePictureTapViewGestureRecognizer];
                     
                     self.nameLabel.text = currentPerson.name;
                     
@@ -241,18 +250,6 @@ static Person *currentPerson;
             }];
         }
     }];
-}
-
-- (void) showNextProfilePictureTapGestureRecognizer: (UITapGestureRecognizer*)tapGestureR
-{
-    NSLog(@"TAPPED");
-    profilePictureNumber++;
-    
-    if(profilePictureNumber >= 6) {
-        profilePictureNumber = 1;
-    }
-    
-    [self showNextProfilePhoto];
 }
 
 - (IBAction)matchesClicked:(id)sender {

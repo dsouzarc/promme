@@ -10,4 +10,9 @@
 
 @interface MatchedPersonTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UIImageView *profilePictureView;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *gradeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *schoolLabel;
+
 @end

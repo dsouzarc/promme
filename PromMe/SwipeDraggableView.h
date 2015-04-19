@@ -18,9 +18,10 @@
 
 @end
 
-@interface SwipeDraggableView : UIView
+@interface SwipeDraggableView : UIView <UIGestureRecognizerDelegate>
 
 - (instancetype) init:(Person*)person nameLabel:(UILabel*)nameLabel photo:(UIImage*)photo;
+
 @property (strong, nonatomic) UIImage *photo;
 
 @property (nonatomic, weak) id<SwipeDraggableViewDelegate> delegate;

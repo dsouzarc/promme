@@ -31,10 +31,9 @@
     
     self.nameLabel = nameLabel;
     self.nameLabel.textColor = [UIColor blackColor];
-    
     self.backgroundColor = [UIColor blackColor];
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
     
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
     [self addGestureRecognizer:self.panGestureRecognizer];
 
     self.layer.cornerRadius = 8;
@@ -53,7 +52,7 @@
     
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
     [self addGestureRecognizer:self.panGestureRecognizer];
-    
+
     self.overlay = [[SwipeDraggableOverlay alloc] initWithFrame:self.bounds];
     self.overlay.alpha = 0;
     [self addSubview:self.overlay];
@@ -70,7 +69,6 @@
     
     [image drawInRect:CGRectMake(self.startPoint.x, self.startPoint.y, image.size.width, image.size.height)];
 }
-
 
 - (void)dragged:(UIPanGestureRecognizer *)gestureRecognizer
 {

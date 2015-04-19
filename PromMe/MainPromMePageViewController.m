@@ -17,11 +17,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (strong, nonatomic) IBOutlet UIButton *matchesButton;
 
-- (IBAction)yesIcon:(id)sender;
-- (IBAction)noIcon:(id)sender;
-
-- (IBAction)searchPreferencesButton:(id)sender;
-- (IBAction)matchesClicked:(id)sender;
+@property (strong, nonatomic) UITapGestureRecognizer *showNextProfilePictureTapViewGestureRecognizer;
 
 @property (strong, nonatomic) NSMutableArray *availablePeopleToSwipe;
 @property (strong, nonatomic) NSArray *friendsList;
@@ -29,13 +25,19 @@
 
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingAnimation;
 
+- (IBAction)yesIcon:(id)sender;
+- (IBAction)noIcon:(id)sender;
+
+- (IBAction)searchPreferencesButton:(id)sender;
+- (IBAction)matchesClicked:(id)sender;
+
 @end
 
 @implementation MainPromMePageViewController
 
-static int counter = 0;
-
-static int randomPerson;
+static int profilePictureNumber = 1;
+static int currentPersonIndex = 0;
+static Person *currentPerson;
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,6 +52,9 @@ static int randomPerson;
         self.loadingAnimation.center = CGPointMake((self.view.frame.size.width - 100) / 2, (self.view.frame.size.height - 150) / 2);
         self.loadingAnimation.loaderColor = [UIColor blueColor];
         self.loadingAnimation.maxDiam = 150;
+        
+        self.showNextProfilePictureTapViewGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextProfilePictureTapGestureRecognizer:)];
+        self.showNextProfilePictureTapViewGestureRecognizer.numberOfTouchesRequired = 1;
     }
     
     return self;
@@ -58,9 +63,11 @@ static int randomPerson;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self loadFriends];
 }
 
+/** GETS AVAILABLE PEOPLE TO SWIPE FROM PARSE */
 - (void) loadFriends
 {
     [self.loadingAnimation show];
@@ -82,6 +89,7 @@ static int randomPerson;
             
             for(NSDictionary *result in results) {
                 Person *person = [[Person alloc] initWithEverything:result];
+                NSLog(@"AVAILABLE TO SWIPE: %@", person.name);
                 [self.availablePeopleToSwipe addObject:person];
             }
             
@@ -106,12 +114,9 @@ static int randomPerson;
 
 - (IBAction)searchPreferencesButton:(id)sender {
     NSLog(@"Getting people");
-    [self getPeople];
+    [self loadFriends];
 }
 
-- (void) getPeople {
-    
-    }
 
 - (void) yesPerson {
     self.nameLabel.textColor = [UIColor greenColor];
@@ -157,6 +162,8 @@ static int randomPerson;
 }
 
 - (void) nextPerson {
+    currentPersonIndex++;
+    
     self.view.window.backgroundColor = [UIColor whiteColor];
     
     if(self.draggableView) {
@@ -175,12 +182,15 @@ static int randomPerson;
 
 - (void) showNextPerson {
     
-    Person *nextPerson = [self.availablePeopleToSwipe firstObject];
-    [self.availablePeopleToSwipe removeObject:nextPerson];
+    if(currentPersonIndex >= self.availablePeopleToSwipe.count) {
+        [self showAlert:@"Uh oh." alertMessage:@"Sorry, no more people to swipe. Please check back later" buttonName:@"Ok"];
+        return;
+    }
     
-    NSDictionary *parameters = @{@"facebookID": nextPerson.facebookID,
-                                 @"pictureNumber": @0
-                                 };
+    currentPerson = self.availablePeopleToSwipe[currentPersonIndex];
+    
+    NSDictionary *parameters = @{@"facebookID": currentPerson.facebookID,
+                                 @"pictureNumber": [NSNumber numberWithInt:1]};
     
     [PFCloud callFunctionInBackground:@"getUserPhoto" withParameters:parameters block:^(PFFile *file, NSError *error) {
         
@@ -189,9 +199,14 @@ static int randomPerson;
             [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 if(!error) {
                     NSLog(@"NO ERROR");
-                    self.draggableView = [[SwipeDraggableView alloc] init:self.friendsList[randomPerson] nameLabel:self.nameLabel photo:[UIImage imageWithData:data]];
+                    self.draggableView = [[SwipeDraggableView alloc] init:currentPerson nameLabel:self.nameLabel photo:[UIImage imageWithData:data]];
                     self.draggableView.delegate = self;
-                    self.nameLabel.text = ((Person*)self.friendsList[randomPerson]).name;
+                    
+                    self.showNextProfilePictureTapViewGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextProfilePictureTapViewGestureRecognizer)];
+                    self.showNextProfilePictureTapViewGestureRecognizer.numberOfTouchesRequired = 1;
+                    [self.draggableView addGestureRecognizer:self.showNextProfilePictureTapViewGestureRecognizer];
+                    
+                    self.nameLabel.text = currentPerson.name;
                     
                     [self.view addSubview:self.draggableView];
                     
@@ -201,8 +216,6 @@ static int randomPerson;
                     
                     [self.draggableView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds))];
                     self.nameLabel.textColor = [UIColor blackColor];
-                    counter++;
-                    randomPerson = arc4random() % self.friendsList.count;
                 }
                 else {
                     NSLog(@"ERROR: %@", error.description);
@@ -215,10 +228,46 @@ static int randomPerson;
     }];
 }
 
+- (void) showNextProfilePhoto
+{
+    NSDictionary *parameters = @{@"facebookID": currentPerson.facebookID,
+                                 @"pictureNumber": [NSNumber numberWithInt:profilePictureNumber]};
+    
+    [PFCloud callFunctionInBackground:@"getUserPhoto" withParameters:parameters block:^(PFFile *file, NSError *error) {
+        if(!error) {
+            [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                self.draggableView.photo = [UIImage imageWithData:data];
+                [self.draggableView setNeedsDisplay];
+            }];
+        }
+    }];
+}
+
+- (void) showNextProfilePictureTapGestureRecognizer: (UITapGestureRecognizer*)tapGestureR
+{
+    NSLog(@"TAPPED");
+    profilePictureNumber++;
+    
+    if(profilePictureNumber >= 6) {
+        profilePictureNumber = 1;
+    }
+    
+    [self showNextProfilePhoto];
+}
+
 - (IBAction)matchesClicked:(id)sender {
     self.peopleAccepted = [[PeopleAcceptedViewController alloc] initWithNibName:@"PeopleAcceptedViewController" bundle:[NSBundle mainBundle]];
     
     [self.peopleAccepted showInView:self.view shouldAnimate:YES];
+}
+
+- (void) showAlert:(NSString*)alertTitle alertMessage:(NSString*)alertMessage buttonName:(NSString*)buttonName {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:buttonName
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 

@@ -72,7 +72,7 @@ static Person *currentPerson;
                              @"isSchool": @true,
                              @"highschool": @"Princeton High School",
                              @"isGender": @true,
-                             @"gender": @"Female"};
+                             @"gender": @"Male"};
     
     [PFCloud callFunctionInBackground:@"getPeopleToSwipe" withParameters:params block:^(NSArray *results, NSError *error) {
         
@@ -98,10 +98,22 @@ static Person *currentPerson;
 }
 
 - (IBAction)yesIcon:(id)sender {
+    
+    if(self.availablePeopleToSwipe.count == 0) {
+        [self showAlert:@"Whoops" alertMessage:@"Sorry, there's no one to swipe" buttonName:@"Ok"];
+        return;
+    }
+    
     [self yesPerson];
 }
 
 - (IBAction)noIcon:(id)sender {
+    
+    if(self.availablePeopleToSwipe.count == 0) {
+        [self showAlert:@"Whoops" alertMessage:@"Sorry, there's no one to swipe" buttonName:@"Ok"];
+        return;
+    }
+    
     [self noPerson];
 }
 
@@ -287,6 +299,5 @@ static Person *currentPerson;
                                               otherButtonTitles:nil, nil];
     [alertView show];
 }
-
 
 @end

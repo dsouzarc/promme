@@ -11,7 +11,7 @@
 @interface LogInViewController () <CLLocationManagerDelegate>
 
 extern const int NUM_PROFILE_PHOTOS = 5;
-extern const int PROFILE_PHOTO_SIZE = 600;
+extern const int PROFILE_PHOTO_SIZE = 300;
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -283,7 +283,7 @@ static int profilePictureCounter = 0;
         [self showAlert:@"Invalid Information" alertMessage:@"Please login with Facebook" buttonName:@"Ok"];
         return;
     }
-    for(int i = 0; i < self.hasCustomizedPhoto.count; i++) {
+    for(int i = 1; i < self.hasCustomizedPhoto.count; i++) {
         if(![self.hasCustomizedPhoto[i] boolValue]) {
             [self showAlert:@"Invalid Information" alertMessage:@"Please customize all profile photos in the ScrollView" buttonName:@"Ok"];
             return;

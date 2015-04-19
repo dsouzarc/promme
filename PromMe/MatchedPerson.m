@@ -19,10 +19,8 @@
         
         PFFile *file = dictionary[@"profilePhoto1"];
         
-        self.profilePicture = (UIImage*)[file getData];
-        
+        self.profilePicture = [UIImage imageWithData:[file getData]];
     }
-    
     return self;
 }
 

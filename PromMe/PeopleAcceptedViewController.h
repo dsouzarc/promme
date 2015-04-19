@@ -7,7 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "MatchedPersonTableViewCell.h"
+#import "MatchedPerson.h"
 
-@interface PeopleAcceptedViewController : ViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
-- (void) showInView:(UIView *)view shouldAnimate:(BOOL)shouldAnimate;
+@interface PeopleAcceptedViewController : ViewController <UITableViewDelegate, UITableViewDataSource>
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil matchedPeople:(NSArray*)matchedPeople;
+
 @end

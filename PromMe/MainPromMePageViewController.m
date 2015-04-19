@@ -321,6 +321,10 @@ static Person *currentPerson;
             
             dispatch_async(dispatch_get_main_queue(), ^(void) {
                 [self.loadingAnimation2 hide];
+                
+                self.peopleAccepted = [[PeopleAcceptedViewController alloc] initWithNibName:@"PeopleAcceptedViewController" bundle:[NSBundle mainBundle] matchedPeople:officialMatches];
+                self.modalPresentationStyle = UIModalPresentationFullScreen;
+                [self presentViewController:self.peopleAccepted animated:YES completion:nil];
             });
         });
     }];

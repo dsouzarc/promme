@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UILabel *noMatchesLabel;
 
 @property (strong, nonatomic) NSArray *people;
+
 - (IBAction)backClick:(id)sender;
 
 @end
@@ -38,7 +39,9 @@
 {
     [super viewDidLoad];
     
-    [self.mainView registerNib:[UINib nibWithNibName:@"MatchedPersonTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@TABLE_IDENTIFIER];
+    [self.mainView registerNib:[UINib nibWithNibName:@"MatchedPersonTableViewCell"
+                                              bundle:[NSBundle mainBundle]]
+        forCellReuseIdentifier:@TABLE_IDENTIFIER];
 }
 
 -(UIImage*)resizeImage:(UIImage *)image imageSize:(CGSize)size
@@ -50,11 +53,13 @@
     return newImage;
 }
 
-- (IBAction)backClick:(id)sender {
+- (IBAction)backClick:(id)sender
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) showAlert:(NSString*)alertTitle alertMessage:(NSString*)alertMessage buttonName:(NSString*)buttonName {
+- (void) showAlert:(NSString*)alertTitle alertMessage:(NSString*)alertMessage buttonName:(NSString*)buttonName
+{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
                                                         message:alertMessage
                                                        delegate:nil
@@ -103,7 +108,12 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //TODO: NO MATCHES
-    if(self.people.count == 0) {
+    if(self.people.count == 1) {
+        self.noMatchesLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        self.noMatchesLabel.text = @"Sorry, but you have no matches";
+        self.noMatchesLabel.textAlignment = NSTextAlignmentCenter;
+        self.mainView.backgroundView = self.noMatchesLabel;
+        self.mainView.separatorStyle = UITableViewCellSeparatorStyleNone;
         return 0;
     }
     

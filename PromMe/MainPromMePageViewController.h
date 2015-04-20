@@ -11,6 +11,7 @@
 #import "PeopleAcceptedViewController.h"
 #import "Person.h"
 #import "UICKeyChainStore.h"
+#import "SearchPreferencesViewController.h"
 #import "PQFCirclesInTriangle.h"
 #import "PQFBouncingBalls.h"
 #import "MatchedPerson.h"

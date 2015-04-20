@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchPreferencesViewController">
             <connections>
-                <outlet property="cancel" destination="gIh-5Q-tAu" id="4R8-i4-Rwk"/>
                 <outlet property="distanceLabel" destination="9VS-Yk-IpG" id="309-ZF-beE"/>
+                <outlet property="distanceSlider" destination="ZUc-uA-Db8" id="s31-Lx-C8L"/>
                 <outlet property="genderSegmentedControl" destination="EJQ-rc-iNv" id="b7e-Aj-Y10"/>
                 <outlet property="highSchoolTextField" destination="R1H-kl-1fF" id="l84-wy-8UB"/>
                 <outlet property="isDistanceSwitch" destination="w9f-LF-B3Y" id="ZCU-4n-U04"/>
@@ -30,7 +30,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="savePreferences:" destination="-1" eventType="touchUpInside" id="GhS-h4-S0w"/>
+                                <action selector="savePreferences:" destination="-1" eventType="touchUpInside" id="vOS-UY-Zsr"/>
                             </connections>
                         </button>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EJQ-rc-iNv">
@@ -41,7 +41,7 @@
                                 <segment title="Everyone"/>
                             </segments>
                         </segmentedControl>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-TZ-ixf">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender(s) to show" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-TZ-ixf">
                             <rect key="frame" x="8" y="190" width="203" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -62,7 +62,7 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZUc-uA-Db8">
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ZUc-uA-Db8">
                             <rect key="frame" x="6" y="343" width="207" height="31"/>
                             <connections>
                                 <action selector="distanceSlider:" destination="-1" eventType="valueChanged" id="QzT-AY-e7i"/>
@@ -94,6 +94,9 @@
                             <state key="normal" title="X">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Aid-T7-Naj"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

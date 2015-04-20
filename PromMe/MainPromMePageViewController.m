@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) SwipeDraggableView *draggableView;
 @property (strong, nonatomic) PeopleAcceptedViewController *peopleAccepted;
+@property (strong, nonatomic) SearchPreferencesViewController *searchPreferences;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *detailsLabel;
@@ -55,6 +56,8 @@ static Person *currentPerson;
         self.loadingAnimation2 = [[PQFBouncingBalls alloc] initLoaderOnView:self.view];
         self.loadingAnimation2.loaderColor = [UIColor blueColor];
         self.loadingAnimation2.jumpAmount = 150;
+        
+        self.searchPreferences = [[SearchPreferencesViewController alloc] initWithNibName:@"SearchPreferencesViewController" bundle:[NSBundle mainBundle]];
     }
     
     return self;
@@ -127,8 +130,7 @@ static Person *currentPerson;
 }
 
 - (IBAction)searchPreferencesButton:(id)sender {
-    NSLog(@"Getting people");
-    [self loadFriends];
+    [self presentViewController:self.searchPreferences animated:YES completion:nil];
 }
 
 - (void) yesPerson {

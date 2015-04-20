@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "UICKeyChainStore.h"
 
-@interface SearchPreferencesViewController : UIViewController
-
-- (void) showInView:(UIView *)view shouldAnimate:(BOOL)shouldAnimate;
+@interface SearchPreferencesViewController : UIViewController <UITextFieldDelegate>
 
 @end

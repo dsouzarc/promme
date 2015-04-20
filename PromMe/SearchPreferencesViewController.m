@@ -20,66 +20,108 @@
 
 @property (strong, nonatomic) IBOutlet UISwitch *isDistanceSwitch;
 @property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UISlider *distanceSlider;
 
-@property (strong, nonatomic) IBOutlet UIButton *cancel;
+@property (strong, nonatomic) UICKeyChainStore *keyChain;
 
-- (IBAction)savePreferences:(id)sender;
 - (IBAction)distanceSlider:(id)sender;
+- (IBAction)cancel:(id)sender;
+- (IBAction)savePreferences:(id)sender;
 
 @end
 
 @implementation SearchPreferencesViewController
 
-- (IBAction)savePreferences:(id)sender {
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
+    if(self) {
+        self.keyChain = [[UICKeyChainStore alloc] init];
+    }
+    
+    return self;
 }
 
 - (IBAction)distanceSlider:(id)sender {
-    
+    self.distanceLabel.text = [NSString stringWithFormat:@"Show people within %.2f miles", self.distanceSlider.value];
 }
+
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)viewDidLoad
 {
-    self.view.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:.6];
-    self.mainView.layer.cornerRadius = 5;
+    self.view.backgroundColor=[[UIColor grayColor] colorWithAlphaComponent:.6];
+    self.mainView.layer.cornerRadius = 15;
+    self.mainView.layer.shadowColor = [[UIColor blueColor]CGColor];
     self.mainView.layer.shadowOpacity = 0.8;
-    self.mainView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    self.mainView.layer.shadowOffset = CGSizeMake(2.0f, 2.0f);
+
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapReceived:)];
+    [tapGestureRecognizer setDelegate:self];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+    
+    self.distanceSlider.value = self.keyChain[@"distance"] == nil ? 50.00 : [self.keyChain[@"distance"] floatValue];
+    self.highSchoolTextField.text = self.keyChain[@"school"] == nil ? @"" : self.keyChain[@"school"];
+    
+    if(self.keyChain[@"useHighSchool"]) {
+        [self.isHighSchoolSwitch setOn:YES animated:YES];
+    }
+    else {
+        [self.isHighSchoolSwitch setOn:NO animated:YES];
+    }
+    if(self.keyChain[@"isDistance"]) {
+        [self.isDistanceSwitch setOn:YES animated:YES];
+    }
+    else {
+        [self.isDistanceSwitch setOn:NO animated:YES];
+    }
+    
+    if(!self.keyChain[@"genderToShow"]) {
+        [self.genderSegmentedControl setSelectedSegmentIndex:0];
+    }
+    else if([self.keyChain[@"genderToShow"] isEqualToString:@"Male"]) {
+        [self.genderSegmentedControl setSelectedSegmentIndex:0];
+    }
+    else if([self.keyChain[@"genderToShow"] isEqualToString:@"Female"]) {
+        [self.genderSegmentedControl setSelectedSegmentIndex:1];
+    }
+    else {
+        [self.genderSegmentedControl setSelectedSegmentIndex:2];
+    }
+    
+    self.distanceLabel.text = [NSString stringWithFormat:@"Show people within %.2f miles", self.distanceSlider.value];
     
     [super viewDidLoad];
 }
 
-- (void) showAnimate
-{
-    self.view.transform = CGAffineTransformMakeScale(1.3, 1.3);
-    self.view.alpha = 0;
+- (IBAction)savePreferences:(id)sender {
     
-    [UIView animateWithDuration:0.25 animations:^(void) {
-        self.view.alpha = 1;
-        self.view.transform = CGAffineTransformMakeScale(1, 1);
-    }];
-}
-
-- (void) removeAnimate
-{
-    [UIView animateWithDuration:0.25 animations:^(void) {
-        self.view.transform = CGAffineTransformMakeScale(1.3, 1.3);
-        self.view.alpha = 0;
-    } completion:^(BOOL finished) {
-        if(finished) {
-            [self.view removeFromSuperview];
-        }
-    }];
-}
-
-- (void) showInView:(UIView *)view shouldAnimate:(BOOL)shouldAnimate
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [view addSubview:self.view];
-        
-        if(shouldAnimate) {
-            [self showAnimate];
-        }
-    });
+    self.keyChain[@"useHighSchool"] = [[NSNumber numberWithBool:self.isHighSchoolSwitch.isOn] stringValue];
+    self.keyChain[@"school"] = self.highSchoolTextField.text;
+    
+    switch(self.genderSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            self.keyChain[@"genderToShow"] = @"Male";
+            break;
+        case 1:
+            self.keyChain[@"genderToShow"] = @"Female";
+            break;
+        case 2:
+            self.keyChain[@"genderToShow"] = @"Everyone";
+            break;
+        default:
+            self.keyChain[@"genderToShow"] = @"Everyone";
+            break;
+    }
+    
+    self.keyChain[@"distance"] = [[NSNumber numberWithFloat:self.distanceSlider.value] stringValue];
+    self.keyChain[@"isDistance"] = [[NSNumber numberWithBool:self.isDistanceSwitch.isOn] stringValue];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -96,4 +138,14 @@
     //Remove the flow effect
     textField.layer.borderColor=[[UIColor clearColor]CGColor];
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
+-(void)tapReceived:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    [self.view endEditing:YES];
+}
+
 @end

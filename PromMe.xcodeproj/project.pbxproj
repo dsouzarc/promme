@@ -245,8 +245,8 @@
 				947C4D081AE474A400C55B41 /* People Object-Oriented */,
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
-				94BACD421ADB28D600C52B66 /* AppIcon.xcassets */,
 				945B53251AD2342C0047A27D /* AppDelegate.m */,
+				94BACD421ADB28D600C52B66 /* AppIcon.xcassets */,
 				94BACD2A1ADA2B8C00C52B66 /* PNG Files */,
 				945B532F1AD2342C0047A27D /* LaunchScreen.xib */,
 				945B532A1AD2342C0047A27D /* Main.storyboard */,
@@ -728,7 +728,7 @@
 					"/Users/Ryan/Downloads/parse-library-1.7.1",
 				);
 				INFOPLIST_FILE = PromMe/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -746,7 +746,7 @@
 					"/Users/Ryan/Downloads/parse-library-1.7.1",
 				);
 				INFOPLIST_FILE = PromMe/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

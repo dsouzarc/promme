@@ -54,6 +54,8 @@
 		947C4D041AE46C3500C55B41 /* MatchedPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C4D021AE46C3500C55B41 /* MatchedPersonTableViewCell.m */; };
 		947C4D051AE46C3500C55B41 /* MatchedPersonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 947C4D031AE46C3500C55B41 /* MatchedPersonTableViewCell.xib */; };
 		947C4D0B1AE47B1000C55B41 /* myImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 947C4D0A1AE47B1000C55B41 /* myImage.png */; };
+		947C4D0F1AE485F400C55B41 /* SearchPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C4D0D1AE485F400C55B41 /* SearchPreferencesViewController.m */; };
+		947C4D101AE485F400C55B41 /* SearchPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 947C4D0E1AE485F400C55B41 /* SearchPreferencesViewController.xib */; };
 		94BACD151ADA15A800C52B66 /* ApiConfigurations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */; };
 		94BACD1F1ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD181ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.m */; };
 		94BACD201ADA16F000C52B66 /* SPGooglePlacesAutocompleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD1A1ADA16F000C52B66 /* SPGooglePlacesAutocompleteQuery.m */; };
@@ -153,6 +155,9 @@
 		947C4D021AE46C3500C55B41 /* MatchedPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchedPersonTableViewCell.m; sourceTree = "<group>"; };
 		947C4D031AE46C3500C55B41 /* MatchedPersonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchedPersonTableViewCell.xib; sourceTree = "<group>"; };
 		947C4D0A1AE47B1000C55B41 /* myImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myImage.png; sourceTree = "<group>"; };
+		947C4D0C1AE485F400C55B41 /* SearchPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPreferencesViewController.h; sourceTree = "<group>"; };
+		947C4D0D1AE485F400C55B41 /* SearchPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPreferencesViewController.m; sourceTree = "<group>"; };
+		947C4D0E1AE485F400C55B41 /* SearchPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPreferencesViewController.xib; sourceTree = "<group>"; };
 		94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiConfigurations.plist; sourceTree = "<group>"; };
 		94BACD161ADA16F000C52B66 /* SPGooglePlacesAutocomplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocomplete.h; sourceTree = "<group>"; };
 		94BACD171ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocompletePlace.h; sourceTree = "<group>"; };
@@ -227,6 +232,9 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
+				947C4D0C1AE485F400C55B41 /* SearchPreferencesViewController.h */,
+				947C4D0D1AE485F400C55B41 /* SearchPreferencesViewController.m */,
+				947C4D0E1AE485F400C55B41 /* SearchPreferencesViewController.xib */,
 				947C4D071AE4749900C55B41 /* Login Views */,
 				947C4D061AE4748B00C55B41 /* Matched People Views */,
 				947C4D091AE474BD00C55B41 /* Tinder UI Views */,
@@ -534,6 +542,7 @@
 				947C4D0B1AE47B1000C55B41 /* myImage.png in Resources */,
 				94BACD151ADA15A800C52B66 /* ApiConfigurations.plist in Resources */,
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
+				947C4D101AE485F400C55B41 /* SearchPreferencesViewController.xib in Resources */,
 				94BACD281ADA171400C52B66 /* ChooseAddressViewController.xib in Resources */,
 				94BACD451ADD91F500C52B66 /* no_picture_image.png in Resources */,
 				945B53D81AD6002B0047A27D /* fire.png in Resources */,
@@ -564,6 +573,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				945B53BD1AD2B7100047A27D /* LogInViewController.m in Sources */,
+				947C4D0F1AE485F400C55B41 /* SearchPreferencesViewController.m in Sources */,
 				945B53AC1AD23D2E0047A27D /* UIColor+Chameleon.m in Sources */,
 				94BACD1F1ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				94BACD271ADA171400C52B66 /* ChooseAddressViewController.m in Sources */,

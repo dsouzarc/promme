@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchPreferencesViewController">
+            <connections>
+                <outlet property="cancel" destination="gIh-5Q-tAu" id="4R8-i4-Rwk"/>
+                <outlet property="distanceLabel" destination="9VS-Yk-IpG" id="309-ZF-beE"/>
+                <outlet property="genderSegmentedControl" destination="EJQ-rc-iNv" id="b7e-Aj-Y10"/>
+                <outlet property="highSchoolTextField" destination="R1H-kl-1fF" id="l84-wy-8UB"/>
+                <outlet property="isDistanceSwitch" destination="w9f-LF-B3Y" id="ZCU-4n-U04"/>
+                <outlet property="isHighSchoolSwitch" destination="AwR-Wh-vTf" id="Bd8-F4-TKd"/>
+                <outlet property="mainView" destination="Fji-SI-SR9" id="d1U-xj-Wyj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="5sd-Zt-ZYq"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fji-SI-SR9">
+                    <rect key="frame" x="78" y="103" width="219" height="461"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkR-aA-kYg">
+                            <rect key="frame" x="8" y="407" width="203" height="30"/>
+                            <state key="normal" title="Save Preferences">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="savePreferences:" destination="-1" eventType="touchUpInside" id="GhS-h4-S0w"/>
+                            </connections>
+                        </button>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EJQ-rc-iNv">
+                            <rect key="frame" x="4" y="216" width="212" height="29"/>
+                            <segments>
+                                <segment title="Male"/>
+                                <segment title="Female"/>
+                                <segment title="Everyone"/>
+                            </segments>
+                        </segmentedControl>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-TZ-ixf">
+                            <rect key="frame" x="8" y="190" width="203" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w9f-LF-B3Y">
+                            <rect key="frame" x="162" y="276" width="51" height="31"/>
+                        </switch>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcB-KC-ldc">
+                            <rect key="frame" x="8" y="281" width="125" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Radius in Miles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VS-Yk-IpG">
+                            <rect key="frame" x="8" y="323" width="203" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZUc-uA-Db8">
+                            <rect key="frame" x="6" y="343" width="207" height="31"/>
+                            <connections>
+                                <action selector="distanceSlider:" destination="-1" eventType="valueChanged" id="QzT-AY-e7i"/>
+                            </connections>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Highschool" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAs-8f-FEO">
+                            <rect key="frame" x="4" y="78" width="122" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AwR-Wh-vTf">
+                            <rect key="frame" x="162" y="73" width="51" height="31"/>
+                        </switch>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Princeton High School" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R1H-kl-1fF">
+                            <rect key="frame" x="4" y="128" width="207" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="6le-DF-fyV"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIh-5Q-tAu">
+                            <rect key="frame" x="4" y="4" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="drp-K5-qKo"/>
+                                <constraint firstAttribute="width" constant="30" id="pGB-UR-KkK"/>
+                            </constraints>
+                            <state key="normal" title="X">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="w9f-LF-B3Y" secondAttribute="trailing" constant="8" id="0TD-Fz-Tx2"/>
+                        <constraint firstItem="9VS-Yk-IpG" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="8" id="0Uc-uC-0Ll"/>
+                        <constraint firstAttribute="trailing" secondItem="fkR-aA-kYg" secondAttribute="trailing" constant="8" id="2Eg-IE-VRM"/>
+                        <constraint firstAttribute="trailing" secondItem="9VS-Yk-IpG" secondAttribute="trailing" constant="8" id="2r9-Jg-xYr"/>
+                        <constraint firstItem="R1H-kl-1fF" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="4" id="6Hw-4P-VGe"/>
+                        <constraint firstItem="fkR-aA-kYg" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="8" id="6yb-CT-JPU"/>
+                        <constraint firstItem="kcB-KC-ldc" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="8" id="9Oq-AR-y6a"/>
+                        <constraint firstItem="rAs-8f-FEO" firstAttribute="centerY" secondItem="AwR-Wh-vTf" secondAttribute="centerY" id="AxY-ot-s0n"/>
+                        <constraint firstItem="EJQ-rc-iNv" firstAttribute="top" secondItem="9e3-TZ-ixf" secondAttribute="bottom" constant="8" id="Ch6-QQ-DGI"/>
+                        <constraint firstItem="rAs-8f-FEO" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="4" id="DUi-qV-SgM"/>
+                        <constraint firstAttribute="centerX" secondItem="EJQ-rc-iNv" secondAttribute="centerX" id="JC7-X7-aHM"/>
+                        <constraint firstItem="9e3-TZ-ixf" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="8" id="LXf-Fr-yRY"/>
+                        <constraint firstItem="fkR-aA-kYg" firstAttribute="top" secondItem="9VS-Yk-IpG" secondAttribute="bottom" constant="63" id="NHY-5w-I4y"/>
+                        <constraint firstItem="ZUc-uA-Db8" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="8" id="PcR-6o-HHM"/>
+                        <constraint firstItem="9e3-TZ-ixf" firstAttribute="top" secondItem="R1H-kl-1fF" secondAttribute="bottom" constant="32" id="Rkh-rC-bQ2"/>
+                        <constraint firstAttribute="bottom" secondItem="fkR-aA-kYg" secondAttribute="bottom" constant="24" id="S6F-Sw-L64"/>
+                        <constraint firstAttribute="trailing" secondItem="ZUc-uA-Db8" secondAttribute="trailing" constant="8" id="T3d-vS-Rs2"/>
+                        <constraint firstItem="ZUc-uA-Db8" firstAttribute="top" secondItem="w9f-LF-B3Y" secondAttribute="bottom" constant="36" id="TEe-Yc-byD"/>
+                        <constraint firstItem="R1H-kl-1fF" firstAttribute="top" secondItem="AwR-Wh-vTf" secondAttribute="bottom" constant="24" id="VVC-yE-FA9"/>
+                        <constraint firstItem="9VS-Yk-IpG" firstAttribute="top" secondItem="w9f-LF-B3Y" secondAttribute="bottom" constant="16" id="WFy-QV-fxX"/>
+                        <constraint firstAttribute="trailing" secondItem="9e3-TZ-ixf" secondAttribute="trailing" constant="8" id="WaG-c5-E4z"/>
+                        <constraint firstItem="fkR-aA-kYg" firstAttribute="top" secondItem="ZUc-uA-Db8" secondAttribute="bottom" constant="34" id="aYJ-cq-HSE"/>
+                        <constraint firstItem="kcB-KC-ldc" firstAttribute="centerY" secondItem="w9f-LF-B3Y" secondAttribute="centerY" id="aqz-xZ-7SE"/>
+                        <constraint firstItem="w9f-LF-B3Y" firstAttribute="top" secondItem="EJQ-rc-iNv" secondAttribute="bottom" constant="32" id="c57-c6-4b5"/>
+                        <constraint firstItem="gIh-5Q-tAu" firstAttribute="top" secondItem="Fji-SI-SR9" secondAttribute="top" constant="4" id="cXs-YM-h99"/>
+                        <constraint firstItem="w9f-LF-B3Y" firstAttribute="leading" secondItem="kcB-KC-ldc" secondAttribute="trailing" constant="29" id="dtA-9I-XTZ"/>
+                        <constraint firstAttribute="centerY" secondItem="EJQ-rc-iNv" secondAttribute="centerY" id="eil-Bo-usJ"/>
+                        <constraint firstAttribute="trailing" secondItem="AwR-Wh-vTf" secondAttribute="trailing" constant="8" id="pTw-Fd-0Vd"/>
+                        <constraint firstItem="gIh-5Q-tAu" firstAttribute="leading" secondItem="Fji-SI-SR9" secondAttribute="leading" constant="4" id="sj2-NJ-D3v"/>
+                        <constraint firstItem="R1H-kl-1fF" firstAttribute="leading" secondItem="EJQ-rc-iNv" secondAttribute="leading" id="utd-34-ljU"/>
+                        <constraint firstAttribute="trailing" secondItem="R1H-kl-1fF" secondAttribute="trailing" constant="8" id="vPv-HT-3j7"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Fji-SI-SR9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2kb-IK-tPk"/>
+                <constraint firstItem="Fji-SI-SR9" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ywS-CH-ccN"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="295.5" y="391.5"/>
+        </view>
+    </objects>
+</document>

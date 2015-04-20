@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *mainView;
 
+@property (strong, nonatomic) MFMessageComposeViewController *messageController;
+
 @property (strong, nonatomic) UILabel *noMatchesLabel;
 
 @property (strong, nonatomic) NSArray *people;
@@ -30,6 +32,7 @@
     
     if(self) {
         self.people = matchedPeople;
+        self.messageController = [[MFMessageComposeViewController alloc] init];
     }
     
     return self;
@@ -124,12 +127,11 @@
 {
     MatchedPerson *person = self.people[indexPath.row];
     
-    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
-    messageController.recipients = [NSArray arrayWithObjects:person.phoneNumber, nil];
-    messageController.messageComposeDelegate = self;
+    self.messageController.recipients = [NSArray arrayWithObjects:person.phoneNumber, nil];
+    self.messageController.messageComposeDelegate = self;
     
     if([MFMessageComposeViewController canSendText]) {
-        [self presentViewController:messageController animated:YES completion:nil];
+        [self presentViewController:self.messageController animated:YES completion:nil];
     }
     else {
         NSString *message = [NSString stringWithFormat:@"Sorry, we could not send that person a text. Their phone number is: %@", person.phoneNumber];

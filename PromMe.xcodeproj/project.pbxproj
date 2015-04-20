@@ -233,6 +233,7 @@
 				94BACD291ADA2B7700C52B66 /* Location Finding */,
 				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
 				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
+				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				947C4D081AE474A400C55B41 /* People Object-Oriented */,
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
@@ -392,7 +393,6 @@
 		947C4D081AE474A400C55B41 /* People Object-Oriented */ = {
 			isa = PBXGroup;
 			children = (
-				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				945B53C61AD2D8D90047A27D /* Person.h */,
 				945B53C71AD2D8D90047A27D /* Person.m */,
 				9443B3BA1AE465560003F516 /* MatchedPerson.h */,

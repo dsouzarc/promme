@@ -15,9 +15,10 @@
 #import "PQFCirclesInTriangle.h"
 #import "PQFBouncingBalls.h"
 #import "MatchedPerson.h"
+#import "UICKeyChainStore.h"
 
 #import <Parse/Parse.h>
 
-@interface MainPromMePageViewController : ViewController <SwipeDraggableViewDelegate>
+@interface MainPromMePageViewController : ViewController <SwipeDraggableViewDelegate, SearchPreferencesViewControllerDelegate>
 
 @end

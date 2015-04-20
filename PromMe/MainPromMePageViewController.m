@@ -25,6 +25,8 @@
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingAnimation;
 @property (strong, nonatomic) PQFBouncingBalls *loadingAnimation2;
 
+@property (strong, nonatomic) UICKeyChainStore *keyChain;
+
 - (IBAction)yesIcon:(id)sender;
 - (IBAction)noIcon:(id)sender;
 
@@ -58,6 +60,9 @@ static Person *currentPerson;
         self.loadingAnimation2.jumpAmount = 150;
         
         self.searchPreferences = [[SearchPreferencesViewController alloc] initWithNibName:@"SearchPreferencesViewController" bundle:[NSBundle mainBundle]];
+        self.searchPreferences.delegate = self;
+        
+        self.keyChain = [[UICKeyChainStore alloc] init];
     }
     
     return self;
@@ -74,13 +79,33 @@ static Person *currentPerson;
 {
     [self.loadingAnimation show];
     
-    NSDictionary *params = @{@"myFBID": self.facebookID,
-                             @"isLocation": @true,
-                             @"maxDistance": @100,
-                             @"isSchool": @true,
-                             @"highschool": @"Princeton High School",
-                             @"isGender": @true,
-                             @"gender": @"Male"};
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setObject:self.facebookID forKey:@"myFBID"];
+    
+    if(self.keyChain[@"useHighSchool"]) {
+        [params setObject:@true forKey:@"isSchool"];
+        [params setObject:self.keyChain[@"school"] forKey:@"highschool"];
+    }
+    else {
+        [params setObject:@false forKey:@"isSchool"];
+    }
+
+    if(self.keyChain[@"isDistance"]) {
+        [params setObject:@true forKey:@"isLocation"];
+        [params setObject:self.keyChain[@"distance"] forKey:@"maxDistance"];
+    }
+    else {
+        [params setObject:@false forKey:@"isLocation"];
+    }
+    
+    if(!self.keyChain[@"genderToShow"] || [self.keyChain[@"genderToShow"] isEqualToString:@"Everyone"]) {
+        [params setObject:@false forKey:@"isGender"];
+    }
+    else {
+        [params setObject:@true forKey:@"isGender"];
+        [params setObject:self.keyChain[@"genderToShow"] forKey:@"gender"];
+    }
     
     [PFCloud callFunctionInBackground:@"getPeopleToSwipe" withParameters:params block:^(NSArray *results, NSError *error) {
         
@@ -96,6 +121,7 @@ static Person *currentPerson;
             
             if(self.availablePeopleToSwipe.count == 0) {
                 [self showAlert:@"Uh Oh" alertMessage:@"Sorry, there is no one to swipe. Please try again later" buttonName:@"ok"];
+                
                 return;
             }
             
@@ -229,6 +255,7 @@ static Person *currentPerson;
     
     if(currentPersonIndex >= self.availablePeopleToSwipe.count) {
         [self showAlert:@"Uh oh." alertMessage:@"Sorry, no more people to swipe. Please check back later" buttonName:@"Ok"];
+        [self.loadingAnimation hide];
         return;
     }
     
@@ -259,17 +286,17 @@ static Person *currentPerson;
                     self.nameLabel.text = [NSString stringWithFormat:@"%@, %@, %@", currentPerson.name, currentPerson.grade, currentPerson.highSchool];
                     self.nameLabel.numberOfLines = 2;
                     self.nameLabel.adjustsFontSizeToFitWidth = YES;
-                    
-                    
-                    [self.loadingAnimation hide];
                 }
                 else {
                     [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to display this user's profile photo" buttonName:@"Ok"];
                 }
+                
+                [self.loadingAnimation hide];
             }];
         }
         else {
             [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to get this user's profile photo" buttonName:@"Ok"];
+            [self.loadingAnimation hide];
         }
     }];
 }
@@ -287,15 +314,16 @@ static Person *currentPerson;
                 if(!error) {
                     self.draggableView.photo = [UIImage imageWithData:data];
                     [self.draggableView setNeedsDisplay];
-                    [self.loadingAnimation hide];
                 }
                 else {
                     [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to display this user's profile photo" buttonName:@"Ok"];
                 }
+                [self.loadingAnimation hide];
             }];
         }
         else {
             [self showAlert:@"Error" alertMessage:@"Sorry, something went wrong while trying to get this user's profile photo" buttonName:@"Ok"];
+            [self.loadingAnimation hide];
         }
     }];
 }
@@ -339,6 +367,11 @@ static Person *currentPerson;
                                               cancelButtonTitle:buttonName
                                               otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+- (void) searchPreferencesViewController:(SearchPreferencesViewController *)viewController
+{
+    [self loadFriends];
 }
 
 @end

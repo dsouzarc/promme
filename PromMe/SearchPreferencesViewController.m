@@ -100,6 +100,8 @@
 
 - (IBAction)savePreferences:(id)sender {
     
+    [self.delegate searchPreferencesViewController:self];
+    
     self.keyChain[@"useHighSchool"] = [[NSNumber numberWithBool:self.isHighSchoolSwitch.isOn] stringValue];
     self.keyChain[@"school"] = self.highSchoolTextField.text;
     

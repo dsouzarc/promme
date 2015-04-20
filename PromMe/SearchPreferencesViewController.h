@@ -9,6 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "UICKeyChainStore.h"
 
+@class SearchPreferencesViewController;
+
+@protocol SearchPreferencesViewControllerDelegate <NSObject>
+
+- (void) searchPreferencesViewController:(SearchPreferencesViewController*)viewController;
+
+@end
+
 @interface SearchPreferencesViewController : UIViewController <UITextFieldDelegate>
+
+@property (nonatomic, weak) id<SearchPreferencesViewControllerDelegate> delegate;
 
 @end

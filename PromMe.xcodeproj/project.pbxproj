@@ -225,27 +225,13 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
-				94F728181AD9BDE300598D02 /* ProfilePictureTableViewCell.h */,
-				94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */,
-				94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */,
-				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
-				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
-				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
-				945B53D91AD60FF30047A27D /* PeopleAcceptedViewController.h */,
-				945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */,
-				945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */,
-				945B53CC1AD5CE320047A27D /* SwipeDraggableOverlay.h */,
-				945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */,
+				947C4D071AE4749900C55B41 /* Login Views */,
+				947C4D061AE4748B00C55B41 /* Matched People Views */,
+				947C4D091AE474BD00C55B41 /* Tinder UI Views */,
 				94BACD291ADA2B7700C52B66 /* Location Finding */,
-				945B53C91AD493960047A27D /* SwipeDraggableView.h */,
-				945B53CA1AD493960047A27D /* SwipeDraggableView.m */,
 				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
 				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
-				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
-				945B53C61AD2D8D90047A27D /* Person.h */,
-				945B53C71AD2D8D90047A27D /* Person.m */,
-				9443B3BA1AE465560003F516 /* MatchedPerson.h */,
-				9443B3BB1AE465560003F516 /* MatchedPerson.m */,
+				947C4D081AE474A400C55B41 /* People Object-Oriented */,
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,
 				94BACD421ADB28D600C52B66 /* AppIcon.xcassets */,
@@ -258,9 +244,6 @@
 				945B53B51AD23D5F0047A27D /* Misc. 3rd Party Libraries */,
 				945B53B41AD23D470047A27D /* Parse and Default Libraries */,
 				945B53201AD2342C0047A27D /* Supporting Files */,
-				947C4D011AE46C3500C55B41 /* MatchedPersonTableViewCell.h */,
-				947C4D021AE46C3500C55B41 /* MatchedPersonTableViewCell.m */,
-				947C4D031AE46C3500C55B41 /* MatchedPersonTableViewCell.xib */,
 			);
 			path = PromMe;
 			sourceTree = "<group>";
@@ -376,6 +359,55 @@
 			);
 			name = "Misc. 3rd Party Libraries";
 			path = ..;
+			sourceTree = "<group>";
+		};
+		947C4D061AE4748B00C55B41 /* Matched People Views */ = {
+			isa = PBXGroup;
+			children = (
+				947C4D011AE46C3500C55B41 /* MatchedPersonTableViewCell.h */,
+				947C4D021AE46C3500C55B41 /* MatchedPersonTableViewCell.m */,
+				947C4D031AE46C3500C55B41 /* MatchedPersonTableViewCell.xib */,
+				945B53D91AD60FF30047A27D /* PeopleAcceptedViewController.h */,
+				945B53DA1AD60FF30047A27D /* PeopleAcceptedViewController.m */,
+				945B53DB1AD60FF30047A27D /* PeopleAcceptedViewController.xib */,
+			);
+			name = "Matched People Views";
+			sourceTree = "<group>";
+		};
+		947C4D071AE4749900C55B41 /* Login Views */ = {
+			isa = PBXGroup;
+			children = (
+				94F728181AD9BDE300598D02 /* ProfilePictureTableViewCell.h */,
+				94F728191AD9BDE300598D02 /* ProfilePictureTableViewCell.m */,
+				94F7281A1AD9BDE300598D02 /* ProfilePictureTableViewCell.xib */,
+				945B53BA1AD2B7100047A27D /* LogInViewController.h */,
+				945B53BB1AD2B7100047A27D /* LogInViewController.m */,
+				945B53BC1AD2B7100047A27D /* LogInViewController.xib */,
+			);
+			name = "Login Views";
+			sourceTree = "<group>";
+		};
+		947C4D081AE474A400C55B41 /* People Object-Oriented */ = {
+			isa = PBXGroup;
+			children = (
+				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
+				945B53C61AD2D8D90047A27D /* Person.h */,
+				945B53C71AD2D8D90047A27D /* Person.m */,
+				9443B3BA1AE465560003F516 /* MatchedPerson.h */,
+				9443B3BB1AE465560003F516 /* MatchedPerson.m */,
+			);
+			name = "People Object-Oriented";
+			sourceTree = "<group>";
+		};
+		947C4D091AE474BD00C55B41 /* Tinder UI Views */ = {
+			isa = PBXGroup;
+			children = (
+				945B53C91AD493960047A27D /* SwipeDraggableView.h */,
+				945B53CA1AD493960047A27D /* SwipeDraggableView.m */,
+				945B53CC1AD5CE320047A27D /* SwipeDraggableOverlay.h */,
+				945B53CD1AD5CE320047A27D /* SwipeDraggableOverlay.m */,
+			);
+			name = "Tinder UI Views";
 			sourceTree = "<group>";
 		};
 		94BACD231ADA16F700C52B66 /* SPGoogleAutocompletePlaces */ = {

@@ -10,7 +10,9 @@
 #import "MatchedPersonTableViewCell.h"
 #import "MatchedPerson.h"
 
-@interface PeopleAcceptedViewController : ViewController <UITableViewDelegate, UITableViewDataSource>
+#import <MessageUI/MFMessageComposeViewController.h>
+
+@interface PeopleAcceptedViewController : ViewController <UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
 
 - (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil matchedPeople:(NSArray*)matchedPeople;
 

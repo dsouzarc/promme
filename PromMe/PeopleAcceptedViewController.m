@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *mainView;
 
+@property (strong, nonatomic) UILabel *noMatchesLabel;
+
 @property (strong, nonatomic) NSArray *people;
 - (IBAction)backClick:(id)sender;
 
@@ -32,10 +34,38 @@
     return self;
 }
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)viewDidLoad
 {
-    return self.people.count;
+    [super viewDidLoad];
+    
+    [self.mainView registerNib:[UINib nibWithNibName:@"MatchedPersonTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@TABLE_IDENTIFIER];
 }
+
+-(UIImage*)resizeImage:(UIImage *)image imageSize:(CGSize)size
+{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0,0,size.width,size.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+- (IBAction)backClick:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) showAlert:(NSString*)alertTitle alertMessage:(NSString*)alertMessage buttonName:(NSString*)buttonName {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:buttonName
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
+/****************************/
+//    TABLEVIEW DELEGATES
+/****************************/
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -70,24 +100,44 @@
     return 116;
 }
 
-- (void)viewDidLoad
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    [super viewDidLoad];
+    //TODO: NO MATCHES
+    if(self.people.count == 0) {
+        return 0;
+    }
     
-    [self.mainView registerNib:[UINib nibWithNibName:@"MatchedPersonTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@TABLE_IDENTIFIER];
+    return self.people.count;
 }
 
--(UIImage*)resizeImage:(UIImage *)image imageSize:(CGSize)size
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0,0,size.width,size.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
+    MatchedPerson *person = self.people[indexPath.row];
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.recipients = [NSArray arrayWithObjects:person.phoneNumber, nil];
+    messageController.messageComposeDelegate = self;
+    
+    if([MFMessageComposeViewController canSendText]) {
+        [self presentViewController:messageController animated:YES completion:nil];
+    }
+    else {
+        NSString *message = [NSString stringWithFormat:@"Sorry, we could not send that person a text. Their phone number is: %@", person.phoneNumber];
+        [self showAlert:@"Uh oh" alertMessage:message buttonName:@"Ok"];
+    }
 }
 
-- (IBAction)backClick:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+
+/****************************/
+//    MESSAGE COMPOSE DELEGATE
+/****************************/
+
+- (void) messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if(result == MessageComposeResultSent) {
+        [self showAlert:@"Woot Woot" alertMessage:@"Awesome!" buttonName:@"Let's keep on going"];
+    }
 }
 
 @end

@@ -19,6 +19,6 @@
 
 #import <Parse/Parse.h>
 
-@interface MainPromMePageViewController : ViewController <SwipeDraggableViewDelegate, SearchPreferencesViewControllerDelegate>
+@interface MainPromMePageViewController : ViewController <SwipeDraggableViewDelegate, SearchPreferencesViewControllerDelegate, UIAlertViewDelegate>
 
 @end

@@ -56,6 +56,7 @@
 		947C4D0B1AE47B1000C55B41 /* myImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 947C4D0A1AE47B1000C55B41 /* myImage.png */; };
 		947C4D0F1AE485F400C55B41 /* SearchPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C4D0D1AE485F400C55B41 /* SearchPreferencesViewController.m */; };
 		947C4D101AE485F400C55B41 /* SearchPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 947C4D0E1AE485F400C55B41 /* SearchPreferencesViewController.xib */; };
+		947C4D161AE5BA2000C55B41 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 947C4D151AE5BA2000C55B41 /* flag.png */; };
 		94BACD151ADA15A800C52B66 /* ApiConfigurations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */; };
 		94BACD1F1ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD181ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.m */; };
 		94BACD201ADA16F000C52B66 /* SPGooglePlacesAutocompleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BACD1A1ADA16F000C52B66 /* SPGooglePlacesAutocompleteQuery.m */; };
@@ -158,6 +159,7 @@
 		947C4D0C1AE485F400C55B41 /* SearchPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPreferencesViewController.h; sourceTree = "<group>"; };
 		947C4D0D1AE485F400C55B41 /* SearchPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPreferencesViewController.m; sourceTree = "<group>"; };
 		947C4D0E1AE485F400C55B41 /* SearchPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPreferencesViewController.xib; sourceTree = "<group>"; };
+		947C4D151AE5BA2000C55B41 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiConfigurations.plist; sourceTree = "<group>"; };
 		94BACD161ADA16F000C52B66 /* SPGooglePlacesAutocomplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocomplete.h; sourceTree = "<group>"; };
 		94BACD171ADA16F000C52B66 /* SPGooglePlacesAutocompletePlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocompletePlace.h; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 		94BACD2A1ADA2B8C00C52B66 /* PNG Files */ = {
 			isa = PBXGroup;
 			children = (
+				947C4D151AE5BA2000C55B41 /* flag.png */,
 				945B53D31AD5F6DA0047A27D /* yes_dress.png */,
 				94BACD441ADD91F400C52B66 /* no_picture_image.png */,
 				945B53D71AD6002B0047A27D /* fire.png */,
@@ -541,6 +544,7 @@
 			files = (
 				947C4D0B1AE47B1000C55B41 /* myImage.png in Resources */,
 				94BACD151ADA15A800C52B66 /* ApiConfigurations.plist in Resources */,
+				947C4D161AE5BA2000C55B41 /* flag.png in Resources */,
 				945B53BE1AD2B7100047A27D /* LogInViewController.xib in Resources */,
 				947C4D101AE485F400C55B41 /* SearchPreferencesViewController.xib in Resources */,
 				94BACD281ADA171400C52B66 /* ChooseAddressViewController.xib in Resources */,

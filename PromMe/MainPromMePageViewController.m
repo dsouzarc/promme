@@ -24,11 +24,13 @@
 
 @property (strong, nonatomic) PQFCirclesInTriangle *loadingAnimation;
 @property (strong, nonatomic) PQFBouncingBalls *loadingAnimation2;
+@property (strong, nonatomic) UIAlertView *flagUserAlert;
 
 @property (strong, nonatomic) UICKeyChainStore *keyChain;
 
 - (IBAction)yesIcon:(id)sender;
 - (IBAction)noIcon:(id)sender;
+- (IBAction)flagUser:(id)sender;
 
 - (IBAction)searchPreferencesButton:(id)sender;
 - (IBAction)matchesClicked:(id)sender;
@@ -153,6 +155,19 @@ static Person *currentPerson;
     }
     
     [self noPerson];
+}
+
+- (IBAction)flagUser:(id)sender {
+    
+    //Check to see if there is a valid user
+    if(!currentPerson) {
+        [self showAlert:@"Whoops" alertMessage:@"Sorry, there's no one to report" buttonName:@"Ok"];
+        return;
+    }
+    
+    NSString *message = [NSString stringWithFormat:@"Would you like to report %@ for inappropriate content?", currentPerson.name];
+    self.flagUserAlert = [[UIAlertView alloc] initWithTitle:@"Flag User & Content" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Report", nil];
+    [self.flagUserAlert show];
 }
 
 - (IBAction)searchPreferencesButton:(id)sender {
@@ -372,6 +387,24 @@ static Person *currentPerson;
 - (void) searchPreferencesViewController:(SearchPreferencesViewController *)viewController
 {
     [self loadFriends];
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Report button
+    if(buttonIndex == 1) {
+        NSDictionary *params = @{@"myFBID": self.facebookID,
+                                 @"personToReportFBID": currentPerson.facebookID};
+        
+        [PFCloud callFunctionInBackground:@"reportUser" withParameters:params block:^(NSString *response, NSError *error) {
+            if(!error) {
+                
+            }
+            else {
+                NSLog(error.description);
+            }
+        }];
+    }
 }
 
 @end

@@ -84,9 +84,22 @@
                         <action selector="yesIcon:" destination="-1" eventType="touchUpInside" id="0rr-Lk-Yi3"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxZ-89-ld9">
+                    <rect key="frame" x="8" y="627" width="22" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="gBF-wz-Ech"/>
+                        <constraint firstAttribute="width" constant="22" id="xQc-Dt-Q6n"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="flag.png"/>
+                    <connections>
+                        <action selector="flagUser:" destination="-1" eventType="touchUpInside" id="fm2-zj-TwG"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="oxZ-89-ld9" secondAttribute="bottom" constant="8" id="02H-Ys-iU1"/>
+                <constraint firstItem="oxZ-89-ld9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="7BH-iR-OaA"/>
                 <constraint firstItem="yVF-zL-eMB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="B3X-ig-Yus"/>
                 <constraint firstItem="nyg-iU-V2L" firstAttribute="trailing" secondItem="Pjm-Dn-TUR" secondAttribute="trailing" id="BVn-g5-iHr"/>
                 <constraint firstItem="Pjm-Dn-TUR" firstAttribute="leading" secondItem="nyg-iU-V2L" secondAttribute="leading" id="FR2-1N-uXe"/>
@@ -109,4 +122,7 @@
             <point key="canvasLocation" x="276.5" y="355.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="flag.png" width="32" height="32"/>
+    </resources>
 </document>

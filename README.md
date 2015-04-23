@@ -2,6 +2,8 @@
 
 ##Tinder for Prom
 
-###[Demo video with instructions/explanations] (https://www.facebook.com/dsouzarc/videos/10205930261872381/)
+###[Latest demo video with instructions/explanations] (https://www.facebook.com/dsouzarc/videos/10206034661202299/)
 
-####Note: Screenshots + an updated UI will be posted soon
+####[First demo video with instructions/explanations] (https://www.facebook.com/dsouzarc/videos/10205930261872381/)
+
+#####Note: Screenshots + an updated UI will be posted soon

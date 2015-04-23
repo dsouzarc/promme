@@ -234,6 +234,9 @@
 		945B531F1AD2342C0047A27D /* PromMe */ = {
 			isa = PBXGroup;
 			children = (
+				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
+				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
+				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				947C4D0C1AE485F400C55B41 /* SearchPreferencesViewController.h */,
 				947C4D0D1AE485F400C55B41 /* SearchPreferencesViewController.m */,
 				947C4D0E1AE485F400C55B41 /* SearchPreferencesViewController.xib */,
@@ -241,9 +244,6 @@
 				947C4D061AE4748B00C55B41 /* Matched People Views */,
 				947C4D091AE474BD00C55B41 /* Tinder UI Views */,
 				94BACD291ADA2B7700C52B66 /* Location Finding */,
-				945B53C11AD2C40E0047A27D /* MainPromMePageViewController.h */,
-				945B53C21AD2C40E0047A27D /* MainPromMePageViewController.m */,
-				945B53C31AD2C40E0047A27D /* MainPromMePageViewController.xib */,
 				947C4D081AE474A400C55B41 /* People Object-Oriented */,
 				94BACD141ADA15A800C52B66 /* ApiConfigurations.plist */,
 				945B53241AD2342C0047A27D /* AppDelegate.h */,

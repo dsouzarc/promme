@@ -86,26 +86,28 @@ static Person *currentPerson;
     [params setObject:self.facebookID forKey:@"myFBID"];
     
     if(self.keyChain[@"useHighSchool"]) {
-        [params setObject:@true forKey:@"isSchool"];
+        [params setObject:[NSNumber numberWithInt:1] forKey:@"isSchool"];
         [params setObject:self.keyChain[@"school"] forKey:@"highschool"];
     }
     else {
-        [params setObject:@false forKey:@"isSchool"];
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"isSchool"];
     }
 
     if(self.keyChain[@"isDistance"]) {
-        [params setObject:@true forKey:@"isLocation"];
+        NSLog(@"Is distance");
+        [params setObject:[NSNumber numberWithInt:1] forKey:@"isLocation"];
         [params setObject:self.keyChain[@"distance"] forKey:@"maxDistance"];
     }
     else {
-        [params setObject:@false forKey:@"isLocation"];
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"isLocation"];
     }
     
     if(!self.keyChain[@"genderToShow"] || [self.keyChain[@"genderToShow"] isEqualToString:@"Everyone"]) {
-        [params setObject:@false forKey:@"isGender"];
+        NSLog(@"Showing everyday");
+        [params setObject:[NSNumber numberWithInt:0] forKey:@"isGender"];
     }
     else {
-        [params setObject:@true forKey:@"isGender"];
+        [params setObject:[NSNumber numberWithInt:1] forKey:@"isGender"];
         [params setObject:self.keyChain[@"genderToShow"] forKey:@"gender"];
     }
     
@@ -194,22 +196,26 @@ static Person *currentPerson;
 
 - (void) updateParseWithSwipeDirection:(BOOL)didSwipeRight
 {
-    NSString *parseFunction, *directionID;
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
     if(didSwipeRight) {
-        parseFunction = @"swipeRight";
-        directionID = @"yesFBID";
+        NSLog(@"SWIPE RIGHT");
+        [params setObject:currentPerson.facebookID forKey:@"yesFBID"];
     }
     else {
-        parseFunction = @"swipeLeft";
-        directionID = @"noFBID";
+        [params setObject:currentPerson.facebookID forKey:@"noFBID"];
     }
     
-    NSDictionary *params = @{@"myFBID": self.facebookID,
-                             directionID: currentPerson.facebookID};
+    [params setObject:@"myFBID" forKey:self.facebookID];
+    
+    NSLog(@"YES TO: %@", params[@"yesFBID"]);
+    NSLog(@"ME: %@", params[@"myFBID"]);
+    
+    NSString *parseFunction = didSwipeRight ? @"swipeRight" : @"swipeLeft";
     
     [PFCloud callFunctionInBackground:parseFunction withParameters:params block:^(NSString *result, NSError *error) {
         if(error) {
-            [self showAlert:@"Uh oh" alertMessage:@"Sorry, something went wrong with saving your last swipe" buttonName:@"Ok"];
+            //[self showAlert:@"Uh oh" alertMessage:@"Sorry, something went wrong with saving your last swipe" buttonName:@"Ok"];
         }
         else {
             NSLog(@"%@\t%@", parseFunction, result);

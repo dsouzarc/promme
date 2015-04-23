@@ -88,7 +88,13 @@
     
     CGSize profilePhotoSize = CGSizeMake(80, 75);
     
-    cell.profilePictureView.image = [self resizeImage:person.profilePicture imageSize:profilePhotoSize];
+    cell.profilePictureView.contentMode = UIViewContentModeCenter;
+    if (cell.profilePictureView.bounds.size.width > person.profilePicture.size.width && cell.profilePictureView.bounds.size.height > person.profilePicture.size.height) {
+        cell.profilePictureView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    cell.profilePictureView.image = person.profilePicture;
+    
+    //cell.profilePictureView.image = //[self resizeImage:person.profilePicture imageSize:profilePhotoSize];
     cell.nameLabel.text = person.name;
     cell.gradeLabel.text = person.grade;
     cell.schoolLabel.text = person.highSchool;

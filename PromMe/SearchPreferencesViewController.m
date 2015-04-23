@@ -73,6 +73,9 @@
     else {
         [self.isHighSchoolSwitch setOn:NO animated:YES];
     }
+    [self.isHighSchoolSwitch setOn:NO];
+    
+    
     if(self.keyChain[@"isDistance"]) {
         [self.isDistanceSwitch setOn:YES animated:YES];
     }

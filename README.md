@@ -7,17 +7,24 @@
 ####[First demo video with instructions/explanations] (https://www.facebook.com/dsouzarc/videos/10205930261872381/)
 
 
+---
+
+##Screenshots
+
 ![Screenshot 1](https://github.com/dsouzarc/promme/blob/master/Screenshots/Screenshot_1.png)
+
 The home screen
 
 ---
 
 ![Screenshot 2](https://github.com/dsouzarc/promme/blob/master/Screenshots/Screenshot_2.png)
+
 Create account screen
 
 ---
 
 ![Screenshot 3](https://github.com/dsouzarc/promme/blob/master/Screenshots/Screenshot_3.png)
+
 Create account screen scrolled down to show two pictures
 
 ---

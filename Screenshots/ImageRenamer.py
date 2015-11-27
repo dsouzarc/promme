@@ -13,7 +13,7 @@ import os;
 files = os.listdir('.');
 index = 0;
 
-projectName = "iMessageAnalyzer"
+projectName = "promme"
 
 prefix = "https://github.com/dsouzarc/" + projectName + "/blob/master/Screenshots/";
 
